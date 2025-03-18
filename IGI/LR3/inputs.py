@@ -80,6 +80,26 @@ def random_generator(value_type, min_value=None, max_value=None):
         return random_num
 
 
+def random_sequence(value_type, min_value=None, max_value=None, count=None):
+    """Generator function that yields a sequence of random values.
+
+    Args:
+        value_type (type): Type of generating value
+        min_value (int/string/float, optional): Minimum input data value.
+                                                Defaults to None.
+        max_value (int/string/float, optional): Maximum input data value.
+                                                Defaults to None.
+        count (int, optional): Count of numbers in sequence. Defaults to None.
+
+    Yields:
+        int/str/float: Random value
+    """
+    generated = 0
+    while count is None or generated < count:
+        yield random_generator(value_type, min_value, max_value)
+        generated += 1
+
+
 def is_float(s):
     """Check is string converting in float
 

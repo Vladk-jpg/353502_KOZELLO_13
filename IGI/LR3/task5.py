@@ -30,8 +30,8 @@ def task5():
                               "(0 - keyboard, 1 - auto): ", int, 0, 1)
     if mode:
         count = inputs.valid_input("Enter count of numbers: ", int, 1, 100)
-        for _ in range(count):
-            lst.append(inputs.random_generator(float))
+        for i in inputs.random_sequence(float, count=count):
+            lst.append(i)
     else:
         while True:
             s = input("Enter a list of float numbers separated with space:\n")
