@@ -1,6 +1,7 @@
 from .inputs import valid_input
 from Task1.task1 import task1
 from Task2.task2 import task2
+from Task3.task3 import task3
 
 
 def start_menu():
@@ -13,7 +14,7 @@ def start_menu():
             case 2:
                 task2()
             case 3:
-                pass
+                task3()
             case 4:
                 pass
             case 5:
