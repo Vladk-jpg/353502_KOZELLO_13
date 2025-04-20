@@ -1,2 +1,2 @@
-class task5:
+def task5():
     pass
