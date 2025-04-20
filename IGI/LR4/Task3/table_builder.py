@@ -1,4 +1,4 @@
-class table_builder:
+class TableBuilder:
     @staticmethod
     def print_table(data):
         headers = ["x", "n", "F(x)", "Math F(x)", "eps"]

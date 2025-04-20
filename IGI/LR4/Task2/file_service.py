@@ -1,7 +1,7 @@
 import zipfile
 
 
-class file_service:
+class FileService:
     @staticmethod
     def read_file(name):
         with open(name, 'r', encoding='utf-8') as f:

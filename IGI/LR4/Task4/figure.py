@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class figure(ABC):
+class Figure(ABC):
     @abstractmethod
     def square(self):
         pass

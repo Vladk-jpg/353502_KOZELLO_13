@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
 
-class plot_builder:
+class PlotBuilder:
     def __init__(self, x_vals, fx_vals, fx_m_vals):
         self._x_vals = x_vals
         self._fx_vals = fx_vals

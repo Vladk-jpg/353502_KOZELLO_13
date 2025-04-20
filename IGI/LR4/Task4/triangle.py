@@ -1,9 +1,9 @@
-from .figure import figure
-from .color import figure_color
+from .figure import Figure
+from .color import FigureColor
 import math
 
 
-class triangle(figure):
+class Triangle(Figure):
     name = "Undefined"
 
     def __init__(self, a, b, c, color_hex):
@@ -14,7 +14,7 @@ class triangle(figure):
         self._a = a
         self._b = b
         self._c = c
-        self._color = figure_color(color_hex)
+        self._color = FigureColor(color_hex)
 
     def square(self):
         p = (self._a + self._b + self._c) / 2

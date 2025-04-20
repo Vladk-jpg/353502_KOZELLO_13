@@ -1,4 +1,4 @@
-from .triangle import triangle
+from .triangle import Triangle
 from utils.inputs import valid_input
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
@@ -58,7 +58,7 @@ def task4():
                 print("Invalid input")
                 continue
             try:
-                triang = triangle(a, b, c, color)
+                triang = Triangle(a, b, c, color)
                 print("Success!")
             except ValueError:
                 print("Invalid color format")

@@ -1,6 +1,6 @@
 from utils.inputs import valid_input
-from .pickle_service import pickle_service
-from .csv_service import csv_service
+from .pickle_service import PickleService
+from .csv_service import CsvService
 
 
 class Item:
@@ -42,8 +42,8 @@ def task1():
         Item("orange", "Spain", "950")
     ]
     items_dict = [item.to_dict() for item in items]
-    p_service = pickle_service("Task1/data.pkl")
-    c_service = csv_service("Task1/data.csv")
+    p_service = PickleService("Task1/data.pkl")
+    c_service = CsvService("Task1/data.csv")
     p_service.write(items_dict)
     c_service.write(items_dict)
     while True:

@@ -1,4 +1,4 @@
-class figure_color:
+class FigureColor:
     def __init__(self, color_hex):
         int(color_hex, 16)
         self._color = color_hex

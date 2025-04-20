@@ -2,7 +2,7 @@ import math
 from utils.inputs import random_sequence
 
 
-class sequence_calculator:
+class SequenceCalculator:
     def calculate_ln(self, x, eps):
         n = 0
         m_fx = math.log(1 + x)

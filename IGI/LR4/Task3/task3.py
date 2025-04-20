@@ -1,12 +1,12 @@
 import statistics
 from utils.inputs import valid_input
-from .table_builder import table_builder
-from .sequence_calculator import sequence_calculator
-from .plot_builder import plot_builder
+from .table_builder import TableBuilder
+from .sequence_calculator import SequenceCalculator
+from .plot_builder import PlotBuilder
 
 
 def task3():
-    seq = sequence_calculator()
+    seq = SequenceCalculator()
     series_vals = []
     while True:
         print("======================")
@@ -21,7 +21,7 @@ def task3():
             eps = valid_input("Enter epsilon: ", float, 0.0)
             count = valid_input("Enter count of numbers: ", int, 0)
             raw_data = seq.generate_random_seq(count, eps)
-            table_builder.print_table(raw_data)
+            TableBuilder.print_table(raw_data)
             series_vals.clear()
             for row in raw_data:
                 series_vals.append(row[2])
@@ -47,5 +47,5 @@ def task3():
                 x_vals.append(val[0])
                 fx_vals.append(val[2])
                 fx_m_vals.append(val[3])
-            builer = plot_builder(x_vals, fx_vals, fx_m_vals)
+            builer = PlotBuilder(x_vals, fx_vals, fx_m_vals)
             builer.build_plot(eps)

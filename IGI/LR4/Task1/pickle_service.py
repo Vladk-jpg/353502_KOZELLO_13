@@ -1,7 +1,7 @@
 import pickle
 
 
-class pickle_service:
+class PickleService:
     def __init__(self, path):
         self._path = path
         pass

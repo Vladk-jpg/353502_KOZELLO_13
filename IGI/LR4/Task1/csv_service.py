@@ -1,7 +1,7 @@
 import csv
 
 
-class csv_service:
+class CsvService:
     def __init__(self, path):
         self._path = path
         pass

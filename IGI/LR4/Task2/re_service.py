@@ -1,7 +1,7 @@
 import re
 
 
-class re_service:
+class ReService:
     @staticmethod
     def find_sentences_count(text):
         pattern = r'.+?[.!?]+'
