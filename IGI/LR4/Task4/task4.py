@@ -6,6 +6,15 @@ import math
 
 
 def draw_triangle(triangle_obj, label=None):
+    """
+    Draws a triangle based on the given `Triangle` object and displays it.
+
+    Args:
+        triangle_obj (Triangle): The triangle object with side lengths and
+        color.
+        label (str, optional): Label to display on the triangle. Defaults to
+        None.
+    """
     a, b, c = triangle_obj.get_sides()
     color = '#' + triangle_obj.get_color()
 
@@ -38,6 +47,14 @@ def draw_triangle(triangle_obj, label=None):
 
 
 def task4():
+    """
+    Provides an interactive menu for triangle-related operations:
+    1. Create a triangle by entering side lengths and color.
+    2. Display triangle information.
+    3. Draw the triangle figure.
+
+    Loops until the user chooses to exit.
+    """
     triang = None
     while True:
         print("======================")

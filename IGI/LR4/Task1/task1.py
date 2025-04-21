@@ -5,15 +5,32 @@ from .csv_service import CsvService
 
 class Item:
     def __init__(self, name, country, count):
+        """Initialize class item
+
+        Args:
+            name (st): name of item
+            country (str): exporting country
+            count (int): amount of items
+        """
         self._name = name
         self._country = country
         self._count = count
 
     def __repr__(self):
+        """Represents class item as a string
+
+        Returns:
+            str: description string
+        """
         return (f"Item (name: {self._name}, country: {self._country}, "
                 f"count: {self._count})")
 
     def to_dict(self):
+        """returns a dictionary variant of class item
+
+        Returns:
+            dict: result dictionary
+        """
         return {
             "name": self._name,
             "country": self._country,
@@ -22,6 +39,14 @@ class Item:
 
 
 def find_count(items):
+    """finds count of production of particular item
+
+    Args:
+        items (list[Item]): result value
+
+    Returns:
+        int: result amount
+    """
     summary = 0
     for item in items:
         summary += int(item["count"])
@@ -29,6 +54,8 @@ def find_count(items):
 
 
 def task1():
+    """Generates a list of items and allows to manipulate them
+    """
     items = [
         Item("orange", "Zanzibar", "1000"),
         Item("apple", "France", "500"),

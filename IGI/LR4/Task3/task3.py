@@ -6,6 +6,22 @@ from .plot_builder import PlotBuilder
 
 
 def task3():
+    """
+    Main function for Task 3, allowing the user to:
+    1. Get statistical results for a randomly generated sequence.
+    2. Build a plot comparing ln(1 + x) and its Taylor series approximation.
+
+    - '1 - get results': Generates a random sequence, calculates statistical
+    characteristics (mode, median, mean, variance, stdev), and displays them.
+    - '2 - build plots': Generates a sequence and builds a plot comparing the
+    mathematical function and the Taylor series.
+
+    Parameters:
+    - epsilon (eps): Precision for the Taylor series.
+    - count: Number of random values to generate.
+
+    The user can exit by choosing option `0`.
+    """
     seq = SequenceCalculator()
     series_vals = []
     while True:

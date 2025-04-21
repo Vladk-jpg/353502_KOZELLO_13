@@ -3,10 +3,60 @@ from .color import FigureColor
 import math
 
 
-class Triangle(Figure):
+class RepaintableMixin:
+    """
+    Mixin class for repainting an object with a new color.
+
+    Methods:
+        repaint: Updates the color of the object with the provided hexadecimal
+        color code.
+    """
+
+    def repaint(self, new_color_hex):
+        """
+        Repaints the object with the new color.
+
+        Args:
+            new_color_hex (str): The new color code in hexadecimal format.
+        """
+        self._color = FigureColor(new_color_hex)
+
+
+class Triangle(Figure, RepaintableMixin):
+    """
+    Represents a triangle with given sides and color.
+
+    Attributes:
+        name (str): The name of the figure, "Triangle".
+        _a (float): The length of side a.
+        _b (float): The length of side b.
+        _c (float): The length of side c.
+        _color (FigureColor): The color of the triangle.
+
+    Methods:
+        square: Calculates the area of the triangle using Heron's formula.
+        get_name: Returns the name of the figure.
+        get_color: Returns the color of the triangle.
+        get_sides: Returns the lengths of the sides of the triangle.
+        get_info: Returns a string with the triangle's information.
+        __str__: Returns a string representation of the triangle.
+    """
+
     name = "Undefined"
 
     def __init__(self, a, b, c, color_hex):
+        """
+        Initializes a Triangle instance with the given sides and color.
+
+        Args:
+            a (float): The length of side a.
+            b (float): The length of side b.
+            c (float): The length of side c.
+            color_hex (str): The color of the triangle in hexadecimal format.
+
+        Raises:
+            ValueError: If the sides do not form a valid triangle.
+        """
         super().__init__()
         self.name = "Triangle"
         if a + b <= c or a + c <= b or b + c <= a:
@@ -17,27 +67,58 @@ class Triangle(Figure):
         self._color = FigureColor(color_hex)
 
     def square(self):
+        """
+        Calculates the area of the triangle using Heron's formula.
+
+        Returns:
+            float: The area of the triangle.
+        """
         p = (self._a + self._b + self._c) / 2
         return math.sqrt(p * (p - self._a) *
                          (p - self._b) * (p - self._c))
 
     def get_name(self):
+        """
+        Returns the name of the figure.
+
+        Returns:
+            str: The name of the figure ("Triangle").
+        """
         return self.name
 
     def get_color(self):
+        """
+        Returns the color of the triangle.
+
+        Returns:
+            str: The hexadecimal color code.
+        """
         return self._color._color
 
     def get_sides(self):
+        """
+        Returns the lengths of the sides of the triangle.
+
+        Returns:
+            tuple: A tuple containing the lengths of the three sides (a, b, c).
+        """
         return (self._a, self._b, self._c)
 
     def get_info(self):
-        str = "{}: ({},{},{}), S = {:.3f}, color_hex({})".format(self.name,
-                                                                 self._a,
-                                                                 self._b,
-                                                                 self._c,
-                                                                 self.square(),
-                                                                 self._color)
-        return str
+        """
+        Returns a string with the triangle's information.
+
+        Returns:
+            str: A string containing the name, sides, area, and color.
+        """
+        return "{}: ({},{},{}), S = {:.3f}, color_hex({})".format(
+            self.name, self._a, self._b, self._c, self.square(), self._color)
 
     def __str__(self):
+        """
+        Returns a string representation of the triangle.
+
+        Returns:
+            str: The string returned by get_info().
+        """
         return self.get_info()

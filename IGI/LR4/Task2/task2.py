@@ -4,6 +4,18 @@ from .file_service import FileService
 
 
 def task2():
+    """
+    Main function for task 2, which provides an interactive interface for
+    analyzing text and archiving the results. It performs the following
+    actions:
+    - Allow the user to choose different options for text analysis and
+    archiving.
+    - Option 1: Perform text analysis (count sentences, questions, smiles...).
+    - Option 2: Archive the results in a zip file.
+    - Option 3: Print archive information (details of the zip file).
+
+    The loop continues until the user selects option 0 (exit).
+    """
     while (True):
         print("======================")
         choose = valid_input("Choose action:\n"
