@@ -1,11 +1,11 @@
 name,country,count
-orange,Zanzibar,1000
-apple,France,500
-banana,Ecuador,1200
-mango,India,800
-kiwi,New Zealand,1500
-kiwi,Italy,700
-pineapple,Costa Rica,300
-watermelon,USA,1800
 orange,Argentina,400
+pineapple,Costa Rica,300
+banana,Ecuador,1200
+apple,France,500
+mango,India,800
+kiwi,Italy,700
+kiwi,New Zealand,1500
 orange,Spain,950
+watermelon,USA,1800
+orange,Zanzibar,1000

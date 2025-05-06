@@ -51,7 +51,7 @@ def task3():
             print(f"Median: {statistics.median(series_vals):.6f}")
             print(f"Mean: {statistics.mean(series_vals):.6f}")
             print(f"Variance: {statistics.variance(series_vals):.6f}")
-            print("Standard deviation (SD):",
+            print("Standard deviation:",
                   f"{statistics.stdev(series_vals):.6f}")
         else:
             eps = valid_input("Enter epsilon: ", float, 0.0)

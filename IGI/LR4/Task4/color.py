@@ -1,15 +1,4 @@
 class FigureColor:
-    """
-    Represents a color specified by a hexadecimal color code.
-
-    Attributes:
-        color (str): The color in hexadecimal format.
-
-    Methods:
-        color: Gets or sets the color value.
-        __str__: Returns the string representation of the color.
-    """
-
     def __init__(self, color_hex):
         """
         Initializes a FigureColor instance.

@@ -30,7 +30,7 @@ class PlotBuilder:
             approximation for labeling.
         """
         plt.figure(figsize=(10, 6))
-        plt.plot(self._x_vals, self._fx_m_vals, label="ln(1 + x) [math.log]",
+        plt.plot(self._x_vals, self._fx_m_vals, label="ln(1 + x)",
                  color="black", linestyle="--", linewidth=2)
         plt.plot(self._x_vals, self._fx_vals,
                  label=f"Taylor series (eps={eps})", color="blue")
@@ -39,6 +39,12 @@ class PlotBuilder:
         plt.xlabel("x")
         plt.ylabel("f(x)")
         plt.legend()
+        plt.annotate(
+            'Annotation',
+            xy=(0, 0),     
+            xytext=(10, 0),
+            textcoords='offset points'
+        )
         plt.grid(True)
         plt.xlim(0, 1)
         plt.savefig("Task3/plots.png")

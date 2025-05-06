@@ -2,14 +2,6 @@ import pickle
 
 
 class PickleService:
-    """
-    A service for serializing and deserializing a collection of dictionaries
-    to/from a file using pickle.
-
-    Attributes:
-        _path (str): Path to the file for reading/writing data.
-    """
-
     def __init__(self, path):
         """
         Initializes the PickleService with the given file path.
@@ -61,18 +53,41 @@ class PickleService:
 
     def sort(self, key, reverse=False):
         """
-        Sorts the list of dictionaries by the given key and writes the result
-        back to the file.
+        Sorts the CSV data by a specified key and rewrites the file.
 
         Args:
-            key (str): Key to sort by.
-            reverse (bool, optional): Whether to sort in descending order.
-            Defaults to False.
+            key (str): The key (column name) to sort by.
+            reverse (bool, optional): Sort in descending order if True.
+                Defaults to False.
 
         Returns:
-            list[dict]: The sorted list of dictionaries.
+            list: The sorted list of rows (each row is a dictionary).
         """
         items = self.read()
-        sorted_items = sorted(items, key=lambda x: x.get(key), reverse=reverse)
+
+        is_numeric = False
+        for row in items:
+            value = row.get(key)
+            if value is not None:
+                if isinstance(value, int):
+                    is_numeric = True
+                    break
+                if isinstance(value, str) and value.strip().isdigit():
+                    is_numeric = True
+                    break
+        
+        if is_numeric:
+            sorted_items = sorted(
+                items,
+                key=lambda x: int(x.get(key)) if x.get(key) is not None else 0,
+                reverse=reverse
+            )
+        else:
+            sorted_items = sorted(
+                items,
+                key=lambda x: x.get(key),
+                reverse=reverse
+            )
+        
         self.write(sorted_items)
         return sorted_items

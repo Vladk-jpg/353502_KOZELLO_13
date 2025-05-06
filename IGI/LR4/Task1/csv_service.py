@@ -2,13 +2,6 @@ import csv
 
 
 class CsvService:
-    """
-    A service for reading, writing, finding, and sorting CSV data.
-
-    Attributes:
-        _path (str): Path to the CSV file.
-    """
-
     def __init__(self, path):
         """
         Initializes the CsvService with the given file path.
@@ -75,8 +68,30 @@ class CsvService:
             list: The sorted list of rows (each row is a dictionary).
         """
         items = self.read()
-        sorted_items = sorted(
-            items, key=lambda x: x.get(key), reverse=reverse
-        )
+
+        is_numeric = False
+        for row in items:
+            value = row.get(key)
+            if value is not None:
+                if isinstance(value, int):
+                    is_numeric = True
+                    break
+                if isinstance(value, str) and value.strip().isdigit():
+                    is_numeric = True
+                    break
+        
+        if is_numeric:
+            sorted_items = sorted(
+                items,
+                key=lambda x: int(x.get(key)) if x.get(key) is not None else 0,
+                reverse=reverse
+            )
+        else:
+            sorted_items = sorted(
+                items,
+                key=lambda x: x.get(key),
+                reverse=reverse
+            )
+        
         self.write(sorted_items)
         return sorted_items

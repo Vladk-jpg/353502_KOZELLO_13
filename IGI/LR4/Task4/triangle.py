@@ -4,14 +4,6 @@ import math
 
 
 class RepaintableMixin:
-    """
-    Mixin class for repainting an object with a new color.
-
-    Methods:
-        repaint: Updates the color of the object with the provided hexadecimal
-        color code.
-    """
-
     def repaint(self, new_color_hex):
         """
         Repaints the object with the new color.
@@ -23,25 +15,7 @@ class RepaintableMixin:
 
 
 class Triangle(Figure, RepaintableMixin):
-    """
-    Represents a triangle with given sides and color.
-
-    Attributes:
-        name (str): The name of the figure, "Triangle".
-        _a (float): The length of side a.
-        _b (float): The length of side b.
-        _c (float): The length of side c.
-        _color (FigureColor): The color of the triangle.
-
-    Methods:
-        square: Calculates the area of the triangle using Heron's formula.
-        get_name: Returns the name of the figure.
-        get_color: Returns the color of the triangle.
-        get_sides: Returns the lengths of the sides of the triangle.
-        get_info: Returns a string with the triangle's information.
-        __str__: Returns a string representation of the triangle.
-    """
-
+    
     name = "Undefined"
 
     def __init__(self, a, b, c, color_hex):

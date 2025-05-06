@@ -21,10 +21,8 @@ class TableBuilder:
                 return f"{item:.6f}"
             return str(item)
 
-        # Format the data
         formatted_data = [[format_item(item) for item in row] for row in data]
 
-        # Calculate column widths
         col_widths = [max(len(str(item)) for item in col)
                       for col in zip(*([headers] + formatted_data))]
 
@@ -33,7 +31,6 @@ class TableBuilder:
             print("| " + " | ".join(f"{str(item):<{col_widths[i]}}"
                                     for i, item in enumerate(row)) + " |")
 
-        # Print the table
         print("-" * (sum(col_widths) + len(col_widths) * 3 + 1))
         print_row(headers)
         print("-" * (sum(col_widths) + len(col_widths) * 3 + 1))
