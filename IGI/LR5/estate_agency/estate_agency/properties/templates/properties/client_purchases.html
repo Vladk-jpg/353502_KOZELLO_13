@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
+            <li class="breadcrumb-item active">Мои покупки</li>
+        </ol>
+    </nav>
+
+    <h1 class="mb-4">Мои покупки</h1>
+
+    {% if purchases %}
+        <div class="row">
+            {% for purchase in purchases %}
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ purchase.property.title }}</h5>
+                            <div class="mb-3">
+                                <span class="badge {% if purchase.status == 'pending' %}bg-warning{% else %}bg-success{% endif %}">
+                                    {{ purchase.get_status_display }}
+                                </span>
+                            </div>
+                            <div class="mb-2">
+                                <strong>Цена:</strong>
+                                {% if purchase.promo %}
+                                    <span class="text-decoration-line-through text-muted">{{ purchase.property.price }} BYN</span>
+                                    <span class="text-danger ms-2">
+                                        {{ purchase.get_final_price|floatformat:0 }} BYN
+                                        <small class="text-muted">(-{{ purchase.promo.discount_percentage }}%)</small>
+                                    </span>
+                                {% else %}
+                                    {{ purchase.property.price }} BYN
+                                {% endif %}
+                            </div>
+                            <div class="mb-2">
+                                <strong>Дата покупки:</strong> {{ purchase.sale_date|date:"d.m.Y" }}
+                            </div>
+                            <div class="mb-2">
+                                <strong>Дата договора:</strong> {{ purchase.contract_date|date:"d.m.Y" }}
+                            </div>
+                            <div class="mb-2">
+                                <strong>Агент:</strong> {{ purchase.agent.user.username }}
+                            </div>
+                            {% if purchase.promo %}
+                                <div class="mb-2">
+                                    <strong>Примененный промокод:</strong> {{ purchase.promo.promo_code }}
+                                </div>
+                            {% endif %}
+                            <a href="{% url 'property_detail' purchase.property.id %}" class="btn btn-primary mt-2">
+                                Подробнее об объекте
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            У вас пока нет покупок.
+        </div>
+    {% endif %}
+</div>
+{% endblock %} 

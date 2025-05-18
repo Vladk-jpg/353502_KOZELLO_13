@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
+            <li class="breadcrumb-item active">Мониторинг продаж</li>
+        </ol>
+    </nav>
+
+    <h1 class="mb-4">Мониторинг продаж</h1>
+
+    {% if sales %}
+        <div class="row">
+            {% for sale in sales %}
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ sale.property.title }}</h5>
+                            <div class="mb-3">
+                                <span class="badge {% if sale.status == 'pending' %}bg-warning{% elif sale.status == 'approved' %}bg-success{% else %}bg-danger{% endif %}">
+                                    {{ sale.get_status_display }}
+                                </span>
+                            </div>
+                            
+                            <div class="mb-2">
+                                <strong>Клиент:</strong> {{ sale.client.user.username }}
+                            </div>
+                            
+                            <div class="mb-2">
+                                <strong>Агент:</strong> {{ sale.agent.user.username }}
+                            </div>
+                            
+                            <div class="mb-2">
+                                <strong>Цена:</strong>
+                                {% if sale.promo %}
+                                    <span class="text-decoration-line-through text-muted">{{ sale.property.price }} BYN</span>
+                                    <span class="text-danger ms-2">
+                                        {{ sale.get_final_price|floatformat:0 }} BYN
+                                        <small class="text-muted">(-{{ sale.promo.discount_percentage }}%)</small>
+                                    </span>
+                                {% else %}
+                                    {{ sale.property.price }} BYN
+                                {% endif %}
+                            </div>
+                            
+                            <div class="mb-2">
+                                <strong>Дата договора:</strong> {{ sale.contract_date|date:"d.m.Y" }}
+                            </div>
+                            
+                            {% if sale.sale_date %}
+                                <div class="mb-2">
+                                    <strong>Дата продажи:</strong> {{ sale.sale_date|date:"d.m.Y" }}
+                                </div>
+                            {% endif %}
+                            
+                            {% if sale.promo %}
+                                <div class="mb-2">
+                                    <strong>Примененный промокод:</strong> {{ sale.promo.promo_code }}
+                                </div>
+                            {% endif %}
+                            
+                            <div class="mt-3">
+                                <a href="{% url 'property_detail' sale.property.id %}" class="btn btn-info">
+                                    Подробнее об объекте
+                                </a>
+                                
+                                {% if sale.status == 'pending' %}
+                                    <form method="post" class="d-inline">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="sale_id" value="{{ sale.id }}">
+                                        <input type="hidden" name="action" value="approve">
+                                        <button type="submit" class="btn btn-success">
+                                            Продать
+                                        </button>
+                                    </form>
+                                    
+                                    <form method="post" class="d-inline">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="sale_id" value="{{ sale.id }}">
+                                        <input type="hidden" name="action" value="reject">
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Вы уверены, что хотите отклонить эту заявку?')">
+                                            Отклонить
+                                        </button>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            Пока нет продаж.
+        </div>
+    {% endif %}
+</div>
+{% endblock %} 

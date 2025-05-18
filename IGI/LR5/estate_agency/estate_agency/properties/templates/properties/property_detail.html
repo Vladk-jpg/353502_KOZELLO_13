@@ -44,36 +44,19 @@
             <h5>Детали</h5>
             <ul class="list-unstyled">
               <li>
-                <strong>Добавлено:</strong> {{ property.created_at|date:"d.m.Y"
-                }}
+                <strong>Добавлено:</strong> {{ property.created_at|date:"d.m.Y" }}
               </li>
               <li>
                 <strong>Статус:</strong> {{ property.get_status_display }}
               </li>
             </ul>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Связанные объекты</h5>
-          {% if related_properties %} {% for related in related_properties %}
-          <div class="card mb-2">
-            <div class="card-body">
-              <h6 class="card-title">{{ related.title }}</h6>
-              <p class="card-text text-primary mb-1">{{ related.price }} BYN</p>
-              <a
-                href="{% url 'property_detail' related.id %}"
-                class="btn btn-sm btn-outline-primary"
-                >Посмотреть детали</a
-              >
-            </div>
+          {% if user.is_authenticated and user.userprofile.role == 'client' and property.status == 'available' %}
+          <div class="mt-4">
+            <a href="{% url 'property_reserve' property.id %}" class="btn btn-primary">
+              <i class="fas fa-calendar-check me-2"></i>Забронировать
+            </a>
           </div>
-          {% endfor %} {% else %}
-          <p class="text-muted">Связанных объектов не найдено.</p>
           {% endif %}
         </div>
       </div>
