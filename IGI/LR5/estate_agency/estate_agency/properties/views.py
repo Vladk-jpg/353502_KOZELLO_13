@@ -12,14 +12,12 @@ def index(request):
     properties = Property.objects.filter(status='available')
     categories = Category.objects.all()
     
-    # Get filter parameters
     min_price = request.GET.get('min_price')
     max_price = request.GET.get('max_price')
     category_id = request.GET.get('category')
     date_from = request.GET.get('date_from')
     date_to = request.GET.get('date_to')
     
-    # Apply filters
     if min_price:
         properties = properties.filter(price__gte=min_price)
     if max_price:

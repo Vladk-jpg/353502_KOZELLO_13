@@ -59,6 +59,31 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
+              <a class="nav-link" href="{% url 'content:about' %}"
+                >О нас</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'content:news' %}"
+                >Новости</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'content:faq' %}"
+                >FAQ</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'content:vacancies' %}"
+                >Вакансии</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'content:reviews' %}"
+                >Отзывы</a
+              >
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="{% url 'index' %}"
                 >Объекты недвижимости</a
               >
@@ -174,10 +199,17 @@
           <div class="col-md-6">
             <h5>Estate Agency</h5>
             <p class="text-muted">Найдите свою мечту с нами</p>
+            <p class="text-muted mt-2">
+              IP адрес: {{ client_ip }}
+            </p>
           </div>
           <div class="col-md-6 text-md-end">
             <p class="text-muted">
               &copy; {% now "Y" %} Estate Agency. Все права защищены.
+            </p>
+            <a href="{% url 'content:privacy_policy' %}" class="text-muted text-decoration-none">Политика конфиденциальности</a>
+            <p class="text-muted mt-2">
+              Текущее время: {% now "d.m.Y H:i" %}
             </p>
           </div>
         </div>

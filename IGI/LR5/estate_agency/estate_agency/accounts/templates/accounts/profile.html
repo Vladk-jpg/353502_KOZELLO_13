@@ -104,5 +104,18 @@
       </div>
     </div>
   </div>
+  
+  {% if dog_image %}
+  <div class="row mt-4">
+    <div class="col-md-8 offset-md-2">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Случайная собака</h5>
+          <img src="{{ dog_image }}" class="img-fluid rounded" alt="Случайная собака">
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
 </div>
 {% endblock %}

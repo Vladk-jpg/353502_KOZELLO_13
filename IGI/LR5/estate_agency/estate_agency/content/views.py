@@ -1,7 +1,9 @@
 import matplotlib
 matplotlib.use('Agg') 
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from properties.models import Property
 from django.db.models import Count, Sum
 from django.utils import timezone
@@ -12,7 +14,25 @@ import base64
 from sales.models import Sale
 import numpy as np
 from accounts.decorators import role_required
+from .models import About, Article, FAQ, Vacancy, Review
+from .forms import ReviewForm
+import requests
+from django.conf import settings
 
+
+def get_client_ip():
+    try:
+        response = requests.get('https://api.ipify.org?format=json')
+        if response.status_code == 200:
+            return response.json()['ip']
+    except:
+        return 'Не удалось получить IP'
+    return 'Не удалось получить IP'
+
+def base_context(request):
+    return {
+        'client_ip': get_client_ip()
+    }
 
 def home(request):
     latest_property = Property.objects.filter(status='available').first()
@@ -82,3 +102,49 @@ def statistics_view(request):
     }
     
     return render(request, 'content/statistics.html', context)
+
+def about_view(request):
+    about_info = About.objects.first()
+    return render(request, 'content/about.html', {'about_info': about_info})
+
+def news_view(request):
+    articles = Article.objects.all()
+    return render(request, 'content/news.html', {'articles': articles})
+
+def article_detail(request, article_id):
+    article = get_object_or_404(Article, id=article_id)
+    return render(request, 'content/article_detail.html', {'article': article})
+
+def faq_view(request):
+    faqs = FAQ.objects.all()
+    return render(request, 'content/faq.html', {'faqs': faqs})
+
+def privacy_policy_view(request):
+    return render(request, 'content/privacy_policy.html')
+
+def vacancies_view(request):
+    vacancies = Vacancy.objects.all()
+    return render(request, 'content/vacancies.html', {'vacancies': vacancies})
+
+def reviews_view(request):
+    reviews = Review.objects.all()
+    form = ReviewForm()
+    return render(request, 'content/reviews.html', {
+        'reviews': reviews,
+        'form': form
+    })
+
+@login_required
+@role_required(['client'])
+def add_review(request):
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.user_name = request.user.username
+            review.save()
+            messages.success(request, 'Ваш отзыв успешно добавлен!')
+            return redirect('content:reviews')
+    else:
+        form = ReviewForm()
+    return render(request, 'content/add_review.html', {'form': form})

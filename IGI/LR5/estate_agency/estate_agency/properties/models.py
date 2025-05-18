@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.core.validators import MinValueValidator
 
 
 class Category(models.Model):
@@ -25,7 +26,7 @@ class Property(models.Model):
         ("reserved", "Reserved"),
     ]
     title = models.CharField(max_length=100, verbose_name="Title")
-    price = models.IntegerField(verbose_name="Price")
+    price = models.IntegerField(verbose_name="Price", validators=[MinValueValidator(0)])
     description = models.TextField(blank=True, verbose_name="Description")
     category = models.ForeignKey(Category, on_delete=models.CASCADE,
                                  verbose_name="Category")

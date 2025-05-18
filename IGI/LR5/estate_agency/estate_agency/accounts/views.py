@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from .decorators import role_required
 from .models import UserProfile, Staff
 import random
+import requests
 
 def register(request):
     if request.method == 'POST':
@@ -53,6 +54,15 @@ def logout_view(request):
     messages.info(request, 'Вы успешно вышли из системы.')
     return redirect('/properties/')
 
+def get_random_dog():
+    try:
+        response = requests.get('https://dog.ceo/api/breeds/image/random')
+        if response.status_code == 200:
+            return response.json()['message']
+    except:
+        return None
+    return None
+
 @login_required
 def profile_view(request):
     user_profile = request.user.userprofile
@@ -66,6 +76,7 @@ def profile_view(request):
         clients = user_profile.clients.all()
         context['clients'] = clients
     
+    context['dog_image'] = get_random_dog()
     return render(request, 'accounts/profile.html', context)
 
 def staff_list(request):

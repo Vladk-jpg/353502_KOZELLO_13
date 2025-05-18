@@ -58,5 +58,5 @@ class Staff(models.Model):
         return f"{self.user_profile.user.get_full_name() or self.user_profile.user.username} - {self.position}"
 
     class Meta:
-        verbose_name = 'Сотрудник'
-        verbose_name_plural = 'Сотрудники'
+        verbose_name = 'Staff'
+        verbose_name_plural = 'Staff'
