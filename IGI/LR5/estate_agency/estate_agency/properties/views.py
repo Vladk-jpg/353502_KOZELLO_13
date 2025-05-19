@@ -1,3 +1,4 @@
+from django.forms import ValidationError
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from django.contrib import messages
@@ -6,8 +7,9 @@ from accounts.decorators import role_required
 from .models import Property, Category
 from .forms import PropertyForm, ReservationForm
 from sales.models import Sale, Promo
-from datetime import date
+from datetime import date, datetime
 from django.utils import timezone
+from accounts.forms import date_validator
 
 def index(request):
     properties = Property.objects.filter(status='available')
@@ -26,9 +28,20 @@ def index(request):
     if category_id:
         properties = properties.filter(category_id=category_id)
     if date_from:
-        properties = properties.filter(created_at__gte=date_from)
+        try:
+            date_validator(date_from)
+            parsed_date_from = datetime.strptime(date_from, '%d/%m/%Y')
+            properties = properties.filter(created_at__gte=parsed_date_from)
+        except ValidationError:
+            messages.error(request, 'Дата "от" должна быть в формате ДД/ММ/ГГГГ')
+
     if date_to:
-        properties = properties.filter(created_at__lte=date_to)
+        try:
+            date_validator(date_to)
+            parsed_date_to = datetime.strptime(date_to, '%d/%m/%Y')
+            properties = properties.filter(created_at__lte=parsed_date_to)
+        except ValidationError:
+            messages.error(request, 'Дата "до" должна быть в формате ДД/ММ/ГГГГ')
     
     context = {
         'properties': properties,

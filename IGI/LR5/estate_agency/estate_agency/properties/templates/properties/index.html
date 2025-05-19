@@ -29,11 +29,13 @@
                 </div>
                 <div class="col-md-3">
                     <label for="date_from" class="form-label">Дата от</label>
-                    <input type="date" class="form-control" id="date_from" name="date_from" value="{{ current_filters.date_from }}">
+                    <input type="text" class="form-control" id="date_from" name="date_from"
+                           value="{{ current_filters.date_from|default_if_none:'' }}" placeholder="DD/MM/YYYY">
                 </div>
                 <div class="col-md-3">
                     <label for="date_to" class="form-label">Дата до</label>
-                    <input type="date" class="form-control" id="date_to" name="date_to" value="{{ current_filters.date_to }}">
+                    <input type="text" class="form-control" id="date_to" name="date_to"
+                           value="{{ current_filters.date_to|default_if_none:'' }}" placeholder="DD/MM/YYYY">
                 </div>
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">Применить фильтры</button>
