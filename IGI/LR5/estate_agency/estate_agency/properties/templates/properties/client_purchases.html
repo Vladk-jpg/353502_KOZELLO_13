@@ -36,10 +36,10 @@
                                 {% endif %}
                             </div>
                             <div class="mb-2">
-                                <strong>Дата покупки:</strong> {{ purchase.sale_date|date:"d.m.Y" }}
+                                <strong>Дата покупки:</strong> {{ purchase.sale_date|date:"d.m.Y H:i" }}
                             </div>
                             <div class="mb-2">
-                                <strong>Дата договора:</strong> {{ purchase.contract_date|date:"d.m.Y" }}
+                                <strong>Дата договора:</strong> {{ purchase.contract_date|date:"d.m.Y H:i" }}
                             </div>
                             <div class="mb-2">
                                 <strong>Агент:</strong> {{ purchase.agent.user.username }}

@@ -33,7 +33,7 @@
               {{ property.get_status_display }}
             </span>
           </td>
-          <td>{{ property.created_at|date:"d.m.Y H:i" }}</td>
+            <td>{{ property.created_at|date:"d.m.Y H:i" }}</td>
           <td>
             <a
               href="{% url 'property_detail' property.id %}"

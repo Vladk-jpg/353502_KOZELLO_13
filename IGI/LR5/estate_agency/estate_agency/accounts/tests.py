@@ -66,7 +66,8 @@ class AccountsTests(TestCase):
             'password1': 'newpass123',
             'password2': 'newpass123',
             'phone_number': '+375 (29) 123-45-68',
-            'birth_date': '01/01/1999'
+            'birth_date': '01/01/1999',
+            'timezone': 'UTC'
         })
         self.assertEqual(response.status_code, 302)
         self.assertTrue(User.objects.filter(username='newuser').exists())

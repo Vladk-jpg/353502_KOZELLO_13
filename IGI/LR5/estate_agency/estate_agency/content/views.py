@@ -31,7 +31,8 @@ def get_client_ip():
 
 def base_context(request):
     return {
-        'client_ip': get_client_ip()
+        'client_ip': get_client_ip(),
+        'tz': timezone.get_current_timezone()
     }
 
 def home(request):
@@ -79,11 +80,14 @@ def statistics_view(request):
             }
             employee_stats.append(stat)
         stat['total_sales'] += 1
-        stat['total_amount'] += sale.property.price
+        if (sale.promo):
+            stat['total_amount'] += round(sale.property.price * (1 -sale.promo.discount_percentage / 100))
+        else:
+            stat['total_amount'] += round(sale.property.price)
     
     employee_stats.sort(key=lambda x: x['total_sales'], reverse=True)
     
-    last_month_sales = [sale.property.price for sale in sales]
+    last_month_sales = [(sale.property.price * (1 - sale.promo.discount_percentage / 100) if sale.promo else sale.property.price) for sale in sales]
     
     if last_month_sales:
         sales_array = np.array(last_month_sales)
@@ -96,9 +100,9 @@ def statistics_view(request):
     context = {
         'property_distribution_graph': graph,
         'employee_stats': employee_stats,
-        'mean_sales': round(mean_sales, 2),
-        'median_sales': round(median_sales, 2),
-        'mode_sales': round(mode_sales, 2),
+        'mean_sales': round(mean_sales),
+        'median_sales': round(median_sales),
+        'mode_sales': round(mode_sales),
     }
     
     return render(request, 'content/statistics.html', context)

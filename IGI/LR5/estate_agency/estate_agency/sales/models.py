@@ -28,8 +28,8 @@ class Sale(models.Model):
     agent = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, null=True, blank=True, related_name='agent_sales', verbose_name="Агент")
     property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='sales', verbose_name="Объект недвижимости")
     promo = models.ForeignKey(Promo, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Промокод")
-    sale_date = models.DateField(verbose_name="Дата продажи", null=True, blank=True)
-    contract_date = models.DateField(verbose_name="Дата договора")
+    sale_date = models.DateTimeField(verbose_name="Дата продажи", null=True, blank=True)
+    contract_date = models.DateTimeField(verbose_name="Дата договора")
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending', verbose_name="Статус")
 
     class Meta:

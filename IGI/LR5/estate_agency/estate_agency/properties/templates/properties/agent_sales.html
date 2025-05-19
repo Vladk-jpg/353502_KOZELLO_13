@@ -42,12 +42,12 @@
                             </div>
                             
                             <div class="mb-2">
-                                <strong>Дата договора:</strong> {{ sale.contract_date|date:"d.m.Y" }}
+                                <strong>Дата договора:</strong> {{ sale.contract_date|date:"d.m.Y H:i" }}
                             </div>
                             
                             {% if sale.sale_date %}
                                 <div class="mb-2">
-                                    <strong>Дата продажи:</strong> {{ sale.sale_date|date:"d.m.Y" }}
+                                    <strong>Дата продажи:</strong> {{ sale.sale_date|date:"d.m.Y H:i" }}
                                 </div>
                             {% endif %}
                             

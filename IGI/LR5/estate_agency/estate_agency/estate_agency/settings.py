@@ -26,6 +26,10 @@ SECRET_KEY = 'django-insecure-j8r27+r3cdc&62wmj(^aqmbiw%x5(7%7zen2+lm0@w(jk63cl(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+USE_TZ = True
+TIME_ZONE = 'UTC'
+USE_L10N = True
+
 ALLOWED_HOSTS = []
 
 
@@ -52,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'estate_agency.middleware.UserTimezoneMiddleware',
 ]
 
 ROOT_URLCONF = 'estate_agency.urls'
@@ -111,11 +116,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Europe/Moscow'
-
 USE_I18N = True
 
-USE_TZ = True
+#TIME_ZONE = 'Europe/Moscow'
 
 
 # Static files (CSS, JavaScript, Images)

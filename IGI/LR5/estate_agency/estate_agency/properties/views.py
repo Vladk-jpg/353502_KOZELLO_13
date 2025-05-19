@@ -7,6 +7,7 @@ from .models import Property, Category
 from .forms import PropertyForm, ReservationForm
 from sales.models import Sale, Promo
 from datetime import date
+from django.utils import timezone
 
 def index(request):
     properties = Property.objects.filter(status='available')
@@ -134,7 +135,7 @@ def property_reserve(request, property_id):
             if promo_code:
                 try:
                     promo = Promo.objects.get(promo_code=promo_code)
-                    if promo.expires_at.date() < date.today():
+                    if promo.expires_at < timezone.now():
                         messages.error(request, 'Срок действия промокода истек.')
                         return redirect('property_detail', property_id=property_id)
                 except Promo.DoesNotExist:
@@ -147,7 +148,7 @@ def property_reserve(request, property_id):
                 property=property,
                 promo=promo,
                 sale_date=None,
-                contract_date=date.today(),
+                contract_date=timezone.now(),
                 status='pending'
             )
             
@@ -167,7 +168,7 @@ def property_reserve(request, property_id):
 @login_required
 @role_required(['client'])
 def client_purchases(request):
-    purchases = Sale.objects.filter(client=request.user.userprofile).select_related('property', 'agent', 'promo')
+    purchases = Sale.objects.filter(client=request.user.userprofile, status='approved').select_related('property', 'agent', 'promo')
     
     context = {
         'purchases': purchases,
@@ -249,9 +250,13 @@ def admin_sales(request):
     return render(request, 'properties/admin_sales.html', context)
 
 def promo_codes(request):
-    promos = Promo.objects.filter(expires_at__gte=date.today()).order_by('expires_at')
+    today = timezone.now()
     
+    active_promos = Promo.objects.filter(expires_at__gte=today).order_by('expires_at')
+    expired_promos = Promo.objects.filter(expires_at__lt=today).order_by('-expires_at')
+
     context = {
-        'promos': promos,
+        'active_promos': active_promos,
+        'expired_promos': expired_promos,
     }
     return render(request, 'properties/promo_codes.html', context)

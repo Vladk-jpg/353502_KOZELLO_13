@@ -1,3 +1,4 @@
+from zoneinfo import available_timezones
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -18,25 +19,32 @@ class UserRegistrationForm(UserCreationForm):
         widget=forms.EmailInput(attrs={'class': 'form-control'})
     )
     phone_number = forms.CharField(
-        label='Номер телефона',
+        label='Phone number',
         max_length=20,
         required=True,
         validators=[phone_validator],
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': '+375 (29) XXX-XX-XX'}),
         error_messages={
-            'required': 'Поле "Номер телефона" обязательно для заполнения',
+            'required': 'Поле "Phone number" обязательно для заполнения',
             'invalid': 'Номер телефона должен быть в формате: +375 (29) XXX-XX-XX'
         }
     )
     birth_date = forms.CharField(
-        label='Дата рождения',
+        label='Birthday date',
         required=True,
         validators=[date_validator],
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'DD/MM/YYYY'}),
         error_messages={
-            'required': 'Поле "Дата рождения" обязательно для заполнения',
+            'required': 'Поле "Birthday date" обязательно для заполнения',
             'invalid': 'Дата должна быть в формате DD/MM/YYYY'
         }
+    )
+    
+    timezone = forms.ChoiceField(
+        label="Timezone",
+        choices=[(tz, tz) for tz in sorted(available_timezones())],
+        initial='UTC',
+        widget=forms.Select(attrs={'class': 'form-control'})
     )
 
     class Meta:
@@ -90,6 +98,7 @@ class UserRegistrationForm(UserCreationForm):
                 user=user,
                 phone_number=self.cleaned_data['phone_number'],
                 birth_date=self.cleaned_data['birth_date'],
+                timezone=self.cleaned_data['timezone'],
                 role='client'
             )
         return user
@@ -138,6 +147,13 @@ class StaffForm(forms.ModelForm):
             'invalid': 'Дата должна быть в формате DD/MM/YYYY'
         }
     )
+    
+    timezone = forms.ChoiceField(
+        label="Часовой пояс",
+        choices=[(tz, tz) for tz in sorted(available_timezones())],
+        initial='UTC',
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
 
     class Meta:
         model = Staff
@@ -174,7 +190,6 @@ class StaffForm(forms.ModelForm):
     def save(self, commit=True):
         staff = super().save(commit=False)
         if commit:
-            # Create User
             user = User.objects.create_user(
                 username=self.cleaned_data['username'],
                 email=self.cleaned_data['email'],
@@ -182,12 +197,12 @@ class StaffForm(forms.ModelForm):
                 first_name=self.cleaned_data['first_name'],
                 last_name=self.cleaned_data['last_name']
             )
-            # Create UserProfile with provided data
             user_profile = UserProfile.objects.create(
                 user=user,
                 role='agent',
                 phone_number=self.cleaned_data['phone_number'],
-                birth_date=self.cleaned_data['birth_date']
+                birth_date=self.cleaned_data['birth_date'],
+                timezone=self.cleaned_data['timezone'],
             )
             staff.user_profile = user_profile
             staff.save()

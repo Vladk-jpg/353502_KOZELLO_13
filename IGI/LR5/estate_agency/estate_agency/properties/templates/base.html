@@ -208,8 +208,13 @@
               &copy; {% now "Y" %} Estate Agency. Все права защищены.
             </p>
             <a href="{% url 'content:privacy_policy' %}" class="text-muted text-decoration-none">Политика конфиденциальности</a>
+            {% load tz %}
             <p class="text-muted mt-2">
               Текущее время: {% now "d.m.Y H:i" %}
+            </p>
+
+            <p class="text-muted mt-2">
+              Часовой пояс: {{ tz }}
             </p>
           </div>
         </div>

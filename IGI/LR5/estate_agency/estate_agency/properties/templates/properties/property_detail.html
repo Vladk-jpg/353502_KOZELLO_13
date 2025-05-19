@@ -44,7 +44,7 @@
             <h5>Детали</h5>
             <ul class="list-unstyled">
               <li>
-                <strong>Добавлено:</strong> {{ property.created_at|date:"d.m.Y" }}
+                <strong>Добавлено:</strong> {{ property.created_at|date:"d.m.Y H:i" }}
               </li>
               <li>
                 <strong>Статус:</strong> {{ property.get_status_display }}

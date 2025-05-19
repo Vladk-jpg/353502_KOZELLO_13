@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.core.validators import RegexValidator, MinValueValidator
 from django.utils import timezone
 from datetime import date
+from zoneinfo import available_timezones
 
 ROLE_CHOICES = (
     ('client', 'Клиент'),
@@ -25,6 +26,11 @@ class UserProfile(models.Model):
     phone_number = models.CharField(validators=[phone_validator], max_length=20)
     birth_date = models.DateField()
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='client')
+    timezone = models.CharField(
+        max_length=50,
+        default='Europe/Moscow',
+        choices=[(tz, tz) for tz in sorted(available_timezones())]
+    )
     following = models.ManyToManyField(
         'self',
         symmetrical=False,

@@ -19,7 +19,8 @@ class SalesTests(TestCase):
             user=self.agent_user,
             role='agent',
             birth_date=date(1990, 1, 1),
-            phone_number='+375 (29) 123-45-67'
+            phone_number='+375 (29) 123-45-67',
+            timezone='UTC',
         )
         
         self.client_user = User.objects.create_user(
@@ -31,7 +32,8 @@ class SalesTests(TestCase):
             user=self.client_user,
             role='client',
             birth_date=date(1990, 1, 1),
-            phone_number='+375 (29) 765-43-21'
+            phone_number='+375 (29) 765-43-21',
+            timezone='UTC'
         )
         
         self.category = Category.objects.create(
@@ -128,12 +130,12 @@ class SalesTests(TestCase):
         future_date = timezone.now().date() + timedelta(days=30)
         self.sale1.sale_date = future_date
         self.sale1.save()
-        self.assertEqual(Sale.objects.get(id=self.sale1.id).sale_date, future_date)
-        
+        self.assertEqual(Sale.objects.get(id=self.sale1.id).sale_date.date(), future_date)
+
         contract_date = timezone.now().date() + timedelta(days=7)
         self.sale1.contract_date = contract_date
         self.sale1.save()
-        self.assertEqual(Sale.objects.get(id=self.sale1.id).contract_date, contract_date)
+        self.assertEqual(Sale.objects.get(id=self.sale1.id).contract_date.date(), contract_date)
 
     def test_sale_string_representation(self):
         self.assertEqual(str(self.sale1), f'Продажа {self.client_profile} - {self.sale1.sale_date}')
