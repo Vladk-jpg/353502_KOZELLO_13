@@ -18,6 +18,8 @@ from .models import About, Article, FAQ, Vacancy, Review
 from .forms import ReviewForm
 import requests
 from django.conf import settings
+import calendar
+import datetime
 
 
 def get_client_ip():
@@ -37,8 +39,17 @@ def base_context(request):
 
 def home(request):
     latest_property = Property.objects.filter(status='available').first()
+    
+    today = datetime.date.today()
+    current_date = today.strftime("%d %B %Y") 
+    
+    cal = calendar.TextCalendar()
+    month_calendar = cal.formatmonth(today.year, today.month)
+    
     context = {
-        'latest_property': latest_property
+        'latest_property': latest_property,
+        'current_date': current_date, 
+        'month_calendar': month_calendar, 
     }
     return render(request, 'content/home.html', context)
 
