@@ -1,0 +1,121 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="text-center">Профиль пользователя</h3>
+        </div>
+        <div class="card-body">
+          <div class="row mb-4">
+            <div class="col-md-6">
+              <h4>Основная информация</h4>
+              <div class="mb-3">
+                <label class="fw-bold">Имя пользователя:</label>
+                <p>{{ user.username }}</p>
+              </div>
+              <div class="mb-3">
+                <label class="fw-bold">Email:</label>
+                <p>{{ user.email }}</p>
+              </div>
+              <div class="mb-3">
+                <label class="fw-bold">Роль:</label>
+                <p>{{ user.userprofile.get_role_display }}</p>
+              </div>
+              <div class="mb-3">
+                <label class="fw-bold">Телефон:</label>
+                <p>{{ user.userprofile.phone_number }}</p>
+              </div>
+              <div class="mb-3">
+                <label class="fw-bold">Дата рождения:</label>
+                <p>{{ user.userprofile.birth_date|date:"d.m.Y" }}</p>
+              </div>
+              <div class="mb-3">
+                <label class="fw-bold">Возраст:</label>
+                <p>{{ user.userprofile.age }} лет</p>
+              </div>
+            </div>
+          </div>
+
+          {% if user.userprofile.role == 'client' %}
+          <div class="row">
+            <div class="col-12">
+              <h4>Ваш агент</h4>
+              {% if agent %}
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    {{ agent.user.get_full_name|default:agent.user.username }}
+                  </h5>
+                  <div class="mb-2">
+                    <label class="fw-bold">Email:</label>
+                    <p>{{ agent.user.email }}</p>
+                  </div>
+                  <div class="mb-2">
+                    <label class="fw-bold">Телефон:</label>
+                    <p>{{ agent.phone_number }}</p>
+                  </div>
+                  <div class="mb-2">
+                    <label class="fw-bold">Возраст:</label>
+                    <p>{{ agent.age }} лет</p>
+                  </div>
+                </div>
+              </div>
+              {% else %}
+              <p class="text-muted">У вас пока нет назначенного агента</p>
+              {% endif %}
+            </div>
+          </div>
+          {% endif %} {% if user.userprofile.role == 'agent' %}
+          <div class="row">
+            <div class="col-12">
+              <h4>Ваши клиенты</h4>
+              {% if user.userprofile.clients.exists %}
+              <div class="row">
+                {% for client in user.userprofile.clients.all %}
+                <div class="col-md-6 mb-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ client.user.username }}</h5>
+                      <div class="mb-2">
+                        <label class="fw-bold">Email:</label>
+                        <p>{{ client.user.email }}</p>
+                      </div>
+                      <div class="mb-2">
+                        <label class="fw-bold">Телефон:</label>
+                        <p>{{ client.phone_number }}</p>
+                      </div>
+                      <div class="mb-2">
+                        <label class="fw-bold">Возраст:</label>
+                        <p>{{ client.age }} лет</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+              {% else %}
+              <p class="text-muted">У вас пока нет клиентов</p>
+              {% endif %}
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  {% if dog_image %}
+  <div class="row mt-4">
+    <div class="col-md-8 offset-md-2">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Случайная собака</h5>
+          <img src="{{ dog_image }}" class="img-fluid rounded" alt="Случайная собака">
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

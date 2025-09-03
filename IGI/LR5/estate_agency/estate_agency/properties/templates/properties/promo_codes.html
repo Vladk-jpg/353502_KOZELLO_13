@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Актуальные промокоды</h1>
+
+    {% if active_promos %}
+        <div class="row">
+            {% for promo in active_promos %}
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 border-success">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ promo.promo_code }}</h5>
+                            <div class="mb-3">
+                                <span class="badge bg-success">
+                                    Скидка {{ promo.discount_percentage }}%
+                                </span>
+                            </div>
+                            <div class="mb-2">
+                                <strong>Действует до:</strong> {{ promo.expires_at|date:"d.m.Y H:i" }}
+                            </div>
+                            <div class="mb-2">
+                                <strong>Дата создания:</strong> {{ promo.created_at|date:"d.m.Y H:i" }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            В данный момент нет активных промокодов.
+        </div>
+    {% endif %}
+
+    <hr class="my-5">
+
+    <h2 class="mb-4">Истекшие промокоды</h2>
+
+    {% if expired_promos %}
+        <div class="row">
+            {% for promo in expired_promos %}
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 border-secondary">
+                        <div class="card-body">
+                            <h5 class="card-title text-muted">{{ promo.promo_code }}</h5>
+                            <div class="mb-3">
+                                <span class="badge bg-secondary">
+                                    Скидка {{ promo.discount_percentage }}%
+                                </span>
+                            </div>
+                            <div class="mb-2">
+                                <strong>Истёк:</strong> {{ promo.expires_at|date:"d.m.Y H:i" }}
+                            </div>
+                            <div class="mb-2">
+                                <strong>Дата создания:</strong> {{ promo.created_at|date:"d.m.Y H:i" }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-secondary">
+            Нет истекших промокодов.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
