@@ -1,0 +1,32 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container mt-5">
+  <h1 class="mb-4">Добро пожаловать в наше агентство недвижимости</h1>
+
+  {% if latest_property %}
+  <div class="card">
+    <div class="card-body">
+      <h2 class="card-title">Последний объект недвижимости</h2>
+      <h3 class="card-subtitle mb-2 text-muted">{{ latest_property.title }}</h3>
+      <p class="card-text">
+        <strong>Цена:</strong> {{ latest_property.price }} BYN<br />
+        <strong>Категория:</strong> {{ latest_property.category.name }}<br />
+        <strong>Статус:</strong> {{ latest_property.get_status_display }}<br />
+        <strong>Описание:</strong><br />
+        {{ latest_property.description }}
+      </p>
+      <a href="{{ latest_property.get_absolute_url }}" class="btn btn-primary"
+        >Подробнее</a
+      >
+    </div>
+  </div>
+  {% else %}
+  <div class="alert alert-info">
+    В данный момент нет доступных объектов недвижимости.
+  </div>
+  {% endif %}
+
+  <h2>Сегодня: {{ current_date }}</h2>
+
+  <pre>{{ month_calendar }}</pre>
+</div>
+{% endblock %}

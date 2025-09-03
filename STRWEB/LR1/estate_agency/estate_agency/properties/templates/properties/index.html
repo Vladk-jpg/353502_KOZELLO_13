@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Объекты недвижимости</h1>
+    
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Фильтры</h5>
+            <form method="get" class="row g-3">
+                <div class="col-md-3">
+                    <label for="min_price" class="form-label">Минимальная цена</label>
+                    <input type="number" class="form-control" id="min_price" name="min_price" value="{{ current_filters.min_price }}">
+                </div>
+                <div class="col-md-3">
+                    <label for="max_price" class="form-label">Максимальная цена</label>
+                    <input type="number" class="form-control" id="max_price" name="max_price" value="{{ current_filters.max_price }}">
+                </div>
+                <div class="col-md-3">
+                    <label for="category" class="form-label">Категория</label>
+                    <select class="form-select" id="category" name="category">
+                        <option value="">Все категории</option>
+                        {% for category in categories %}
+                        <option value="{{ category.id }}" {% if current_filters.category_id == category.id|stringformat:"i" %}selected{% endif %}>
+                            {{ category.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="date_from" class="form-label">Дата от</label>
+                    <input type="text" class="form-control" id="date_from" name="date_from"
+                           value="{{ current_filters.date_from|default_if_none:'' }}" placeholder="DD/MM/YYYY">
+                </div>
+                <div class="col-md-3">
+                    <label for="date_to" class="form-label">Дата до</label>
+                    <input type="text" class="form-control" id="date_to" name="date_to"
+                           value="{{ current_filters.date_to|default_if_none:'' }}" placeholder="DD/MM/YYYY">
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Применить фильтры</button>
+                    <a href="{% url 'index' %}" class="btn btn-secondary">Очистить фильтры</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for property in properties %}
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{% url 'property_detail' property.id %}" class="text-decoration-none text-dark">
+                            {{ property.title }}
+                        </a>
+                    </h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ property.category.name }}</h6>
+                    <p class="card-text">{{ property.description|truncatewords:30 }}</p>
+                    <p class="card-text"><strong>Цена:</strong> {{ property.price }} BYN</p>
+                    <p class="card-text"><small class="text-muted">Добавлено: {{ property.created_at|date:"d.m.Y H:i" }}</small></p>
+                    <p class="card-text">
+                        <span class="badge {% if property.status == 'available' %}bg-success{% elif property.status == 'reserved' %}bg-warning{% else %}bg-danger{% endif %}">
+                            {{ property.get_status_display }}
+                        </span>
+                    </p>
+                    <a href="{% url 'property_detail' property.id %}" class="btn btn-primary">Посмотреть детали</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info">
+                Нет объектов недвижимости, соответствующих вашим критериям.
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} 
