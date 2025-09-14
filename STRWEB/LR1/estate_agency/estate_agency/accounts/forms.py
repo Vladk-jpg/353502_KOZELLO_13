@@ -15,45 +15,46 @@ date_validator = RegexValidator(
 
 class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField(
+        label='Email',
         required=True,
-        widget=forms.EmailInput(attrs={'class': 'form-control'})
+        widget=forms.EmailInput()
     )
     phone_number = forms.CharField(
-        label='Phone number',
+        label='Номер телефона',
         max_length=20,
         required=True,
         validators=[phone_validator],
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': '+375 (29) XXX-XX-XX'}),
+        widget=forms.TextInput(attrs={'placeholder': '+375 (29) XXX-XX-XX'}),
         error_messages={
-            'required': 'Поле "Phone number" обязательно для заполнения',
+            'required': 'Поле "Номер телефона" обязательно для заполнения',
             'invalid': 'Номер телефона должен быть в формате: +375 (29) XXX-XX-XX'
         }
     )
     birth_date = forms.CharField(
-        label='Birthday date',
+        label='Дата рождения',
         required=True,
         validators=[date_validator],
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'DD/MM/YYYY'}),
+        widget=forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY'}),
         error_messages={
-            'required': 'Поле "Birthday date" обязательно для заполнения',
+            'required': 'Поле "Дата рождения" обязательно для заполнения',
             'invalid': 'Дата должна быть в формате DD/MM/YYYY'
         }
     )
     
     timezone = forms.ChoiceField(
-        label="Timezone",
+        label="Часовой пояс",
         choices=[(tz, tz) for tz in sorted(available_timezones())],
         initial='UTC',
-        widget=forms.Select(attrs={'class': 'form-control'})
+        widget=forms.Select()
     )
 
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')
         widgets = {
-            'username': forms.TextInput(attrs={'class': 'form-control'}),
-            'password1': forms.PasswordInput(attrs={'class': 'form-control'}),
-            'password2': forms.PasswordInput(attrs={'class': 'form-control'}),
+            'username': forms.TextInput(),
+            'password1': forms.PasswordInput(),
+            'password2': forms.PasswordInput(),
         }
 
     def __init__(self, *args, **kwargs):
@@ -106,32 +107,32 @@ class UserRegistrationForm(UserCreationForm):
 class StaffForm(forms.ModelForm):
     username = forms.CharField(
         label='Имя пользователя',
-        widget=forms.TextInput(attrs={'class': 'form-control'})
+        widget=forms.TextInput()
     )
     email = forms.EmailField(
         label='Email',
-        widget=forms.EmailInput(attrs={'class': 'form-control'})
+        widget=forms.EmailInput()
     )
     password = forms.CharField(
         label='Пароль',
-        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+        widget=forms.PasswordInput()
     )
     first_name = forms.CharField(
         label='Имя',
         required=False,
-        widget=forms.TextInput(attrs={'class': 'form-control'})
+        widget=forms.TextInput()
     )
     last_name = forms.CharField(
         label='Фамилия',
         required=False,
-        widget=forms.TextInput(attrs={'class': 'form-control'})
+        widget=forms.TextInput()
     )
     phone_number = forms.CharField(
         label='Номер телефона',
         max_length=20,
         required=True,
         validators=[phone_validator],
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': '+375 (29) XXX-XX-XX'}),
+        widget=forms.TextInput(attrs={'placeholder': '+375 (29) XXX-XX-XX'}),
         error_messages={
             'required': 'Поле "Номер телефона" обязательно для заполнения',
             'invalid': 'Номер телефона должен быть в формате: +375 (29) XXX-XX-XX'
@@ -141,7 +142,7 @@ class StaffForm(forms.ModelForm):
         label='Дата рождения',
         required=True,
         validators=[date_validator],
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'DD/MM/YYYY'}),
+        widget=forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY'}),
         error_messages={
             'required': 'Поле "Дата рождения" обязательно для заполнения',
             'invalid': 'Дата должна быть в формате DD/MM/YYYY'
@@ -152,15 +153,15 @@ class StaffForm(forms.ModelForm):
         label="Часовой пояс",
         choices=[(tz, tz) for tz in sorted(available_timezones())],
         initial='UTC',
-        widget=forms.Select(attrs={'class': 'form-control'})
+        widget=forms.Select()
     )
 
     class Meta:
         model = Staff
         fields = ['photo', 'position', 'experience']
         widgets = {
-            'position': forms.TextInput(attrs={'class': 'form-control'}),
-            'experience': forms.NumberInput(attrs={'class': 'form-control'}),
+            'position': forms.TextInput(),
+            'experience': forms.NumberInput(),
         }
 
     def clean_email(self):

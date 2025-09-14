@@ -14,7 +14,7 @@ import base64
 from sales.models import Sale
 import numpy as np
 from accounts.decorators import role_required
-from .models import About, Article, FAQ, Vacancy, Review
+from .models import About, Article, FAQ, Vacancy, Review, Partners
 from .forms import ReviewForm
 import requests
 from django.conf import settings
@@ -39,6 +39,9 @@ def base_context(request):
 
 def home(request):
     latest_property = Property.objects.filter(status='available').first()
+    latest_article = Article.objects.first()
+    about_info = About.objects.first()
+    partners = Partners.objects.all()
     
     today = datetime.date.today()
     current_date = today.strftime("%d %B %Y") 
@@ -48,6 +51,9 @@ def home(request):
     
     context = {
         'latest_property': latest_property,
+        'latest_article': latest_article,
+        'about_info': about_info,
+        'partners': partners,
         'current_date': current_date, 
         'month_calendar': month_calendar, 
     }

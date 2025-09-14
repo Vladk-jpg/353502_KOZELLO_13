@@ -1,44 +1,65 @@
-{% extends 'base.html' %}
-
-{% block title %}Добавить отзыв{% endblock %}
-
+{% extends 'base.html' %} 
+{% block title %}Добавить отзыв{% endblock %} 
 {% block content %}
-<div class="container mt-4">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="mb-0">Добавить отзыв</h2>
-                </div>
-                <div class="card-body">
-                    <form method="post">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="{{ form.rating.id_for_label }}" class="form-label">Оценка</label>
-                            {{ form.rating }}
-                            {% if form.rating.errors %}
-                                <div class="invalid-feedback d-block">
-                                    {{ form.rating.errors }}
-                                </div>
-                            {% endif %}
-                        </div>
-                        <div class="mb-3">
-                            <label for="{{ form.text.id_for_label }}" class="form-label">Текст отзыва</label>
-                            {{ form.text }}
-                            {% if form.text.errors %}
-                                <div class="invalid-feedback d-block">
-                                    {{ form.text.errors }}
-                                </div>
-                            {% endif %}
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <a href="{% url 'content:reviews' %}" class="btn btn-secondary">Назад</a>
-                            <button type="submit" class="btn btn-primary">Отправить</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+<header>
+  <h1>Добавить отзыв</h1>
+</header>
+
+<section>
+  <form method="post">
+    {% csrf_token %}
+
+    <fieldset>
+      <legend>Информация об отзыве</legend>
+      
+      <div>
+        <label for="id_rating">Оценка</label>
+        <select name="rating" id="id_rating" required>
+          <option value="">Выберите оценку</option>
+          <option value="1" {% if form.rating.value == 1 %}selected{% endif %}>1 - Очень плохо</option>
+          <option value="2" {% if form.rating.value == 2 %}selected{% endif %}>2 - Плохо</option>
+          <option value="3" {% if form.rating.value == 3 %}selected{% endif %}>3 - Неудовлетворительно</option>
+          <option value="4" {% if form.rating.value == 4 %}selected{% endif %}>4 - Ниже среднего</option>
+          <option value="5" {% if form.rating.value == 5 %}selected{% endif %}>5 - Средне</option>
+          <option value="6" {% if form.rating.value == 6 %}selected{% endif %}>6 - Выше среднего</option>
+          <option value="7" {% if form.rating.value == 7 %}selected{% endif %}>7 - Хорошо</option>
+          <option value="8" {% if form.rating.value == 8 %}selected{% endif %}>8 - Очень хорошо</option>
+          <option value="9" {% if form.rating.value == 9 %}selected{% endif %}>9 - Отлично</option>
+          <option value="10" {% if form.rating.value == 10 %}selected{% endif %}>10 - Превосходно</option>
+        </select>
+        {% if form.rating.errors %}
+        <div role="alert">
+          {% for error in form.rating.errors %}
+          <p>{{ error }}</p>
+          {% endfor %}
         </div>
-    </div>
-</div>
-{% endblock %} 
+        {% endif %}
+      </div>
+
+      <div>
+        <label for="id_text">Текст отзыва</label>
+        <textarea 
+          name="text" 
+          id="id_text" 
+          rows="4" 
+          placeholder="Ваш отзыв"
+          spellcheck="true"
+          required
+        >{% if form.text.value %}{{ form.text.value }}{% endif %}</textarea>
+        {% if form.text.errors %}
+        <div role="alert">
+          {% for error in form.text.errors %}
+          <p>{{ error }}</p>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </fieldset>
+
+    <nav>
+      <button type="submit">Отправить</button>
+      <a href="{% url 'content:reviews' %}">Назад</a>
+    </nav>
+  </form>
+</section>
+{% endblock %}

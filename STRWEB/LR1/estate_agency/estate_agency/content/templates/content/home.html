@@ -1,32 +1,187 @@
-{% extends 'base.html' %} {% block content %}
-<div class="container mt-5">
-  <h1 class="mb-4">Добро пожаловать в наше агентство недвижимости</h1>
+{% extends 'base.html' %}
+{% block content %}
+<header>
+  <h1>Добро пожаловать в наше агентство недвижимости</h1>
 
-  {% if latest_property %}
-  <div class="card">
-    <div class="card-body">
-      <h2 class="card-title">Последний объект недвижимости</h2>
-      <h3 class="card-subtitle mb-2 text-muted">{{ latest_property.title }}</h3>
-      <p class="card-text">
-        <strong>Цена:</strong> {{ latest_property.price }} BYN<br />
-        <strong>Категория:</strong> {{ latest_property.category.name }}<br />
-        <strong>Статус:</strong> {{ latest_property.get_status_display }}<br />
-        <strong>Описание:</strong><br />
-        {{ latest_property.description }}
-      </p>
-      <a href="{{ latest_property.get_absolute_url }}" class="btn btn-primary"
-        >Подробнее</a
-      >
-    </div>
-  </div>
-  {% else %}
-  <div class="alert alert-info">
-    В данный момент нет доступных объектов недвижимости.
-  </div>
+  {% if about_info.logo %}
+  <figure>
+    <img
+      src="{{ about_info.logo.url }}"
+      alt="Логотип компании"
+      width="150"
+      height="auto"
+    />
+  </figure>
   {% endif %}
+</header>
 
-  <h2>Сегодня: {{ current_date }}</h2>
+<section>
+  <article>
+    <picture>
+      <source 
+        media="(max-width: 500px)"
+        srcset="/media/banner/banner-narrow-500.png 500w"
+        sizes="100vw">
+      
+      <source 
+        media="(max-width: 700px)"
+        srcset="/media/banner/banner-narrow-700.png 700w"
+        sizes="100vw">
+      
+      <source 
+        media="(max-width: 1000px)"
+        srcset="/media/banner/banner-1000.png 1000w"
+        sizes="100vw">
+      
+      <source 
+        media="(min-width: 1001px)"
+        srcset="/media/banner/banner-1400.png 1400w"
+        sizes="100vw">
+      
+      <img
+        src="/media/banner/banner.png"
+        srcset="/media/banner/banner-1000.png 1000w,
+                /media/banner/banner-1400.png 1400w"
+        sizes="(max-width: 500px) 100vw,
+               (max-width: 700px) 100vw,
+               (max-width: 1000px) 100vw,
+               100vw"
+        alt="Баннер Estate Agency - Найдите свою мечту с нами"
+        loading="lazy"
+      />
+    </picture>
+  </article>
+</section>
 
-  <pre>{{ month_calendar }}</pre>
-</div>
+<section>
+  <header>
+    <h2>Приветственное сообщение</h2>
+  </header>
+  <article>
+    <p>Послушайте приветственное сообщение от нашего директора:</p>
+    <figure>
+      <audio controls>
+        <source src="/media/audio/greetings.mp3" type="audio/mpeg" />
+        <source src="/media/audio/greetings.ogg" type="audio/ogg" />
+        Ваш браузер не поддерживает аудио элемент
+      </audio>
+      <figcaption>
+        Приветственное сообщение от директора агентства недвижимости
+      </figcaption>
+    </figure>
+  </article>
+</section>
+
+{% if latest_property %}
+<section>
+  <header>
+    <h2>Последний объект недвижимости</h2>
+  </header>
+
+  <article>
+    <header>
+      <h3>{{ latest_property.title }}</h3>
+    </header>
+
+    <dl>
+      <dt>Цена:</dt>
+      <dd>{{ latest_property.price }} BYN</dd>
+
+      <dt>Категория:</dt>
+      <dd>{{ latest_property.category.name }}</dd>
+
+      <dt>Статус:</dt>
+      <dd>{{ latest_property.get_status_display }}</dd>
+
+      <dt>Описание:</dt>
+      <dd>{{ latest_property.description|truncatewords:20 }}</dd>
+    </dl>
+
+    <nav>
+      <a href="{{ latest_property.get_absolute_url }}">Подробнее</a>
+      <a href="{% url 'index' %}">Посмотреть все объекты</a>
+    </nav>
+  </article>
+</section>
+{% else %}
+<section>
+  <p>В данный момент нет доступных объектов недвижимости.</p>
+  <nav>
+    <a href="{% url 'index' %}">Посмотреть каталог</a>
+  </nav>
+</section>
+{% endif %}
+{% if latest_article %}
+<section>
+  <header>
+    <h2>Последние новости</h2>
+  </header>
+
+  <article>
+    <header>
+      <h3>{{ latest_article.title }}</h3>
+      <time datetime="{{ latest_article.created_at|date:'c' }}">
+        {{ latest_article.created_at|date:"d.m.Y H:i" }}
+      </time>
+    </header>
+
+    {% if latest_article.image %}
+    <figure>
+      <img
+        src="{{ latest_article.image.url }}"
+        alt="{{ latest_article.title }}"
+        width="300"
+        height="auto"
+      />
+    </figure>
+    {% endif %}
+
+    <section>
+      <p>{{ latest_article.get_short_content }}</p>
+    </section>
+
+    <nav>
+      <a href="{% url 'content:article_detail' latest_article.id %}"
+        >Читать далее</a
+      >
+      <a href="{% url 'content:news' %}">Все новости</a>
+    </nav>
+  </article>
+</section>
+{% endif %}
+{% if partners %}
+<section>
+  <header>
+    <h2>Наши партнеры</h2>
+  </header>
+
+  <section>
+    {% for partner in partners %}
+    <article>
+      <figure>
+        <a href="{{ partner.link }}" target="_blank" rel="noopener">
+          <img
+            src="{{ partner.image.url }}"
+            alt="{{ partner.name }}"
+            width="120"
+            height="auto"
+          />
+        </a>
+        <figcaption>{{ partner.name }}</figcaption>
+      </figure>
+    </article>
+    {% endfor %}
+  </section>
+</section>
+{% endif %}
+
+<aside>
+  <header>
+    <h2>Сегодня: {{ current_date }}</h2>
+  </header>
+
+  <section>
+    <pre>{{ month_calendar }}</pre>
+  </section>
+</aside>
 {% endblock %}

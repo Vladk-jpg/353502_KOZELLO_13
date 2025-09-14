@@ -16,5 +16,5 @@ class ReservationForm(forms.Form):
         max_length=50,
         required=False,
         label='Промокод',
-        widget=forms.TextInput(attrs={'class': 'form-control'})
+        widget=forms.TextInput()
     ) 

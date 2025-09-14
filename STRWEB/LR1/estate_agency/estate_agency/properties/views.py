@@ -189,6 +189,43 @@ def client_purchases(request):
     return render(request, 'properties/client_purchases.html', context)
 
 @login_required
+@role_required(['client'])
+def client_reservations(request):
+    reservations = Sale.objects.filter(
+        client=request.user.userprofile, 
+        status='pending'
+    ).select_related('property', 'agent', 'promo')
+    
+    if request.method == 'POST':
+        reservation_id = request.POST.get('reservation_id')
+        action = request.POST.get('action')
+        
+        if reservation_id and action == 'cancel':
+            try:
+                reservation = Sale.objects.get(
+                    id=reservation_id, 
+                    client=request.user.userprofile,
+                    status='pending'
+                )
+                
+                reservation.property.status = 'available'
+                reservation.property.save()
+                
+                reservation.delete()
+                
+                messages.success(request, 'Резервация успешно отменена.')
+                return redirect('client_reservations')
+                
+            except Sale.DoesNotExist:
+                messages.error(request, 'Резервация не найдена.')
+                return redirect('client_reservations')
+    
+    context = {
+        'reservations': reservations,
+    }
+    return render(request, 'properties/client_reservations.html', context)
+
+@login_required
 @role_required(['agent'])
 def agent_sales(request):
     sales = Sale.objects.filter(agent=request.user.userprofile).select_related('client', 'property', 'promo')

@@ -8,6 +8,7 @@ urlpatterns = [
     path('property/<int:property_id>/reserve/', views.property_reserve, name='property_reserve'),
     path('categories/', views.category_list, name='category_list'),
     path('client/purchases/', views.client_purchases, name='client_purchases'),
+    path('client/reservations/', views.client_reservations, name='client_reservations'),
     path('promo-codes/', views.promo_codes, name='promo_codes'),
     
 

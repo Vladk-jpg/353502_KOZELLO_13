@@ -1,39 +1,40 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} 
 {% block content %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="text-center">Добавление нового сотрудника</h3>
-                </div>
-                <div class="card-body">
-                    <form method="post" enctype="multipart/form-data" novalidate>
-                        {% csrf_token %}
-                        {% for field in form %}
-                        <div class="form-group mb-3">
-                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                            {{ field }}
-                            {% if field.errors %}
-                            <div class="invalid-feedback d-block">
-                                {% for error in field.errors %}
-                                <div class="text-danger">{{ error }}</div>
-                                {% endfor %}
-                            </div>
-                            {% endif %}
-                            {% if field.help_text %}
-                            <small class="form-text text-muted">{{ field.help_text }}</small>
-                            {% endif %}
-                        </div>
-                        {% endfor %}
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary">Добавить сотрудника</button>
-                            <a href="{% url 'staff_list' %}" class="btn btn-secondary">Отмена</a>
-                        </div>
-                    </form>
-                </div>
-            </div>
+<header>
+  <h1>Добавление нового сотрудника</h1>
+</header>
+
+<section>
+  <form method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+    
+    <fieldset>
+      <legend>Информация о сотруднике</legend>
+      
+      {% for field in form %}
+      <div>
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        
+        {% if field.errors %}
+        <div role="alert">
+          {% for error in field.errors %}
+          <p>{{ error }}</p>
+          {% endfor %}
         </div>
-    </div>
-</div>
-{% endblock %} 
+        {% endif %}
+        
+        {% if field.help_text %}
+        <small>{{ field.help_text }}</small>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </fieldset>
+    
+    <nav>
+      <button type="submit">Добавить сотрудника</button>
+      <a href="{% url 'staff_list' %}">Отмена</a>
+    </nav>
+  </form>
+</section>
+{% endblock %}

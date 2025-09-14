@@ -1,237 +1,214 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Агентство недвижимости Estate Agency - найдите свою мечту с нами" />
+    <meta name="keywords" content="недвижимость, агентство недвижимости, купить квартиру, продать квартиру, аренда недвижимости, коммерческая недвижимость, жилая недвижимость, Estate Agency, недвижимость Минск, недвижимость Беларусь" />
+    
+    <link rel="icon" type="image/png" href="/media/logos/Logo.png">
+    <link rel="shortcut icon" type="image/png" href="/media/logos/Logo.png">
+    
     <title>{% block title %}Estate Agency{% endblock %}</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <style>
-      .navbar-brand {
-        font-weight: bold;
-      }
-      .footer {
-        margin-top: 3rem;
-        padding: 1.5rem 0;
-        background-color: #f8f9fa;
-      }
-      .toast-container {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 1050;
-      }
-      .toast {
-        background-color: white;
-        border-left: 4px solid;
-      }
-      .toast.bg-success {
-        border-left-color: #198754;
-      }
-      .toast.bg-danger {
-        border-left-color: #dc3545;
-      }
-      .toast.bg-warning {
-        border-left-color: #ffc107;
-      }
-      .toast.bg-info {
-        border-left-color: #0dcaf0;
-      }
-    </style>
     {% block extra_css %}{% endblock %}
   </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container">
-        <a class="navbar-brand" href="{% url 'content:home' %}"
-          >Estate Agency</a
-        >
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'content:about' %}"
-                >О нас</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'content:news' %}"
-                >Новости</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'content:faq' %}"
-                >FAQ</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'content:vacancies' %}"
-                >Вакансии</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'content:reviews' %}"
-                >Отзывы</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'index' %}"
-                >Объекты недвижимости</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'category_list' %}">Категории</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'promo_codes' %}">Промокоды</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'staff_list' %}">Контакты</a>
-            </li>
-          </ul>
-          <ul class="navbar-nav">
-            {% if user.is_authenticated %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'profile' %}">Мой профиль</a>
-            </li>
-            {% if user.userprofile.role == 'agent' %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'agent_property_list' %}"
-                >Управление объектами</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'agent_sales' %}"
-                >Мои продажи</a
-              >
-            </li>
-            {% endif %}
-            {% if user.userprofile.role == 'admin' %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'agent_property_list' %}"
-                >Управление объектами</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'sales_monitoring' %}"
-                >Мониторинг продаж</a
-              >
-            </li>
-            {% endif %}
-            {% if user.userprofile.role == 'client' %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'client_purchases' %}"
-                >Мои покупки</a
-              >
-            </li>
-            {% endif %}
-            {% if user.userprofile.role == 'admin' %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'content:statistics' %}"
-                >Статистика</a
-              >
-            </li>
-            {% endif %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'logout' %}">Выйти</a>
-            </li>
-            {% else %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'login' %}">Войти</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
-            </li>
-            {% endif %}
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-    <div class="toast-container">
-      {% if messages %} {% for message in messages %}
-      <div
-        class="toast bg-{{ message.tags }}"
-        role="alert"
-        aria-live="assertive"
-        aria-atomic="true"
-        data-bs-autohide="true"
-        data-bs-delay="3000"
-      >
-        <div class="toast-header">
-          <strong class="me-auto">
-            {% if message.tags == 'success' %}
-              Успешно
-            {% elif message.tags == 'error' %}
-              Ошибка
-            {% elif message.tags == 'warning' %}
-              Внимание
-            {% else %}
-              Информация
-            {% endif %}
-          </strong>
+  <body itemscope itemtype="https://schema.org/WebSite">
+    <header>
+      <nav role="navigation" aria-label="Основная навигация" itemscope itemtype="https://schema.org/SiteNavigationElement">
+        <div>
+          <a href="{% url 'content:home' %}" aria-label="Estate Agency - главная страница">
+            Estate Agency
+          </a>
           <button
             type="button"
-            class="btn-close"
-            data-bs-dismiss="toast"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="toast-body">{{ message }}</div>
-      </div>
-      {% endfor %} {% endif %}
-    </div>
-
-    <main>{% block content %} {% endblock %}</main>
-
-    <footer class="footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6">
-            <h5>Estate Agency</h5>
-            <p class="text-muted">Найдите свою мечту с нами</p>
-            <p class="text-muted mt-2">
-              IP адрес: {{ client_ip }}
-            </p>
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Переключить навигационное меню"
+          >
+            <span aria-hidden="true"></span>
+          </button>
+          <div id="navbarNav">
+            <ul role="menubar">
+              <li role="none">
+                <a href="{% url 'content:about' %}" role="menuitem">
+                  О нас
+                </a>
+              </li>
+              <li role="none">
+                <a href="{% url 'content:news' %}" role="menuitem">
+                  Новости
+                </a>
+              </li>
+              <li role="none">
+                <a href="{% url 'content:faq' %}" role="menuitem">
+                  FAQ
+                </a>
+              </li>
+              <li role="none">
+                <a href="{% url 'content:vacancies' %}" role="menuitem">
+                  Вакансии
+                </a>
+              </li>
+              <li role="none">
+                <a href="{% url 'content:reviews' %}" role="menuitem">
+                  Отзывы
+                </a>
+              </li>
+              <li role="none">
+                <a href="{% url 'index' %}" role="menuitem">
+                  Объекты недвижимости
+                </a>
+              </li>
+              <li role="none">
+                <a href="{% url 'category_list' %}" role="menuitem">Категории</a>
+              </li>
+              <li role="none">
+                <a href="{% url 'promo_codes' %}" role="menuitem">Промокоды</a>
+              </li>
+              <li role="none">
+                <a href="{% url 'staff_list' %}" role="menuitem">Контакты</a>
+              </li>
+            </ul>
+            <ul role="menubar" aria-label="Пользовательское меню">
+              {% if user.is_authenticated %}
+              <li role="none">
+                <a href="{% url 'profile' %}" role="menuitem">Мой профиль</a>
+              </li>
+              {% if user.userprofile.role == 'agent' %}
+              <li role="none">
+                <a href="{% url 'agent_property_list' %}" role="menuitem">
+                  Управление объектами
+                </a>
+              </li>
+              <li role="none">
+                <a href="{% url 'agent_sales' %}" role="menuitem">
+                  Мои продажи
+                </a>
+              </li>
+              {% endif %}
+              {% if user.userprofile.role == 'admin' %}
+              <li role="none">
+                <a href="{% url 'agent_property_list' %}" role="menuitem">
+                  Управление объектами
+                </a>
+              </li>
+              <li role="none">
+                <a href="{% url 'sales_monitoring' %}" role="menuitem">
+                  Мониторинг продаж
+                </a>
+              </li>
+              {% endif %}
+              {% if user.userprofile.role == 'client' %}
+              <li role="none">
+                <a href="{% url 'client_purchases' %}" role="menuitem">
+                  Мои покупки
+                </a>
+              </li>
+              <li role="none">
+                <a href="{% url 'client_reservations' %}" role="menuitem">
+                  Мои резервации
+                </a>
+              </li>
+              {% endif %}
+              {% if user.userprofile.role == 'admin' %}
+              <li role="none">
+                <a href="{% url 'content:statistics' %}" role="menuitem">
+                  Статистика
+                </a>
+              </li>
+              {% endif %}
+              <li role="none">
+                <a href="{% url 'logout' %}" role="menuitem">Выйти</a>
+              </li>
+              {% else %}
+              <li role="none">
+                <a href="{% url 'login' %}" role="menuitem">Войти</a>
+              </li>
+              <li role="none">
+                <a href="{% url 'register' %}" role="menuitem">Регистрация</a>
+              </li>
+              {% endif %}
+            </ul>
           </div>
-          <div class="col-md-6 text-md-end">
-            <p class="text-muted">
+        </div>
+      </nav>
+    </header>
+
+    <main role="main">{% block content %} {% endblock %}</main>
+
+    <footer itemscope itemtype="https://schema.org/Organization">
+      <section>
+        <div>
+          <div>
+            <h2 itemprop="name">Estate Agency</h2>
+            <p itemprop="description">Найдите свою мечту с нами</p>
+            <address itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+              <span itemprop="addressCountry">BY</span>
+              <span itemprop="addressLocality">Минск</span>
+              <br>
+              IP адрес: {{ client_ip }}
+            </address>
+          </div>
+          <div>
+            <p>
               &copy; {% now "Y" %} Estate Agency. Все права защищены.
             </p>
-            <a href="{% url 'content:privacy_policy' %}" class="text-muted text-decoration-none">Политика конфиденциальности</a>
+            <nav>
+              <a href="{% url 'content:privacy_policy' %}">Политика конфиденциальности</a>
+            </nav>
             {% load tz %}
-            <p class="text-muted mt-2">
-              Текущее время: {% now "d.m.Y H:i" %}
-            </p>
-
-            <p class="text-muted mt-2">
-              Часовой пояс: {{ tz }}
-            </p>
+            <section>
+              <h3>Информация о времени</h3>
+              <time datetime="{% now 'c' %}">
+                Текущее время: {% now "d.m.Y H:i" %}
+              </time>
+              <p>
+                Часовой пояс: {{ tz }}
+              </p>
+            </section>
           </div>
         </div>
-      </div>
+      </section>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script></script>
+    <div id="messages-data" style="display: none;">
+      {% if messages %}
+        {% for message in messages %}
+          <div data-tag="{{ message.tags }}" data-message="{{ message|escapejs }}"></div>
+        {% endfor %}
+      {% endif %}
+    </div>
+
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        var toastElList = [].slice.call(document.querySelectorAll(".toast"));
-        var toastList = toastElList.map(function (toastEl) {
-          return new bootstrap.Toast(toastEl, {
-            autohide: true,
-            delay: 3000,
-          });
+        const messagesContainer = document.getElementById('messages-data');
+        const messageElements = messagesContainer.querySelectorAll('div[data-tag]');
+        
+        messageElements.forEach(function(element) {
+          const tag = element.getAttribute('data-tag');
+          const message = element.getAttribute('data-message');
+          
+          switch(tag) {
+            case 'success':
+              alert('✅ Успешно: ' + message);
+              break;
+            case 'error':
+              alert('❌ Ошибка: ' + message);
+              break;
+            case 'warning':
+              alert('⚠️ Внимание: ' + message);
+              break;
+            default:
+              alert('ℹ️ Информация: ' + message);
+          }
         });
-        toastList.forEach((toast) => toast.show());
       });
     </script>
     {% block extra_js %}{% endblock %}

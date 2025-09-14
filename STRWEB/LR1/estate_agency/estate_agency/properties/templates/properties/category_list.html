@@ -1,36 +1,40 @@
-{% extends 'base.html' %} {% block content %}
-<div class="container mt-4">
-  <h1 class="mb-4">Категории объектов недвижимости</h1>
+{% extends 'base.html' %} 
+{% block content %}
+<header>
+  <h1>Категории объектов недвижимости</h1>
+</header>
 
-  <div class="row row-cols-1 row-cols-md-3 g-4">
-    {% for category in categories %}
-    <div class="col">
-      <div class="card h-100">
-        <div class="card-body">
-          <h5 class="card-title">{{ category.name }}</h5>
-          {% if category.description %}
-          <p class="card-text">{{ category.description }}</p>
-          {% endif %}
-          <p class="card-text">
-            <small class="text-muted">
-              {{ category.property_count }} объектов недвижимости с такой
-              категорией
-            </small>
-          </p>
-          <a
-            href="{% url 'index' %}?category={{ category.id }}"
-            class="btn btn-primary"
-          >
-            Посмотреть объекты
-          </a>
-        </div>
-      </div>
-    </div>
-    {% empty %}
-    <div class="col-12">
-      <div class="alert alert-info">Не нашйдено категорий.</div>
-    </div>
-    {% endfor %}
-  </div>
-</div>
+<section>
+  {% for category in categories %}
+  <article>
+    <header>
+      <h2>{{ category.name }}</h2>
+    </header>
+    
+    {% if category.description %}
+    <section>
+      <p>{{ category.description }}</p>
+    </section>
+    {% endif %}
+    
+    <section>
+      <p>
+        <small>
+          {{ category.property_count }} объектов недвижимости с такой категорией
+        </small>
+      </p>
+    </section>
+    
+    <nav>
+      <a href="{% url 'index' %}?category={{ category.id }}">
+        Посмотреть объекты
+      </a>
+    </nav>
+  </article>
+  {% empty %}
+  <section>
+    <p>Не найдено категорий.</p>
+  </section>
+  {% endfor %}
+</section>
 {% endblock %}

@@ -5,6 +5,11 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 class About(models.Model):
     company_info = models.TextField(verbose_name='Информация о компании')
+    video_link = models.FileField(upload_to='videos/', verbose_name='Видео', blank=True, null=True)
+    logo = models.ImageField(upload_to='logos/', verbose_name='Логотип', blank=True, null=True)
+    history = models.TextField(verbose_name='История компании', blank=True, null=True)
+    requisites = models.TextField(verbose_name='Реквизиты компании', blank=True, null=True)
+    sertificate = models.TextField(verbose_name='Сертификат компании', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -75,3 +80,17 @@ class Review(models.Model):
 
     def __str__(self):
         return f'Отзыв от {self.user_name}'
+    
+class Partners(models.Model):
+    name = models.CharField(max_length=200, verbose_name='Название партнера')
+    image = models.ImageField(upload_to='partners/', verbose_name='Изображение')
+    link = models.URLField(verbose_name='Ссылка на партнера')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Partner'
+        verbose_name_plural = 'Partners'
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.name

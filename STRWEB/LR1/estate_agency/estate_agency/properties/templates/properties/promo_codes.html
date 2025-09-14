@@ -1,69 +1,92 @@
-{% extends 'base.html' %}
-
+{% extends 'base.html' %} 
 {% block content %}
-<div class="container mt-4">
-    <h1 class="mb-4">Актуальные промокоды</h1>
+<header>
+  <h1>Промокоды</h1>
+</header>
 
-    {% if active_promos %}
-        <div class="row">
-            {% for promo in active_promos %}
-                <div class="col-md-6 mb-4">
-                    <div class="card h-100 border-success">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ promo.promo_code }}</h5>
-                            <div class="mb-3">
-                                <span class="badge bg-success">
-                                    Скидка {{ promo.discount_percentage }}%
-                                </span>
-                            </div>
-                            <div class="mb-2">
-                                <strong>Действует до:</strong> {{ promo.expires_at|date:"d.m.Y H:i" }}
-                            </div>
-                            <div class="mb-2">
-                                <strong>Дата создания:</strong> {{ promo.created_at|date:"d.m.Y H:i" }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <div class="alert alert-info">
-            В данный момент нет активных промокодов.
-        </div>
-    {% endif %}
+<section>
+  <header>
+    <h2>Актуальные промокоды</h2>
+  </header>
 
-    <hr class="my-5">
+  {% if active_promos %}
+  <section>
+    {% for promo in active_promos %}
+    <article>
+      <header>
+        <h3>{{ promo.promo_code }}</h3>
+      </header>
+      
+      <section>
+        <dl>
+          <dt>Скидка:</dt>
+          <dd>{{ promo.discount_percentage }}%</dd>
+          
+          <dt>Действует до:</dt>
+          <dd>
+            <time datetime="{{ promo.expires_at|date:'c' }}">
+              {{ promo.expires_at|date:"d.m.Y H:i" }}
+            </time>
+          </dd>
+          
+          <dt>Дата создания:</dt>
+          <dd>
+            <time datetime="{{ promo.created_at|date:'c' }}">
+              {{ promo.created_at|date:"d.m.Y H:i" }}
+            </time>
+          </dd>
+        </dl>
+      </section>
+    </article>
+    {% endfor %}
+  </section>
+  {% else %}
+  <section>
+    <p>В данный момент нет активных промокодов.</p>
+  </section>
+  {% endif %}
+</section>
 
-    <h2 class="mb-4">Истекшие промокоды</h2>
+<section>
+  <header>
+    <h2>Истекшие промокоды</h2>
+  </header>
 
-    {% if expired_promos %}
-        <div class="row">
-            {% for promo in expired_promos %}
-                <div class="col-md-6 mb-4">
-                    <div class="card h-100 border-secondary">
-                        <div class="card-body">
-                            <h5 class="card-title text-muted">{{ promo.promo_code }}</h5>
-                            <div class="mb-3">
-                                <span class="badge bg-secondary">
-                                    Скидка {{ promo.discount_percentage }}%
-                                </span>
-                            </div>
-                            <div class="mb-2">
-                                <strong>Истёк:</strong> {{ promo.expires_at|date:"d.m.Y H:i" }}
-                            </div>
-                            <div class="mb-2">
-                                <strong>Дата создания:</strong> {{ promo.created_at|date:"d.m.Y H:i" }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <div class="alert alert-secondary">
-            Нет истекших промокодов.
-        </div>
-    {% endif %}
-</div>
+  {% if expired_promos %}
+  <section>
+    {% for promo in expired_promos %}
+    <article>
+      <header>
+        <h3>{{ promo.promo_code }}</h3>
+      </header>
+      
+      <section>
+        <dl>
+          <dt>Скидка:</dt>
+          <dd>{{ promo.discount_percentage }}%</dd>
+          
+          <dt>Истёк:</dt>
+          <dd>
+            <time datetime="{{ promo.expires_at|date:'c' }}">
+              {{ promo.expires_at|date:"d.m.Y H:i" }}
+            </time>
+          </dd>
+          
+          <dt>Дата создания:</dt>
+          <dd>
+            <time datetime="{{ promo.created_at|date:'c' }}">
+              {{ promo.created_at|date:"d.m.Y H:i" }}
+            </time>
+          </dd>
+        </dl>
+      </section>
+    </article>
+    {% endfor %}
+  </section>
+  {% else %}
+  <section>
+    <p>Нет истекших промокодов.</p>
+  </section>
+  {% endif %}
+</section>
 {% endblock %}

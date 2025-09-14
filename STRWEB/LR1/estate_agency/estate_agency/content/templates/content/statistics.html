@@ -1,80 +1,64 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container mt-4">
-    <h2 class="mb-4">Статистика агентства недвижимости</h2>
+<header>
+  <h1>Статистика агентства недвижимости</h1>
+</header>
 
-    <!-- Распределение недвижимости по категориям -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h4>Распределение недвижимости по категориям</h4>
-        </div>
-        <div class="card-body">
-            <img src="data:image/png;base64,{{ property_distribution_graph }}" class="img-fluid" alt="Распределение по категориям">
-        </div>
-    </div>
+<section>
+  <section>
+    <header>
+      <h2>Распределение недвижимости по категориям</h2>
+    </header>
+    
+    <figure>
+      <img
+        src="data:image/png;base64,{{ property_distribution_graph }}"
+        alt="Распределение по категориям"
+        style="max-width: 100%; height: auto;"
+      />
+    </figure>
+  </section>
 
-    <!-- Статистика продаж по сотрудникам -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h4>Статистика продаж по сотрудникам за последний месяц</h4>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Сотрудник</th>
-                            <th>Количество продаж</th>
-                            <th>Общая сумма продаж</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for stat in employee_stats %}
-                        <tr>
-                            <td>{{ stat.agent_name }}</td>
-                            <td>{{ stat.total_sales }}</td>
-                            <td>{{ stat.total_amount }} BYN</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+  <section>
+    <header>
+      <h2>Статистика продаж по сотрудникам за последний месяц</h2>
+    </header>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Сотрудник</th>
+          <th>Количество продаж</th>
+          <th>Общая сумма продаж</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for stat in employee_stats %}
+        <tr>
+          <td>{{ stat.agent_name }}</td>
+          <td>{{ stat.total_sales }}</td>
+          <td>{{ stat.total_amount }} BYN</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
 
-    <!-- Статистические показатели -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h4>Статистические показатели продаж за последний месяц</h4>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Среднее значение</h5>
-                            <p class="card-text h3">{{ mean_sales }} BYN</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Медиана</h5>
-                            <p class="card-text h3">{{ median_sales }} BYN</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Мода</h5>
-                            <p class="card-text h3">{{ mode_sales }} BYN</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{% endblock %} 
+  <section>
+    <header>
+      <h2>Статистические показатели продаж за последний месяц</h2>
+    </header>
+    
+    <dl>
+      <dt>Среднее значение</dt>
+      <dd>{{ mean_sales }} BYN</dd>
+
+      <dt>Медиана</dt>
+      <dd>{{ median_sales }} BYN</dd>
+
+      <dt>Мода</dt>
+      <dd>{{ mode_sales }} BYN</dd>
+    </dl>
+  </section>
+</section>
+{% endblock %}
