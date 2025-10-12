@@ -1,27 +1,31 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
+{% load static %}
 {% block title %}
 {{ article.title }}
-{% endblock %} 
+{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/article_detail.css' %}">
+{% endblock %}
 {% block content %}
-<article>
-  <header>
-    <h1>{{ article.title }}</h1>
-    <time datetime="{{ article.created_at|date:'c' }}">
+<article class="article-detail-container">
+  <header class="article-detail-header">
+    <h1 class="article-detail-title">{{ article.title }}</h1>
+    <time class="article-detail-date" datetime="{{ article.created_at|date:'c' }}">
       {{ article.created_at|date:"d.m.Y H:i" }}
     </time>
   </header>
 
   {% if article.image %}
-  <figure>
+  <figure class="article-detail-image-container">
     <img 
+      class="article-detail-image"
       src="{{ article.image.url }}" 
-      alt="{{ article.title }}" 
-      style="max-width: 100%; height: auto;"
+      alt="{{ article.title }}"
     />
   </figure>
   {% endif %}
 
-  <section>
+  <section class="article-detail-content">
     {{ article.content|linebreaks }}
   </section>
 </article>

@@ -1,98 +1,112 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/properties.css' %}">
+{% endblock %}
 
 {% block content %}
-<header>
-    <h1>Объекты недвижимости</h1>
-</header>
-
-<aside>
-    <header>
-        <h2>Фильтры</h2>
+<div class="catalog-container">
+    <header class="catalog-header">
+        <h1>Объекты недвижимости</h1>
     </header>
-    
-    <form method="get">
-        <fieldset>
-            <legend>Параметры поиска</legend>
-            
-            <div>
-                <label for="min_price">Минимальная цена</label>
-                <input type="number" id="min_price" name="min_price" value="{{ current_filters.min_price }}">
-            </div>
-            <div>
-                <label for="max_price">Максимальная цена</label>
-                <input type="number" id="max_price" name="max_price" value="{{ current_filters.max_price }}">
-            </div>
-            <div>
-                <label for="category">Категория</label>
-                <select id="category" name="category">
-                    <option value="">Все категории</option>
-                    {% for category in categories %}
-                    <option value="{{ category.id }}" {% if current_filters.category_id == category.id|stringformat:"i" %}selected{% endif %}>
-                        {{ category.name }}
-                    </option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div>
-                <label for="date_from">Дата от</label>
-                <input type="text" id="date_from" name="date_from"
-                       value="{{ current_filters.date_from|default_if_none:'' }}" placeholder="DD/MM/YYYY">
-            </div>
-            <div>
-                <label for="date_to">Дата до</label>
-                <input type="text" id="date_to" name="date_to"
-                       value="{{ current_filters.date_to|default_if_none:'' }}" placeholder="DD/MM/YYYY">
-            </div>
-        </fieldset>
-        
-        <nav>
-            <button type="submit">Применить фильтры</button>
-            <a href="{% url 'index' %}">Очистить фильтры</a>
-        </nav>
-    </form>
-</aside>
 
-<section>
-    {% for property in properties %}
-    <article>
+    <aside class="catalog-filters">
         <header>
-            <h2>
-                <a href="{% url 'property_detail' property.id %}">
-                    {{ property.title }}
-                </a>
-            </h2>
-            <h3>{{ property.category.name }}</h3>
+            <h2>Фильтры</h2>
         </header>
         
-        <section>
-            <p>{{ property.description|truncatewords:30 }}</p>
-        </section>
-        
-        <section>
-            <dl>
-                <dt>Цена:</dt>
-                <dd>{{ property.price }} BYN</dd>
+        <form method="get">
+            <fieldset>
+                <legend>Параметры поиска</legend>
                 
-                <dt>Добавлено:</dt>
-                <dd>
-                    <time datetime="{{ property.created_at|date:'c' }}">
-                        {{ property.created_at|date:"d.m.Y H:i" }}
-                    </time>
-                </dd>
+                <div class="filter-grid">
+                    <div class="filter-group">
+                        <label for="min_price">Минимальная цена</label>
+                        <input type="number" id="min_price" name="min_price" value="{{ current_filters.min_price }}" placeholder="0">
+                    </div>
+                    <div class="filter-group">
+                        <label for="max_price">Максимальная цена</label>
+                        <input type="number" id="max_price" name="max_price" value="{{ current_filters.max_price }}" placeholder="1000000">
+                    </div>
+                    <div class="filter-group">
+                        <label for="category">Категория</label>
+                        <select id="category" name="category">
+                            <option value="">Все категории</option>
+                            {% for category in categories %}
+                            <option value="{{ category.id }}" {% if current_filters.category_id == category.id|stringformat:"i" %}selected{% endif %}>
+                                {{ category.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="date_from">Дата от</label>
+                        <input type="text" id="date_from" name="date_from"
+                               value="{{ current_filters.date_from|default_if_none:'' }}" placeholder="DD/MM/YYYY">
+                    </div>
+                    <div class="filter-group">
+                        <label for="date_to">Дата до</label>
+                        <input type="text" id="date_to" name="date_to"
+                               value="{{ current_filters.date_to|default_if_none:'' }}" placeholder="DD/MM/YYYY">
+                    </div>
+                </div>
+            </fieldset>
+            
+            <div class="filter-actions">
+                <button type="submit">Применить фильтры</button>
+                <a href="{% url 'index' %}">Очистить фильтры</a>
+            </div>
+        </form>
+    </aside>
+
+    <section class="catalog-properties">
+        <div class="properties-grid">
+            {% for property in properties %}
+            <article class="property-card">
+                <header>
+                    <h2>
+                        <a href="{% url 'property_detail' property.id %}">
+                            {{ property.title }}
+                        </a>
+                    </h2>
+                    <h3>{{ property.category.name }}</h3>
+                </header>
                 
-                <dt>Статус:</dt>
-                <dd>{{ property.get_status_display }}</dd>
-            </dl>
-        </section>
-        
-        <nav>
-            <a href="{% url 'property_detail' property.id %}">Посмотреть детали</a>
-        </nav>
-    </article>
-    {% empty %}
-    <section>
-        <p>Нет объектов недвижимости, соответствующих вашим критериям.</p>
+                <section>
+                    <p>{{ property.description|truncatewords:30 }}</p>
+                </section>
+                
+                <section>
+                    <dl>
+                        <dt>Цена:</dt>
+                        <dd class="price-highlight">{{ property.price }} BYN</dd>
+                        
+                        <dt>Добавлено:</dt>
+                        <dd>
+                            <time datetime="{{ property.created_at|date:'c' }}">
+                                {{ property.created_at|date:"d.m.Y H:i" }}
+                            </time>
+                        </dd>
+                        
+                        <dt>Статус:</dt>
+                        <dd>
+                            <span class="status-badge status-{{ property.status|lower }}">
+                                {{ property.get_status_display }}
+                            </span>
+                        </dd>
+                    </dl>
+                </section>
+                <nav>
+                    <a href="{% url 'property_detail' property.id %}">Посмотреть детали</a>
+                </nav>
+            </article>
+            {% empty %}
+            <div class="catalog-empty">
+                <p>Нет объектов недвижимости, соответствующих вашим критериям.</p>
+            </div>
+            {% endfor %}
+        </div>
     </section>
-    {% endfor %}
-</section>
+</div>
 {% endblock %} 

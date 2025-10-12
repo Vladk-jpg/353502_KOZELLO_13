@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/preloader.css' %}">
+<link rel="stylesheet" href="{% static 'css/animation.css' %}">
+{% endblock %}
 {% block content %}
-<header>
+<header class="home-header">
   <h1>Добро пожаловать в наше агентство недвижимости</h1>
 
   {% if about_info.logo %}
@@ -15,7 +21,21 @@
   {% endif %}
 </header>
 
-<section>
+<section class="animation-section">
+  <div class="animation-container">
+    <div class="animation-forest animation-forest-left"></div>
+    <div class="animation-forest animation-forest-right"></div>
+    <div class="animation-cloud"></div>
+    <div class="animation-house"></div>
+    <div class="animation-window1"></div>
+    <div class="animation-window2"></div>
+    <div class="animation-window3"></div>
+    <div class="animation-door"></div>
+    <div class="animation-text">Найдите свой дом мечты с нами!</div>
+  </div>
+</section>
+
+<section class="banner-section">
   <article>
     <picture>
       <source 
@@ -53,7 +73,7 @@
   </article>
 </section>
 
-<section>
+<section class="audio-section">
   <header>
     <h2>Приветственное сообщение</h2>
   </header>
@@ -73,7 +93,7 @@
 </section>
 
 {% if latest_property %}
-<section>
+<section class="latest-property-section">
   <header>
     <h2>Последний объект недвижимости</h2>
   </header>
@@ -104,7 +124,7 @@
   </article>
 </section>
 {% else %}
-<section>
+<section class="latest-property-section">
   <p>В данный момент нет доступных объектов недвижимости.</p>
   <nav>
     <a href="{% url 'index' %}">Посмотреть каталог</a>
@@ -112,12 +132,12 @@
 </section>
 {% endif %}
 {% if latest_article %}
-<section>
+<section class="latest-article-section">
   <header>
     <h2>Последние новости</h2>
   </header>
 
-  <article>
+  <article class="latest-article-content">
     <header>
       <h3>{{ latest_article.title }}</h3>
       <time datetime="{{ latest_article.created_at|date:'c' }}">
@@ -150,14 +170,14 @@
 </section>
 {% endif %}
 {% if partners %}
-<section>
+<section class="partners-section">
   <header>
     <h2>Наши партнеры</h2>
   </header>
 
-  <section>
+  <section class="partners-grid">
     {% for partner in partners %}
-    <article>
+    <article class="partner-item">
       <figure>
         <a href="{{ partner.link }}" target="_blank" rel="noopener">
           <img
@@ -175,7 +195,7 @@
 </section>
 {% endif %}
 
-<aside>
+<aside class="calendar-aside">
   <header>
     <h2>Сегодня: {{ current_date }}</h2>
   </header>
@@ -184,4 +204,43 @@
     <pre>{{ month_calendar }}</pre>
   </section>
 </aside>
+
+<!-- Прелоадер с тремя пульсирующими точками -->
+<section class="preloader-container">
+  <div class="preloader-dots">
+    <div class="preloader-dot"></div>
+    <div class="preloader-dot"></div>
+    <div class="preloader-dot"></div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const animationSection = document.querySelector('.animation-section');
+  
+  // Перезапуск анимации при клике
+  animationSection.addEventListener('click', function() {
+    // Удаляем классы анимации
+    const elements = this.querySelectorAll('[class*="animation-"]');
+    elements.forEach(el => {
+      el.style.animation = 'none';
+      el.offsetHeight; // Принудительный reflow
+      el.style.animation = null;
+    });
+    
+    // Перезапускаем анимацию через небольшую задержку
+    setTimeout(() => {
+      elements.forEach(el => {
+        el.style.animationPlayState = 'running';
+      });
+    }, 100);
+  });
+  
+  // Добавляем курсор pointer для интерактивности
+  animationSection.style.cursor = 'pointer';
+  animationSection.title = 'Кликните для перезапуска анимации';
+});
+</script>
 {% endblock %}

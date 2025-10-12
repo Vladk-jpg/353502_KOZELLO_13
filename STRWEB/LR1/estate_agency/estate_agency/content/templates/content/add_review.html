@@ -1,65 +1,75 @@
 {% extends 'base.html' %} 
-{% block title %}Добавить отзыв{% endblock %} 
+{% load static %}
+
+{% block title %}Добавить отзыв{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/reviews.css' %}">
+{% endblock %}
+
 {% block content %}
-<header>
-  <h1>Добавить отзыв</h1>
-</header>
+<div class="reviews-page">
+  <header class="reviews-header">
+    <h1>Добавить отзыв</h1>
+  </header>
 
-<section>
-  <form method="post">
-    {% csrf_token %}
+  <section>
+    <form method="post" class="review-form">
+      {% csrf_token %}
 
-    <fieldset>
-      <legend>Информация об отзыве</legend>
-      
-      <div>
-        <label for="id_rating">Оценка</label>
-        <select name="rating" id="id_rating" required>
-          <option value="">Выберите оценку</option>
-          <option value="1" {% if form.rating.value == 1 %}selected{% endif %}>1 - Очень плохо</option>
-          <option value="2" {% if form.rating.value == 2 %}selected{% endif %}>2 - Плохо</option>
-          <option value="3" {% if form.rating.value == 3 %}selected{% endif %}>3 - Неудовлетворительно</option>
-          <option value="4" {% if form.rating.value == 4 %}selected{% endif %}>4 - Ниже среднего</option>
-          <option value="5" {% if form.rating.value == 5 %}selected{% endif %}>5 - Средне</option>
-          <option value="6" {% if form.rating.value == 6 %}selected{% endif %}>6 - Выше среднего</option>
-          <option value="7" {% if form.rating.value == 7 %}selected{% endif %}>7 - Хорошо</option>
-          <option value="8" {% if form.rating.value == 8 %}selected{% endif %}>8 - Очень хорошо</option>
-          <option value="9" {% if form.rating.value == 9 %}selected{% endif %}>9 - Отлично</option>
-          <option value="10" {% if form.rating.value == 10 %}selected{% endif %}>10 - Превосходно</option>
-        </select>
-        {% if form.rating.errors %}
-        <div role="alert">
-          {% for error in form.rating.errors %}
-          <p>{{ error }}</p>
-          {% endfor %}
+      <fieldset>
+        <legend>Информация об отзыве</legend>
+        
+        <div class="form-group">
+          <label for="id_rating" class="form-label">Оценка</label>
+          <select name="rating" id="id_rating" class="form-select" required>
+            <option value="">Выберите оценку</option>
+            <option value="1" {% if form.rating.value == 1 %}selected{% endif %}>1 - Очень плохо</option>
+            <option value="2" {% if form.rating.value == 2 %}selected{% endif %}>2 - Плохо</option>
+            <option value="3" {% if form.rating.value == 3 %}selected{% endif %}>3 - Неудовлетворительно</option>
+            <option value="4" {% if form.rating.value == 4 %}selected{% endif %}>4 - Ниже среднего</option>
+            <option value="5" {% if form.rating.value == 5 %}selected{% endif %}>5 - Средне</option>
+            <option value="6" {% if form.rating.value == 6 %}selected{% endif %}>6 - Выше среднего</option>
+            <option value="7" {% if form.rating.value == 7 %}selected{% endif %}>7 - Хорошо</option>
+            <option value="8" {% if form.rating.value == 8 %}selected{% endif %}>8 - Очень хорошо</option>
+            <option value="9" {% if form.rating.value == 9 %}selected{% endif %}>9 - Отлично</option>
+            <option value="10" {% if form.rating.value == 10 %}selected{% endif %}>10 - Превосходно</option>
+          </select>
+          {% if form.rating.errors %}
+          <div role="alert">
+            {% for error in form.rating.errors %}
+            <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+          {% endif %}
         </div>
-        {% endif %}
-      </div>
 
-      <div>
-        <label for="id_text">Текст отзыва</label>
-        <textarea 
-          name="text" 
-          id="id_text" 
-          rows="4" 
-          placeholder="Ваш отзыв"
-          spellcheck="true"
-          required
-        >{% if form.text.value %}{{ form.text.value }}{% endif %}</textarea>
-        {% if form.text.errors %}
-        <div role="alert">
-          {% for error in form.text.errors %}
-          <p>{{ error }}</p>
-          {% endfor %}
+        <div class="form-group">
+          <label for="id_text" class="form-label">Текст отзыва</label>
+          <textarea 
+            name="text" 
+            id="id_text" 
+            rows="4" 
+            placeholder="Ваш отзыв"
+            spellcheck="true"
+            class="form-textarea"
+            required
+          >{% if form.text.value %}{{ form.text.value }}{% endif %}</textarea>
+          {% if form.text.errors %}
+          <div role="alert">
+            {% for error in form.text.errors %}
+            <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+          {% endif %}
         </div>
-        {% endif %}
-      </div>
-    </fieldset>
+      </fieldset>
 
-    <nav>
-      <button type="submit">Отправить</button>
-      <a href="{% url 'content:reviews' %}">Назад</a>
-    </nav>
-  </form>
-</section>
+      <nav>
+        <button type="submit" class="form-button">Отправить</button>
+        <a href="{% url 'content:reviews' %}" class="form-button" style="display: inline-block; text-decoration: none; margin-left: 1rem;">Назад</a>
+      </nav>
+    </form>
+  </section>
+</div>
 {% endblock %}

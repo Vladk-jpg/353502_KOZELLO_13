@@ -1,50 +1,71 @@
 {% extends 'base.html' %} 
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+<link rel="stylesheet" href="{% static 'css/sertificate.css' %}">
+{% endblock %}
 {% block title %}О компании{% endblock %} 
 {% block content %}
-<header>
-  <h1>О компании</h1>
+<header class="about-header">
+  <div class="about-header-content">
+    {% if about_info and about_info.logo %}
+    <figure class="about-logo-figure">
+      <img src="{{ about_info.logo.url }}" alt="Логотип компании" width="120" height="auto">
+    </figure>
+    {% endif %}
+    <h1 class="about-title">О компании</h1>
+  </div>
 </header>
 
 {% if about_info %}
-  {% if about_info.logo %}
-  <section>
-    <figure>
-      <img src="{{ about_info.logo.url }}" alt="Логотип компании" width="300" height="auto">
-    </figure>
-  </section>
-  {% endif %}
 
-  <section>
-    <h2>Информация о компании</h2>
-    <article>
+  <section class="about-section about-info">
+    <h2 class="about-section-title">Информация о компании</h2>
+    <article class="about-card">
       {{ about_info.company_info|linebreaks }}
     </article>
   </section>
 
-  <section>
-    <h2><strong>Внимание!</strong> Наш девиз</h2>
-    <blockquote cite="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
-      <p>Тут — это вам не там.</p>
-      <footer>- JSON Стетхэм</footer>
-    </blockquote>
-    <aside>
-      <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><img src="/media/photoes/JSON_Stetkhem.jpg" alt="JSON Стетхэм" width="100" height="auto"></a>
-    </aside>
+  <section class="about-section about-quote">
+    <h2 class="about-section-title"><strong>Внимание!</strong> Наш девиз</h2>
+    <div class="about-quote-container">
+      <aside class="about-quote-aside">
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><img src="/media/photoes/JSON_Stetkhem.jpg" alt="JSON Стетхэм" width="120" height="auto"></a>
+      </aside>
+      <blockquote class="about-blockquote" cite="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+        <p>Тут — это вам не там.</p>
+        <footer>- JSON Стетхэм</footer>
+      </blockquote>
+    </div>
   </section>
 
-  {% if about_info.history %}
-  <section>
-    <h2>История компании</h2>
-    <article>
-      {{ about_info.history|linebreaks }}
+  <section class="about-section about-history">
+    <h2 class="about-section-title">История компании</h2>
+    <article class="about-timeline">
+      <h3>2020: Основание "Estate Agency"</h3>
+      <p>В 2020 году опытный риелтор Анна и специалист по маркетингу Сергей решили объединить усилия, чтобы создать собственное агентство недвижимости. Их целью было предложить клиентам новый уровень сервиса, основанный на прозрачности, индивидуальном подходе и использовании современных технологий. Так появилась компания "Estate Agency", которая начала свою работу с небольшого офиса и амбициозных планов.</p>
+      
+      <h3>2021: Первые успешные сделки и рост репутации</h3>
+      <p>2021 год стал для "Estate Agency" временем активного становления. Благодаря личному подходу и усердной работе Анны и Сергея, компания быстро завоевала доверие первых клиентов. Успешные сделки по продаже и аренде недвижимости, а также положительные отзывы, позволили "Estate Agency" начать формировать прочную репутацию надежного партнера на рынке.</p>
+      
+      <h3>2022: Расширение команды и цифровизация</h3>
+      <p>В 2022 году "Estate Agency" сделала важный шаг в своем развитии, расширив команду. К Анне и Сергею присоединились новые риелторы и юристы, что позволило увеличить количество одновременно ведущихся проектов. Компания также инвестировала в создание собственного удобного веб-сайта с каталогом объектов и онлайн-консультацией, что значительно упростило взаимодействие с клиентами.</p>
+      
+      <h3>2023: Новые районы и эксклюзивные предложения</h3>
+      <p>К 2023 году "Estate Agency" укрепила свои позиции на рынке и начала активно работать в новых районах города. Благодаря налаженным связям и глубокому пониманию рынка, компания стала предлагать своим клиентам эксклюзивные объекты недвижимости, недоступные другим агентствам. Это привлекло более требовательных клиентов и укрепило имидж "Estate Agency" как эксперта в своем деле.</p>
+      
+      <h3>2024: Внедрение VR-туров и аналитики</h3>
+      <p>2024 год ознаменовался внедрением передовых технологий в работу "Estate Agency". Компания первой на местном рынке начала предлагать виртуальные туры по объектам недвижимости, позволяя клиентам "посетить" дом или квартиру, не выходя из дома. Также была внедрена система аналитики рынка, которая помогала точно определять оптимальные цены и сроки для сделок.</p>
+      
+      <h3>2025: "Estate Agency" – лидер рынка и сообщество</h3>
+      <p>К 2025 году "Estate Agency" стала признанным лидером на рынке недвижимости в своем регионе. Компания не только продолжала успешно проводить сделки, но и активно развивала сообщество вокруг себя, организовывая семинары для покупателей и продавцов, а также участвуя в благотворительных проектах. "Estate Agency" стала синонимом надежности, инноваций и заботы о клиентах, продолжая расти и развиваться.</p>
     </article>
   </section>
-  {% endif %}
 
   {% if about_info.video_link %}
-  <section>
-    <h2>Видео о компании</h2>
-    <figure>
+  <section class="about-section about-video">
+    <h2 class="about-section-title">Видео о компании</h2>
+    <figure class="about-video-figure">
       <video width="640" height="360" controls>
         <source src="{{ about_info.video_link.url }}" type="video/mp4">
         Ваш браузер не поддерживает видео элемент
@@ -54,22 +75,30 @@
   {% endif %}
 
   {% if about_info.requisites %}
-  <section>
-    <h2>Реквизиты компании</h2>
-    <article>
+  <section class="about-section about-requisites">
+    <h2 class="about-section-title">Реквизиты компании</h2>
+    <article class="about-card">
       {{ about_info.requisites|linebreaks }}
     </article>
   </section>
   {% endif %}
 
-  {% if about_info.sertificate %}
-  <section>
-    <h2>Сертификаты компании</h2>
+  <section class="about-section about-certificate">
+    <h2 class="about-section-title">Сертификаты компании</h2>
     <article>
-      {{ about_info.sertificate|linebreaks }}
+      <div class="sertificate-frame">
+        <div class="sertificate-content">
+          <h2>ЕДИНЫЙ РЕЕСТР АГЕНТОВ ПО ПРОДАЖЕ НЕДВИЖИМОСТИ</h2>
+          <h1>СЕРТИФИКАТ ПРОФЕССИОНАЛЬНОЙ КВАЛИФИКАЦИИ</h1>
+          <p id="sert_text">Настоящим документом удостоверяется, что Козелло Владислав Александрович является сертифицированным специалистом по недвижимости в компании "Estate Agency".</p>
+          <p>Действителен: Бессрочно</p>
+          <p>Директор компании "Estate Agency"</p>
+          <p id="sert_date">Выдан: 09.09.2025</p>
+          <p></p>
+        </div>
+      </div>
     </article>
   </section>
-  {% endif %}
 
 {% else %}
   <section>
@@ -77,10 +106,10 @@
   </section>
 {% endif %}
 
-<section>
-  <h2>Полезные ссылки</h2>
+<section class="about-section about-links">
+  <h2 class="about-section-title">Полезные ссылки</h2>
   
-  <table align="center" border="1" bordercolor="black">
+  <table class="about-table" align="center" border="1" bordercolor="black">
     <caption>Справочная информация и полезные ресурсы</caption>
     
     <thead>
@@ -230,8 +259,8 @@
     </tfoot>
   </table>
 </section>
-<section>
-  <h2>Карта</h2>
+<section class="about-section about-map">
+  <h2 class="about-section-title">Карта</h2>
   <iframe
     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117509.25792728113!2d27.45192345!3d53.88475999999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46dbcfd35b1e6ad3%3A0xb61b853ddb570d9!2z0JzQuNC90YHQuiwg0JHQtdC70LDRgNGD0YHRjA!5e0!3m2!1sru!2s!4v1719912345678!5m2!1sru!2s"
     width="400"
