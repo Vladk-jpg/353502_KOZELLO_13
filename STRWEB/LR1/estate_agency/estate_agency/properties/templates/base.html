@@ -170,40 +170,6 @@
       </section>
     </footer>
 
-    <script></script>
-    <div id="messages-data" style="display: none;">
-      {% if messages %}
-        {% for message in messages %}
-          <div data-tag="{{ message.tags }}" data-message="{{ message|escapejs }}"></div>
-        {% endfor %}
-      {% endif %}
-    </div>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const messagesContainer = document.getElementById('messages-data');
-        const messageElements = messagesContainer.querySelectorAll('div[data-tag]');
-        
-        messageElements.forEach(function(element) {
-          const tag = element.getAttribute('data-tag');
-          const message = element.getAttribute('data-message');
-          
-          switch(tag) {
-            case 'success':
-              alert('✅ Успешно: ' + message);
-              break;
-            case 'error':
-              alert('❌ Ошибка: ' + message);
-              break;
-            case 'warning':
-              alert('⚠️ Внимание: ' + message);
-              break;
-            default:
-              alert('ℹ️ Информация: ' + message);
-          }
-        });
-      });
-    </script>
     {% block extra_js %}{% endblock %}
   </body>
 </html>

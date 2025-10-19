@@ -1,67 +1,76 @@
-{% extends 'base.html' %} {% block content %}
-<header>
-  <h1>Мои покупки</h1>
-</header>
+{% extends 'base.html' %}
+{% load static %}
 
-<section>
-  {% if purchases %}
-  <section>
-    {% for purchase in purchases %}
-    <article>
-      <header>
-        <h2>{{ purchase.property.title }}</h2>
-        <span> {{ purchase.get_status_display }} </span>
-      </header>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/client_purchases.css' %}">
+{% endblock %}
 
-      <section>
-        <dl>
-          <dt>Цена:</dt>
-          <dd>
+{% block content %}
+<div class="client-purchases-container">
+  <header class="client-purchases-header">
+    <h1>Мои покупки</h1>
+  </header>
+
+  <section class="client-purchases-section">
+    {% if purchases %}
+    <section>
+      {% for purchase in purchases %}
+      <article class="purchase-card">
+        <header>
+          <h2>{{ purchase.property.title }}</h2>
+          <span class="purchase-status status-{{ purchase.status|lower }}">{{ purchase.get_status_display }}</span>
+        </header>
+
+        <section class="purchase-details">
+          <dl>
+            <dt>Цена:</dt>
+            <dd class="purchase-price">
+              {% if purchase.promo %}
+              <p><s>{{ purchase.property.price }} BYN</s></p>
+              <p>
+                {{ purchase.get_final_price|floatformat:0 }} BYN
+                <small>(-{{ purchase.promo.discount_percentage }}%)</small>
+              </p>
+              {% else %} {{ purchase.property.price }} BYN {% endif %}
+            </dd>
+
+            <dt>Дата покупки:</dt>
+            <dd class="purchase-date">
+              <time datetime="{{ purchase.sale_date|date:'c' }}">
+                {{ purchase.sale_date|date:"d.m.Y H:i" }}
+              </time>
+            </dd>
+
+            <dt>Дата договора:</dt>
+            <dd class="purchase-date">
+              <time datetime="{{ purchase.contract_date|date:'c' }}">
+                {{ purchase.contract_date|date:"d.m.Y H:i" }}
+              </time>
+            </dd>
+
+            <dt>Агент:</dt>
+            <dd class="purchase-agent">{{ purchase.agent.user.username }}</dd>
+
             {% if purchase.promo %}
-            <p><s>{{ purchase.property.price }} BYN</s></p>
-            <p>
-              {{ purchase.get_final_price|floatformat:0 }} BYN
-              <small>(-{{ purchase.promo.discount_percentage }}%)</small>
-            </p>
-            {% else %} {{ purchase.property.price }} BYN {% endif %}
-          </dd>
+            <dt>Примененный промокод:</dt>
+            <dd class="purchase-promo">{{ purchase.promo.promo_code }}</dd>
+            {% endif %}
+          </dl>
+        </section>
 
-          <dt>Дата покупки:</dt>
-          <dd>
-            <time datetime="{{ purchase.sale_date|date:'c' }}">
-              {{ purchase.sale_date|date:"d.m.Y H:i" }}
-            </time>
-          </dd>
-
-          <dt>Дата договора:</dt>
-          <dd>
-            <time datetime="{{ purchase.contract_date|date:'c' }}">
-              {{ purchase.contract_date|date:"d.m.Y H:i" }}
-            </time>
-          </dd>
-
-          <dt>Агент:</dt>
-          <dd>{{ purchase.agent.user.username }}</dd>
-
-          {% if purchase.promo %}
-          <dt>Примененный промокод:</dt>
-          <dd>{{ purchase.promo.promo_code }}</dd>
-          {% endif %}
-        </dl>
-      </section>
-
-      <nav>
-        <a href="{% url 'property_detail' purchase.property.id %}">
-          Подробнее об объекте
-        </a>
-      </nav>
-    </article>
-    {% endfor %}
+        <nav class="purchase-actions">
+          <a href="{% url 'property_detail' purchase.property.id %}">
+            Подробнее об объекте
+          </a>
+        </nav>
+      </article>
+      {% endfor %}
+    </section>
+    {% else %}
+    <div class="client-purchases-empty">
+      <p>У вас пока нет покупок.</p>
+    </div>
+    {% endif %}
   </section>
-  {% else %}
-  <section>
-    <p>У вас пока нет покупок.</p>
-  </section>
-  {% endif %}
-</section>
+</div>
 {% endblock %}

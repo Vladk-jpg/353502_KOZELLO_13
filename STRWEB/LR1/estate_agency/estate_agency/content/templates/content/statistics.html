@@ -1,30 +1,37 @@
 {% extends 'base.html' %}
-{% block content %}
-<header>
-  <h1>Статистика агентства недвижимости</h1>
-</header>
+{% load static %}
 
-<section>
-  <section>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/statistics.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="statistics-container">
+  <header class="statistics-header">
+    <h1>Статистика агентства недвижимости</h1>
+  </header>
+
+  <section class="statistics-section">
     <header>
       <h2>Распределение недвижимости по категориям</h2>
     </header>
     
-    <figure>
-      <img
-        src="data:image/png;base64,{{ property_distribution_graph }}"
-        alt="Распределение по категориям"
-        style="max-width: 100%; height: auto;"
-      />
-    </figure>
+    <div class="statistics-graph">
+      <figure>
+        <img
+          src="data:image/png;base64,{{ property_distribution_graph }}"
+          alt="Распределение по категориям"
+        />
+      </figure>
+    </div>
   </section>
 
-  <section>
+  <section class="statistics-section">
     <header>
       <h2>Статистика продаж по сотрудникам за последний месяц</h2>
     </header>
     
-    <table>
+    <table class="statistics-table">
       <thead>
         <tr>
           <th>Сотрудник</th>
@@ -44,21 +51,27 @@
     </table>
   </section>
 
-  <section>
+  <section class="statistics-section">
     <header>
       <h2>Статистические показатели продаж за последний месяц</h2>
     </header>
     
-    <dl>
-      <dt>Среднее значение</dt>
-      <dd>{{ mean_sales }} BYN</dd>
+    <div class="statistics-metrics">
+      <dl>
+        <dt>Среднее значение</dt>
+        <dd>{{ mean_sales }} BYN</dd>
+      </dl>
 
-      <dt>Медиана</dt>
-      <dd>{{ median_sales }} BYN</dd>
+      <dl>
+        <dt>Медиана</dt>
+        <dd>{{ median_sales }} BYN</dd>
+      </dl>
 
-      <dt>Мода</dt>
-      <dd>{{ mode_sales }} BYN</dd>
-    </dl>
+      <dl>
+        <dt>Мода</dt>
+        <dd>{{ mode_sales }} BYN</dd>
+      </dl>
+    </div>
   </section>
-</section>
+</div>
 {% endblock %}

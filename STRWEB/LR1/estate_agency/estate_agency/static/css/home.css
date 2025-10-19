@@ -17,7 +17,7 @@
   padding: 1.5rem 1rem;
   background: var(--color-bg);
   border: 2px solid var(--color-primary-200);
-  border-radius: 50%;
+  border-radius: 100%;
   width: 180px;
   height: 180px;
   box-shadow: 0 8px 25px rgba(59, 121, 255, 0.15);
@@ -45,7 +45,7 @@
   width: 80px;
   height: 80px;
   object-fit: contain;
-  border-radius: 50%;
+  border-radius: 100%;
   margin-bottom: 0.5rem;
   transition: transform 0.3s ease;
 }
@@ -59,7 +59,8 @@
   font-weight: 600;
   font-size: 0.9rem;
   color: var(--color-primary-700);
-  letter-spacing: 0.5px;  /* Кернинг */
+  font-kerning: normal; /* Кернинг */
+  letter-spacing: 0.5px; 
   line-height: 1.2;
   margin-top: 0.5rem;
   text-align: center;

@@ -1,0 +1,175 @@
+.client-purchases-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.client-purchases-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--color-border);
+}
+
+.client-purchases-header h1 {
+  color: var(--color-primary-700);
+  font-family: var(--font-alt);
+  margin: 0;
+}
+
+.client-purchases-section {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  box-shadow: var(--shadow-md);
+}
+
+.purchase-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: box-shadow 0.2s ease;
+}
+
+.purchase-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.purchase-card:last-child {
+  margin-bottom: 0;
+}
+
+.purchase-card header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.purchase-card h2 {
+  color: var(--color-primary-600);
+  font-family: var(--font-alt);
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.purchase-status {
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.purchase-status.completed {
+  background: var(--color-success);
+  color: white;
+}
+
+.purchase-status.pending {
+  background: var(--color-warning);
+  color: white;
+}
+
+.purchase-status.cancelled {
+  background: var(--color-error);
+  color: white;
+}
+
+.purchase-details {
+  margin-bottom: 1rem;
+}
+
+.purchase-details dl {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 0.5rem 1rem;
+  margin: 0;
+}
+
+.purchase-details dt {
+  font-weight: 600;
+  color: var(--color-primary-700);
+  padding: 0.5rem 0;
+}
+
+.purchase-details dd {
+  margin: 0;
+  padding: 0.5rem 0;
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.purchase-details dd:last-child {
+  border-bottom: none;
+}
+
+.purchase-price {
+  font-weight: 600;
+  color: var(--color-accent-500);
+}
+
+.purchase-price s {
+  color: var(--color-muted);
+  font-weight: normal;
+}
+
+.purchase-price small {
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+.purchase-date {
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+
+.purchase-agent {
+  color: var(--color-text);
+}
+
+.purchase-promo {
+  color: var(--color-primary-600);
+  font-weight: 600;
+}
+
+.purchase-actions {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.purchase-actions a {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: var(--color-primary-500);
+  color: white;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.purchase-actions a:hover {
+  background: var(--color-primary-600);
+  color: white;
+  text-decoration: none;
+}
+
+.client-purchases-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+}
+
+.client-purchases-empty p {
+  color: var(--color-muted);
+  font-size: 1.1rem;
+  margin: 0;
+}

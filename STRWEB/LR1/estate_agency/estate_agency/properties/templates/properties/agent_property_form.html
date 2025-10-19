@@ -1,38 +1,46 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/agent_property_form.css' %}">
+{% endblock %}
+
 {% block content %}
-<header>
-  <h1>{{ action }} объект недвижимости</h1>
-</header>
+<div class="agent-property-form-container">
+  <header class="agent-property-form-header">
+    <h1>{{ action }} объект недвижимости</h1>
+  </header>
 
-<section>
-  <form method="post">
-    {% csrf_token %} 
-    
-    <fieldset>
-      <legend>Информация об объекте недвижимости</legend>
+  <section class="agent-property-form-section">
+    <form method="post" class="agent-property-form">
+      {% csrf_token %} 
       
-      {% for field in form %}
-      <div>
-        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-        {{ field }} 
-        {% if field.errors %}
-        <div role="alert">
-          {% for error in field.errors %}
-          <p>{{ error }}</p>
-          {% endfor %}
+      <fieldset>
+        <legend>Информация об объекте недвижимости</legend>
+        
+        {% for field in form %}
+        <div class="form-group">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }} 
+          {% if field.errors %}
+          <div class="form-errors" role="alert">
+            {% for error in field.errors %}
+            <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+          {% endif %} 
+          {% if field.help_text %}
+          <div class="form-help">{{ field.help_text }}</div>
+          {% endif %}
         </div>
-        {% endif %} 
-        {% if field.help_text %}
-        <small>{{ field.help_text }}</small>
-        {% endif %}
-      </div>
-      {% endfor %}
-    </fieldset>
+        {% endfor %}
+      </fieldset>
 
-    <nav>
-      <button type="submit">{{ action }}</button>
-      <a href="{% url 'agent_property_list' %}">Отмена</a>
-    </nav>
-  </form>
-</section>
+      <nav class="form-navigation">
+        <button type="submit">{{ action }}</button>
+        <a href="{% url 'agent_property_list' %}">Отмена</a>
+      </nav>
+    </form>
+  </section>
+</div>
 {% endblock %}

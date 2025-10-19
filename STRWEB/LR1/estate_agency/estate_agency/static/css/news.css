@@ -78,14 +78,9 @@
     line-height: 1.6;
     font-size: 1em;
     
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-    -webkit-box-orient: vertical;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    
-    max-height: 4.8em;
 }
 
 .news-actions {

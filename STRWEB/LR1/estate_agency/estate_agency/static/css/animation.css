@@ -98,48 +98,24 @@
   bottom: 61px;
   left: calc(50% - 75px);
   transform: translateX(-50%);
-  animation: windowLightUp1 0.5s ease-in-out 2s forwards;
+  animation: windowLightUp 0.5s ease-in-out 2s forwards;
 }
 
 .animation-window2 {
   bottom: 136px;
   left: 50%;
   transform: translateX(-50%);
-  animation: windowLightUp2 0.5s ease-in-out 3s forwards;
+  animation: windowLightUp 0.5s ease-in-out 3s forwards;
 }
 
 .animation-window3 {
   bottom: 61px;
   left: calc(50% + 75px);
   transform: translateX(-50%);
-  animation: windowLightUp3 0.5s ease-in-out 4s forwards;
+  animation: windowLightUp 0.5s ease-in-out 4s forwards;
 }
 
-@keyframes windowLightUp1 {
-  0% { 
-    background: rgba(255, 255, 0, 0);
-    box-shadow: 0 0 0px rgba(255, 255, 0, 0);
-  }
-  100% { 
-    background: rgba(255, 255, 0, 0.9);
-    box-shadow: 0 0 15px rgba(255, 255, 0, 0.8), 
-                0 0 30px rgba(255, 255, 0, 0.4);
-  }
-}
-
-@keyframes windowLightUp2 {
-  0% { 
-    background: rgba(255, 255, 0, 0);
-    box-shadow: 0 0 0px rgba(255, 255, 0, 0);
-  }
-  100% { 
-    background: rgba(255, 255, 0, 0.9);
-    box-shadow: 0 0 15px rgba(255, 255, 0, 0.8), 
-                0 0 30px rgba(255, 255, 0, 0.4);
-  }
-}
-
-@keyframes windowLightUp3 {
+@keyframes windowLightUp {
   0% { 
     background: rgba(255, 255, 0, 0);
     box-shadow: 0 0 0px rgba(255, 255, 0, 0);

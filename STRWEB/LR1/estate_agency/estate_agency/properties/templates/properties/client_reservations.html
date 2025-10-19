@@ -1,79 +1,87 @@
-{% extends 'base.html' %} 
-{% block content %}
-<header>
-  <h1>Мои резервации</h1>
-</header>
+{% extends 'base.html' %}
+{% load static %}
 
-<section>
-  {% if reservations %}
-  <section>
-    {% for reservation in reservations %}
-    <article>
-      <header>
-        <h2>{{ reservation.property.title }}</h2>
-        <span>{{ reservation.get_status_display }}</span>
-      </header>
-      
-      <section>
-        <dl>
-          <dt>Цена:</dt>
-          <dd>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/client_reservations.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="client-reservations-container">
+  <header class="client-reservations-header">
+    <h1>Мои резервации</h1>
+  </header>
+
+  <section class="client-reservations-section">
+    {% if reservations %}
+    <section>
+      {% for reservation in reservations %}
+      <article class="reservation-item">
+        <header>
+          <h2>{{ reservation.property.title }}</h2>
+          <span class="reservation-status">{{ reservation.get_status_display }}</span>
+        </header>
+        
+        <section class="reservation-details">
+          <dl>
+            <dt>Цена:</dt>
+            <dd class="reservation-price">
+              {% if reservation.promo %}
+              <s>{{ reservation.property.price }} BYN</s>
+              <span>
+                {{ reservation.get_final_price|floatformat:0 }} BYN
+                <small>(-{{ reservation.promo.discount_percentage }}%)</small>
+              </span>
+              {% else %} 
+              {{ reservation.property.price }} BYN 
+              {% endif %}
+            </dd>
+            
+            <dt>Дата резервации:</dt>
+            <dd>
+              <time datetime="{{ reservation.contract_date|date:'c' }}">
+                {{ reservation.contract_date|date:"d.m.Y H:i" }}
+              </time>
+            </dd>
+            
+            <dt>Агент:</dt>
+            <dd>{{ reservation.agent.user.username }}</dd>
+            
             {% if reservation.promo %}
-            <s>{{ reservation.property.price }} BYN</s>
-            <span>
-              {{ reservation.get_final_price|floatformat:0 }} BYN
-              <small>(-{{ reservation.promo.discount_percentage }}%)</small>
-            </span>
-            {% else %} 
-            {{ reservation.property.price }} BYN 
+            <dt>Примененный промокод:</dt>
+            <dd>{{ reservation.promo.promo_code }}</dd>
             {% endif %}
-          </dd>
-          
-          <dt>Дата резервации:</dt>
-          <dd>
-            <time datetime="{{ reservation.contract_date|date:'c' }}">
-              {{ reservation.contract_date|date:"d.m.Y H:i" }}
-            </time>
-          </dd>
-          
-          <dt>Агент:</dt>
-          <dd>{{ reservation.agent.user.username }}</dd>
-          
-          {% if reservation.promo %}
-          <dt>Примененный промокод:</dt>
-          <dd>{{ reservation.promo.promo_code }}</dd>
-          {% endif %}
-          
-          <dt>Категория:</dt>
-          <dd>{{ reservation.property.category.name }}</dd>
-        </dl>
-      </section>
-      
-      <section>
-        <p><strong>Описание:</strong> {{ reservation.property.description|truncatewords:20 }}</p>
-      </section>
-      
-      <nav>
-        <a href="{% url 'property_detail' reservation.property.id %}">
-          Подробнее об объекте
-        </a>
-        <form method="post">
-          {% csrf_token %}
-          <input type="hidden" name="reservation_id" value="{{ reservation.id }}">
-          <input type="hidden" name="action" value="cancel">
-          <button type="submit" onclick="return confirm('Вы уверены, что хотите отменить резервацию?')">
-            Отменить резервацию
-          </button>
-        </form>
-      </nav>
-    </article>
-    {% endfor %}
+            
+            <dt>Категория:</dt>
+            <dd>{{ reservation.property.category.name }}</dd>
+          </dl>
+        </section>
+        
+        <section class="reservation-description">
+          <p><strong>Описание:</strong> {{ reservation.property.description|truncatewords:20 }}</p>
+        </section>
+        
+        <nav class="reservation-actions">
+          <a href="{% url 'property_detail' reservation.property.id %}">
+            Подробнее об объекте
+          </a>
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="reservation_id" value="{{ reservation.id }}">
+            <input type="hidden" name="action" value="cancel">
+            <button type="submit" onclick="return confirm('Вы уверены, что хотите отменить резервацию?')">
+              Отменить резервацию
+            </button>
+          </form>
+        </nav>
+      </article>
+      {% endfor %}
+    </section>
+    {% else %}
+    <div class="empty-state">
+      <p>У вас пока нет активных резерваций.</p>
+      <p><a href="{% url 'index' %}">Посмотреть доступные объекты недвижимости</a></p>
+    </div>
+    {% endif %}
   </section>
-  {% else %}
-  <section>
-    <p>У вас пока нет активных резерваций.</p>
-    <p><a href="{% url 'index' %}">Посмотреть доступные объекты недвижимости</a></p>
-  </section>
-  {% endif %}
-</section>
+</div>
 {% endblock %}

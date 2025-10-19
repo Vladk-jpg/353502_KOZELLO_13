@@ -1,8 +1,7 @@
 .sertificate-frame {
-  background-image: url("/media/backgrounds/frame.jpg");
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
+  border: 20px solid transparent;
+  border-image: url("/media/backgrounds/frame.jpg") 20 round;
+  -webkit-border-image: url("/media/backgrounds/frame.jpg") 20 round;
   margin: 1.5rem auto;
   width: 100%;
   max-width: 1200px;
@@ -22,8 +21,8 @@
   padding: clamp(12px, 2.2vw, 36px);
   border-radius: 8px;
   background: linear-gradient(
-      rgba(255, 255, 255, 0.7),
-      rgba(255, 255, 255, 0.7)
+      rgba(255, 255, 255, 0.99),
+      rgba(255, 255, 255, 0.5)
     ),
     url("/media/backgrounds/stamp.png") center / 40% no-repeat;
   background-size: 40%;
@@ -62,7 +61,6 @@
 
 #sert_text::first-letter {
   font-size: 1.5em;
-  padding-left: 1.5em;
 }
 
 #sert_text {
@@ -71,6 +69,7 @@
   overflow-wrap: anywhere;
   word-break: break-word;
   hyphens: auto;
+  text-indent: 1em;
 }
 
 .sertificate-content p {
@@ -81,6 +80,9 @@
   .sertificate-frame {
     aspect-ratio: 4 / 3;
     padding: 7%;
+    border-width: 15px;
+    border-image: url("/media/backgrounds/frame.jpg") 15 round;
+    -webkit-border-image: url("/media/backgrounds/frame.jpg") 15 round;
   }
 
   .sertificate-content {
@@ -94,7 +96,6 @@
 
   #sert_text::first-letter {
     font-size: 1.3em;
-    padding-left: 1em;
   }
 
   #sert_date {
@@ -107,6 +108,9 @@
     aspect-ratio: auto;
     padding: 5%;
     min-width: 320px;
+    border-width: 12px;
+    border-image: url("/media/backgrounds/frame.jpg") 12 round;
+    -webkit-border-image: url("/media/backgrounds/frame.jpg") 12 round;
   }
 
   .sertificate-content {
@@ -127,6 +131,9 @@
 @media (max-width: 360px) {
   .sertificate-frame {
     padding: 6.5% 8%;
+    border-width: 10px;
+    border-image: url("/media/backgrounds/frame.jpg") 10 round;
+    -webkit-border-image: url("/media/backgrounds/frame.jpg") 10 round;
   }
 
   .sertificate-content {

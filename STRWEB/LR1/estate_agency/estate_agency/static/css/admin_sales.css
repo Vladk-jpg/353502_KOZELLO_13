@@ -1,0 +1,164 @@
+.admin-sales-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  background: #f8fafc;
+  min-height: 100vh;
+}
+
+.admin-sales-header {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+}
+
+.admin-sales-header h1 {
+  color: #1e293b;
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.admin-sales-section {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+}
+
+.sale-item {
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #e2e8f0;
+}
+
+.sale-item:last-child {
+  margin-bottom: 0;
+}
+
+.sale-item header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.sale-item h2 {
+  color: #1e293b;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.sale-status {
+  background: #dbeafe;
+  color: #1e40af;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.sale-details {
+  margin-bottom: 1rem;
+}
+
+.sale-details dl {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 0.5rem 1rem;
+  margin: 0;
+}
+
+.sale-details dt {
+  font-weight: 600;
+  color: #1e293b;
+  padding: 0.25rem 0;
+}
+
+.sale-details dd {
+  margin: 0;
+  padding: 0.25rem 0;
+  color: #475569;
+}
+
+.sale-price {
+  font-weight: 600;
+  color: #059669;
+}
+
+.sale-price s {
+  color: #64748b;
+  font-weight: normal;
+}
+
+.sale-price small {
+  color: #059669;
+  font-weight: 600;
+}
+
+.sale-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.sale-actions a {
+  color: #3b82f6;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 1px solid #3b82f6;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.sale-actions a:hover {
+  background: #3b82f6;
+  color: white;
+}
+
+.sale-actions form {
+  display: inline;
+}
+
+.sale-actions button {
+  background: #059669;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.sale-actions button:hover {
+  background: #047857;
+}
+
+.sale-actions button[type="submit"]:last-child {
+  background: #dc2626;
+}
+
+.sale-actions button[type="submit"]:last-child:hover {
+  background: #b91c1c;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: #64748b;
+}
+
+.empty-state p {
+  font-size: 1.125rem;
+  margin: 0;
+}
