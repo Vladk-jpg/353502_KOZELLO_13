@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin_sales.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="admin-sales-container">
+  <header class="admin-sales-header">
+    <h1>Мониторинг продаж</h1>
+  </header>
+
+  <section class="admin-sales-section">
+    {% if sales %}
+    <section>
+      {% for sale in sales %}
+      <article class="sale-item">
+        <header>
+          <h2>{{ sale.property.title }}</h2>
+          <span class="sale-status"> {{ sale.get_status_display }} </span>
+        </header>
+
+        <section class="sale-details">
+          <dl>
+            <dt>Клиент:</dt>
+            <dd>{{ sale.client.user.username }}</dd>
+
+            <dt>Агент:</dt>
+            <dd>{{ sale.agent.user.username }}</dd>
+
+            <dt>Цена:</dt>
+            <dd class="sale-price">
+              {% if sale.promo %}
+              <span>{{ sale.property.price }} BYN</span>
+              <span>
+                {{ sale.get_final_price|floatformat:0 }} BYN
+                <small>(-{{ sale.promo.discount_percentage }}%)</small>
+              </span>
+              {% else %} 
+              {{ sale.property.price }} BYN 
+              {% endif %}
+            </dd>
+
+            <dt>Дата договора:</dt>
+            <dd>
+              <time datetime="{{ sale.contract_date|date:'c' }}">
+                {{ sale.contract_date|date:"d.m.Y H:i" }}
+              </time>
+            </dd>
+
+            {% if sale.sale_date %}
+            <dt>Дата продажи:</dt>
+            <dd>
+              <time datetime="{{ sale.sale_date|date:'c' }}">
+                {{ sale.sale_date|date:"d.m.Y H:i" }}
+              </time>
+            </dd>
+            {% endif %}
+
+            {% if sale.promo %}
+            <dt>Примененный промокод:</dt>
+            <dd>{{ sale.promo.promo_code }}</dd>
+            {% endif %}
+          </dl>
+        </section>
+
+        <nav class="sale-actions">
+          <a href="{% url 'property_detail' sale.property.id %}">
+            Подробнее об объекте
+          </a>
+
+          {% if sale.status == 'pending' %}
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="sale_id" value="{{ sale.id }}" />
+            <input type="hidden" name="action" value="approve" />
+            <button type="submit">Продать</button>
+          </form>
+
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="sale_id" value="{{ sale.id }}" />
+            <input type="hidden" name="action" value="reject" />
+            <button
+              type="submit"
+              onclick="return confirm('Вы уверены, что хотите отклонить эту заявку?')"
+            >
+              Отклонить
+            </button>
+          </form>
+          {% endif %}
+        </nav>
+      </article>
+      {% endfor %}
+    </section>
+    {% else %}
+    <div class="empty-state">
+      <p>Пока нет продаж.</p>
+    </div>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

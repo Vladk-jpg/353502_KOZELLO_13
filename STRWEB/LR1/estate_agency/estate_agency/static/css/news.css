@@ -1,0 +1,141 @@
+.news-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.news-title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 0;
+}
+
+.news-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.news-image-container {
+    margin: 0;
+    overflow: hidden;
+}
+
+.news-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease;
+}
+
+.news-card:hover .news-image {
+    transform: scale(1.05);
+}
+
+.news-header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.news-card-title {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 1.4em;
+    line-height: 1.3;
+}
+
+.news-date {
+    color: #666;
+    font-size: 0.9em;
+    font-style: italic;
+}
+
+.news-content {
+    padding: 20px;
+    position: relative;
+}
+
+.news-excerpt {
+    margin: 0;
+    color: #555;
+    line-height: 1.6;
+    font-size: 1em;
+    
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.news-actions {
+    padding: 0 20px 20px 20px;
+}
+
+.news-read-more {
+    display: inline-block;
+    background: #007bff;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.news-read-more:hover {
+    background: #0056b3;
+}
+
+.news-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+    font-size: 1.2em;
+}
+
+@media (max-width: 768px) {
+    .news-container {
+        padding: 10px;
+    }
+    
+    .news-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .news-title {
+        font-size: 2em;
+    }
+    
+    .news-card-title {
+        font-size: 1.2em;
+    }
+}
+
+@media (max-width: 480px) {
+    .news-header,
+    .news-content,
+    .news-actions {
+        padding: 15px;
+    }
+    
+    .news-image {
+        height: 200px;
+    }
+}

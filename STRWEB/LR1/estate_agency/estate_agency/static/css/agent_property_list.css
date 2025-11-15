@@ -1,0 +1,195 @@
+.agent-property-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.agent-property-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--color-border);
+}
+
+.agent-property-header h1 {
+  color: var(--color-primary-700);
+  font-family: var(--font-alt);
+  margin: 0;
+}
+
+.agent-property-header nav a {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-primary-500);
+  color: white;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.agent-property-header nav a:hover {
+  background: var(--color-primary-600);
+  color: white;
+  text-decoration: none;
+}
+
+.agent-property-section {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+.agent-property-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.agent-property-table thead {
+  background: var(--color-surface);
+}
+
+.agent-property-table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--color-primary-700);
+  border-bottom: 2px solid var(--color-border);
+  font-family: var(--font-alt);
+}
+
+.agent-property-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.agent-property-table tr:last-child td {
+  border-bottom: none;
+}
+
+.agent-property-table tr:hover {
+  background: var(--color-surface);
+}
+
+.property-title {
+  font-weight: 600;
+  color: var(--color-primary-600);
+}
+
+.property-category {
+  color: var(--color-text);
+}
+
+.property-price {
+  font-weight: 600;
+  color: var(--color-accent-500);
+}
+
+.property-status {
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.property-status.available {
+  background: var(--color-success);
+  color: white;
+}
+
+.property-status.sold {
+  background: var(--color-error);
+  color: white;
+}
+
+.property-status.reserved {
+  background: var(--color-warning);
+  color: white;
+}
+
+.property-date {
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+
+.property-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.property-actions a {
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.property-actions a[href*="property_detail"] {
+  background: var(--color-primary-100);
+  color: var(--color-primary-700);
+  border: 1px solid var(--color-primary-200);
+}
+
+.property-actions a[href*="property_detail"]:hover {
+  background: var(--color-primary-200);
+  color: var(--color-primary-800);
+}
+
+.property-actions a[href*="edit"] {
+  background: var(--color-warning);
+  color: white;
+  border: 1px solid var(--color-warning);
+}
+
+.property-actions a[href*="edit"]:hover {
+  background: #b45309;
+}
+
+.property-actions a[href*="delete"] {
+  background: var(--color-error);
+  color: white;
+  border: 1px solid var(--color-error);
+}
+
+.property-actions a[href*="delete"]:hover {
+  background: #b91c1c;
+}
+
+.agent-property-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+}
+
+.agent-property-empty p {
+  color: var(--color-muted);
+  font-size: 1.1rem;
+  margin: 0 0 1rem 0;
+}
+
+.agent-property-empty a {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-primary-500);
+  color: white;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.agent-property-empty a:hover {
+  background: var(--color-primary-600);
+  color: white;
+  text-decoration: none;
+}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="register-container">
+  <header class="register-header">
+    <h1>Регистрация</h1>
+  </header>
+
+  <section class="register-form">
+    <form method="post">
+      {% csrf_token %}
+      <fieldset>
+        <legend>Данные для регистрации</legend>
+        {% for field in form %}
+        <div class="form-group">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {% if field.errors %}
+          <div class="form-errors" role="alert" aria-live="polite">
+            {% for error in field.errors %}
+            <div>{{ error }}</div>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </fieldset>
+      
+      <div>
+        <button type="submit" class="submit-button" accesskey="Enter">Зарегистрироваться</button>
+      </div>
+    </form>
+  </section>
+
+  <aside class="register-aside">
+    <p>Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
+  </aside>
+</div>
+{% endblock %}

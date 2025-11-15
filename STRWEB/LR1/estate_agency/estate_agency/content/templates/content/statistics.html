@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/statistics.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="statistics-container">
+  <header class="statistics-header">
+    <h1>Статистика агентства недвижимости</h1>
+  </header>
+
+  <section class="statistics-section">
+    <header>
+      <h2>Распределение недвижимости по категориям</h2>
+    </header>
+    
+    <div class="statistics-graph">
+      <figure>
+        <img
+          src="data:image/png;base64,{{ property_distribution_graph }}"
+          alt="Распределение по категориям"
+        />
+      </figure>
+    </div>
+  </section>
+
+  <section class="statistics-section">
+    <header>
+      <h2>Статистика продаж по сотрудникам за последний месяц</h2>
+    </header>
+    
+    <table class="statistics-table">
+      <thead>
+        <tr>
+          <th>Сотрудник</th>
+          <th>Количество продаж</th>
+          <th>Общая сумма продаж</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for stat in employee_stats %}
+        <tr>
+          <td>{{ stat.agent_name }}</td>
+          <td>{{ stat.total_sales }}</td>
+          <td>{{ stat.total_amount }} BYN</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  <section class="statistics-section">
+    <header>
+      <h2>Статистические показатели продаж за последний месяц</h2>
+    </header>
+    
+    <div class="statistics-metrics">
+      <dl>
+        <dt>Среднее значение</dt>
+        <dd>{{ mean_sales }} BYN</dd>
+      </dl>
+
+      <dl>
+        <dt>Медиана</dt>
+        <dd>{{ median_sales }} BYN</dd>
+      </dl>
+
+      <dl>
+        <dt>Мода</dt>
+        <dd>{{ mode_sales }} BYN</dd>
+      </dl>
+    </div>
+  </section>
+</div>
+{% endblock %}

@@ -1,0 +1,142 @@
+.statistics-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  background: #f8fafc;
+  min-height: 100vh;
+}
+
+.statistics-header {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+}
+
+.statistics-header h1 {
+  color: #1e293b;
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.statistics-section {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+}
+
+.statistics-section:last-child {
+  margin-bottom: 0;
+}
+
+.statistics-section header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.statistics-section h2 {
+  color: #1e293b;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.statistics-graph {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.statistics-graph figure {
+  margin: 0;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.statistics-graph img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+.statistics-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+.statistics-table thead {
+  background: #f8fafc;
+}
+
+.statistics-table th {
+  color: #1e293b;
+  font-weight: 600;
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 2px solid #e2e8f0;
+  font-size: 0.95rem;
+}
+
+.statistics-table td {
+  color: #475569;
+  padding: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 0.95rem;
+}
+
+.statistics-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.statistics-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.statistics-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin: 1rem 0;
+}
+
+.statistics-metrics dl {
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 1px solid #e2e8f0;
+  margin: 0;
+}
+
+.statistics-metrics dt {
+  color: #1e293b;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+.statistics-metrics dd {
+  color: #059669;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.statistics-empty {
+  text-align: center;
+  padding: 3rem;
+  color: #64748b;
+}
+
+.statistics-empty p {
+  font-size: 1.125rem;
+  margin: 0;
+}

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/property_reserve.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="property-reserve-container">
+  <header class="property-reserve-header">
+    <h1>Бронирование объекта недвижимости</h1>
+  </header>
+
+  <section class="property-info">
+    <header>
+      <h2>{{ property.title }}</h2>
+      <p>{{ property.price }} BYN</p>
+    </header>
+  </section>
+
+  <section class="property-reserve-form">
+    <form method="post">
+      {% csrf_token %} 
+      
+      <fieldset>
+        <legend>Информация для бронирования</legend>
+        
+        {% for field in form %}
+        <div class="form-group">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }} 
+          {% if field.errors %}
+          <div class="form-errors" role="alert">
+            {% for error in field.errors %}
+            <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </fieldset>
+
+      <section class="reserve-info">
+        <p>
+          После бронирования объект будет зарезервирован за вами, и агент
+          свяжется с вами для оформления сделки.
+        </p>
+      </section>
+
+      <nav class="form-navigation">
+        <button type="submit" class="submit-button">Забронировать</button>
+        <a href="{% url 'property_detail' property.id %}" class="cancel-link">Отмена</a>
+      </nav>
+    </form>
+  </section>
+</div>
+{% endblock %}

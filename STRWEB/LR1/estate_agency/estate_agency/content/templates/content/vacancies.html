@@ -1,0 +1,46 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block title %}Вакансии{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/vacancies.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="vacancies-page">
+  <header class="vacancies-header">
+    <h1>Вакансии</h1>
+  </header>
+
+  <div class="vacancies-container">
+    {% if vacancies %}
+    <section class="vacancies-list">
+      {% for vacancy in vacancies %}
+      <article class="vacancy-item">
+        <header class="vacancy-header">
+          <h2 class="vacancy-title">{{ vacancy.title }}</h2>
+        </header>
+        
+        <section class="vacancy-content">
+          <div class="vacancy-description">
+            {{ vacancy.description|linebreaks }}
+          </div>
+        </section>
+        
+        <footer class="vacancy-footer">
+          <time class="vacancy-date" datetime="{{ vacancy.created_at|date:'c' }}">
+            Добавлено: {{ vacancy.created_at|date:"d.m.Y H:i" }}
+          </time>
+        </footer>
+      </article>
+      {% endfor %}
+    </section>
+    {% else %}
+    <section class="vacancy-empty">
+      <p>В данный момент нет открытых вакансий.</p>
+    </section>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

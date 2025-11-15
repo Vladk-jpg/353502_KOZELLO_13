@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/add_staff.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="add-staff-container">
+  <header class="add-staff-header">
+    <h1>Добавление нового сотрудника</h1>
+  </header>
+
+  <section class="add-staff-form">
+    <form method="post" enctype="multipart/form-data" novalidate>
+      {% csrf_token %}
+      
+      <fieldset>
+        <legend>Информация о сотруднике</legend>
+        
+        {% for field in form %}
+        <div class="form-group">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          
+          {% if field.errors %}
+          <div class="form-errors" role="alert">
+            {% for error in field.errors %}
+            <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+          {% endif %}
+          
+          {% if field.help_text %}
+          <small>{{ field.help_text }}</small>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </fieldset>
+      
+      <nav class="form-navigation">
+        <button type="submit" class="submit-button">Добавить сотрудника</button>
+        <a href="{% url 'staff_list' %}" class="cancel-link">Отмена</a>
+      </nav>
+    </form>
+  </section>
+</div>
+{% endblock %}

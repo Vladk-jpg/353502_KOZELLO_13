@@ -1,0 +1,75 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/staff.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="staff-page">
+  <header class="staff-header">
+    <h1>Наши сотрудники</h1>
+    {% if user.userprofile.role == 'admin' %}
+    <nav>
+      <a href="{% url 'add_staff' %}">Добавить сотрудника</a>
+    </nav>
+    {% endif %}
+  </header>
+
+  <section class="staff-grid">
+    {% for staff in staff_members %}
+    <article class="staff-card">
+      <header class="staff-photo">
+        {% if staff.photo %}
+        <img
+          src="{{ staff.photo.url }}"
+          alt="{{ staff.user_profile.user.get_full_name|default:staff.user_profile.user.username }}"
+        />
+        {% else %}
+        <img 
+          src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIFBob3RvPC90ZXh0Pjwvc3ZnPg=="
+          alt="Фото сотрудника отсутствует" 
+        />
+        {% endif %}
+      </header>
+      
+      <section class="staff-info">
+        <h2 class="staff-name">
+          {{ staff.user_profile.user.get_full_name|default:staff.user_profile.user.username }}
+        </h2>
+        <h3 class="staff-position">{{ staff.position }}</h3>
+        
+        <dl class="staff-details">
+          <div class="staff-detail">
+            <dt>Опыт работы:</dt>
+            <dd>{{ staff.experience }} лет</dd>
+          </div>
+          
+          <div class="staff-detail">
+            <dt>Email:</dt>
+            <dd>
+              <a href="mailto:{{ staff.user_profile.user.email }}">
+                {{ staff.user_profile.user.email }}
+              </a>
+            </dd>
+          </div>
+          
+          <div class="staff-detail">
+            <dt>Телефон:</dt>
+            <dd>
+              <a href="tel:{{ staff.user_profile.phone_number }}">
+                {{ staff.user_profile.phone_number }}
+              </a>
+            </dd>
+          </div>
+        </dl>
+      </section>
+    </article>
+    {% empty %}
+    <section class="staff-empty">
+      <p>Сотрудники пока не добавлены</p>
+    </section>
+    {% endfor %}
+  </section>
+</div>
+{% endblock %}

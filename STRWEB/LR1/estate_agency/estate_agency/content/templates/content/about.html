@@ -1,0 +1,275 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+<link rel="stylesheet" href="{% static 'css/sertificate.css' %}">
+{% endblock %}
+{% block title %}О компании{% endblock %} 
+{% block content %}
+<header class="about-header">
+  <div class="about-header-content">
+    {% if about_info and about_info.logo %}
+    <figure class="about-logo-figure">
+      <img src="{{ about_info.logo.url }}" alt="Логотип компании" width="120" height="auto">
+    </figure>
+    {% endif %}
+    <h1 class="about-title">О компании</h1>
+  </div>
+</header>
+
+{% if about_info %}
+
+  <section class="about-section about-info">
+    <h2 class="about-section-title">Информация о компании</h2>
+    <article class="about-card">
+      {{ about_info.company_info|linebreaks }}
+    </article>
+  </section>
+
+  <section class="about-section about-quote">
+    <h2 class="about-section-title"><strong>Внимание!</strong> Наш девиз</h2>
+    <div class="about-quote-container">
+      <aside class="about-quote-aside">
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><img src="/media/photoes/JSON_Stetkhem.jpg" alt="JSON Стетхэм" width="120" height="auto"></a>
+      </aside>
+      <blockquote class="about-blockquote" cite="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+        <p>Тут — это вам не там.</p>
+        <footer>- JSON Стетхэм</footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="about-section about-history">
+    <h2 class="about-section-title">История компании</h2>
+    <article class="about-timeline">
+      <h3>2020: Основание "Estate Agency"</h3>
+      <p>В 2020 году опытный риелтор Анна и специалист по маркетингу Сергей решили объединить усилия, чтобы создать собственное агентство недвижимости. Их целью было предложить клиентам новый уровень сервиса, основанный на прозрачности, индивидуальном подходе и использовании современных технологий. Так появилась компания "Estate Agency", которая начала свою работу с небольшого офиса и амбициозных планов.</p>
+      
+      <h3>2021: Первые успешные сделки и рост репутации</h3>
+      <p>2021 год стал для "Estate Agency" временем активного становления. Благодаря личному подходу и усердной работе Анны и Сергея, компания быстро завоевала доверие первых клиентов. Успешные сделки по продаже и аренде недвижимости, а также положительные отзывы, позволили "Estate Agency" начать формировать прочную репутацию надежного партнера на рынке.</p>
+      
+      <h3>2022: Расширение команды и цифровизация</h3>
+      <p>В 2022 году "Estate Agency" сделала важный шаг в своем развитии, расширив команду. К Анне и Сергею присоединились новые риелторы и юристы, что позволило увеличить количество одновременно ведущихся проектов. Компания также инвестировала в создание собственного удобного веб-сайта с каталогом объектов и онлайн-консультацией, что значительно упростило взаимодействие с клиентами.</p>
+      
+      <h3>2023: Новые районы и эксклюзивные предложения</h3>
+      <p>К 2023 году "Estate Agency" укрепила свои позиции на рынке и начала активно работать в новых районах города. Благодаря налаженным связям и глубокому пониманию рынка, компания стала предлагать своим клиентам эксклюзивные объекты недвижимости, недоступные другим агентствам. Это привлекло более требовательных клиентов и укрепило имидж "Estate Agency" как эксперта в своем деле.</p>
+      
+      <h3>2024: Внедрение VR-туров и аналитики</h3>
+      <p>2024 год ознаменовался внедрением передовых технологий в работу "Estate Agency". Компания первой на местном рынке начала предлагать виртуальные туры по объектам недвижимости, позволяя клиентам "посетить" дом или квартиру, не выходя из дома. Также была внедрена система аналитики рынка, которая помогала точно определять оптимальные цены и сроки для сделок.</p>
+      
+      <h3>2025: "Estate Agency" – лидер рынка и сообщество</h3>
+      <p>К 2025 году "Estate Agency" стала признанным лидером на рынке недвижимости в своем регионе. Компания не только продолжала успешно проводить сделки, но и активно развивала сообщество вокруг себя, организовывая семинары для покупателей и продавцов, а также участвуя в благотворительных проектах. "Estate Agency" стала синонимом надежности, инноваций и заботы о клиентах, продолжая расти и развиваться.</p>
+    </article>
+  </section>
+
+  {% if about_info.video_link %}
+  <section class="about-section about-video">
+    <h2 class="about-section-title">Видео о компании</h2>
+    <figure class="about-video-figure">
+      <video width="640" height="360" controls>
+        <source src="{{ about_info.video_link.url }}" type="video/mp4">
+        Ваш браузер не поддерживает видео элемент
+      </video>
+    </figure>
+  </section>
+  {% endif %}
+
+  {% if about_info.requisites %}
+  <section class="about-section about-requisites">
+    <h2 class="about-section-title">Реквизиты компании</h2>
+    <article class="about-card">
+      {{ about_info.requisites|linebreaks }}
+    </article>
+  </section>
+  {% endif %}
+
+  <section class="about-section about-certificate">
+    <h2 class="about-section-title">Сертификаты компании</h2>
+    <article>
+      <div class="sertificate-frame">
+        <div class="sertificate-content">
+          <h2>ЕДИНЫЙ РЕЕСТР АГЕНТОВ ПО ПРОДАЖЕ НЕДВИЖИМОСТИ</h2>
+          <h1>СЕРТИФИКАТ ПРОФЕССИОНАЛЬНОЙ КВАЛИФИКАЦИИ</h1>
+          <p id="sert_text">Настоящим документом удостоверяется, что Козелло Владислав Александрович является сертифицированным специалистом по недвижимости в компании "Estate Agency".</p>
+          <p>Действителен: Бессрочно</p>
+          <p>Директор компании "Estate Agency"</p>
+          <p id="sert_date">Выдан: 09.09.2025</p>
+          <p></p>
+        </div>
+      </div>
+    </article>
+  </section>
+
+{% else %}
+  <section>
+    <p>Информация о компании пока не добавлена</p>
+  </section>
+{% endif %}
+
+<section class="about-section about-links">
+  <h2 class="about-section-title">Полезные ссылки</h2>
+  
+  <table class="about-table" align="center" border="1" bordercolor="black">
+    <caption>Справочная информация и полезные ресурсы</caption>
+    
+    <thead>
+      <tr>
+        <th id="category">Категория</th>
+        <th id="name">Название ресурса</th>
+        <th id="description">Описание</th>
+        <th id="rating">Рейтинг</th>
+        <th id="visits">Количество посещений</th>
+        <th id="last-update">Последнее обновление</th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      <tr>
+        <th id="legal" headers="category" rowspan="3">Правовые ресурсы</th>
+        <td headers="name legal">
+          <a href="https://www.pravo.by" target="_blank" rel="noopener">Право.by</a>
+        </td>
+        <td headers="description legal">Официальный правовой портал Республики Беларусь</td>
+        <td headers="rating legal">9.2</td>
+        <td headers="visits legal">1,250</td>
+        <td headers="last-update legal">2024-01-15</td>
+      </tr>
+      
+      <tr>
+        <td headers="name legal">
+          <a href="https://www.nalog.gov.by" target="_blank" rel="noopener">Налоговый портал</a>
+        </td>
+        <td headers="description legal">Информация о налогообложении недвижимости</td>
+        <td headers="rating legal">8.7</td>
+        <td headers="visits legal">890</td>
+        <td headers="last-update legal">2024-01-10</td>
+      </tr>
+      
+      <tr>
+        <td headers="name legal">
+          <a href="https://www.mingoc.gov.by" target="_blank" rel="noopener">Минстройархитектуры</a>
+        </td>
+        <td headers="description legal">Министерство архитектуры и строительства РБ</td>
+        <td headers="rating legal">8.5</td>
+        <td headers="visits legal">756</td>
+        <td headers="last-update legal">2024-01-08</td>
+      </tr>
+      
+      <tr>
+        <th id="market" headers="category" rowspan="4">Рыночная аналитика</th>
+        <td headers="name market">
+          <a href="https://www.realt.by" target="_blank" rel="noopener">Realt.by</a>
+        </td>
+        <td headers="description market">Крупнейший портал недвижимости Беларуси</td>
+        <td headers="rating market">9.5</td>
+        <td headers="visits market">2,340</td>
+        <td headers="last-update market">2024-01-20</td>
+      </tr>
+      
+      <tr>
+        <td headers="name market">
+          <a href="https://www.kvartirant.by" target="_blank" rel="noopener">Квартирант.by</a>
+        </td>
+        <td headers="description market">Аналитика рынка аренды недвижимости</td>
+        <td headers="rating market">8.9</td>
+        <td headers="visits market">1,680</td>
+        <td headers="last-update market">2024-01-18</td>
+      </tr>
+      
+      <tr>
+        <td headers="name market">
+          <a href="https://www.bsb.by" target="_blank" rel="noopener">БСБ Банк</a>
+        </td>
+        <td headers="description market">Ипотечные программы и кредитные калькуляторы</td>
+        <td headers="rating market">8.3</td>
+        <td headers="visits market">1,420</td>
+        <td headers="last-update market">2024-01-12</td>
+      </tr>
+      
+      <tr>
+        <td headers="name market">
+          <a href="https://www.belarusbank.by" target="_blank" rel="noopener">Беларусбанк</a>
+        </td>
+        <td headers="description market">Ипотечное кредитование и консультации</td>
+        <td headers="rating market">8.1</td>
+        <td headers="visits market">1,190</td>
+        <td headers="last-update market">2024-01-14</td>
+      </tr>
+      
+      <tr>
+        <th id="tools" headers="category" rowspan="3">Инструменты</th>
+        <td headers="name tools">
+          <a href="https://www.calculator.net" target="_blank" rel="noopener">Калькулятор ипотеки</a>
+        </td>
+        <td headers="description tools">Расчет ежемесячных платежей по ипотеке</td>
+        <td headers="rating tools">9.0</td>
+        <td headers="visits tools">3,200</td>
+        <td headers="last-update tools">2024-01-22</td>
+      </tr>
+      
+      <tr>
+        <td headers="name tools">
+          <a href="https://www.google.com/maps" target="_blank" rel="noopener">Google Maps</a>
+        </td>
+        <td headers="description tools">Карты и спутниковые снимки для анализа локации</td>
+        <td headers="rating tools">9.8</td>
+        <td headers="visits tools">4,500</td>
+        <td headers="last-update tools">2024-01-25</td>
+      </tr>
+      
+      <tr>
+        <td headers="name tools">
+          <a href="https://www.2gis.by" target="_blank" rel="noopener">2ГИС Минск</a>
+        </td>
+        <td headers="description tools">Детальные карты города с инфраструктурой</td>
+        <td headers="rating tools">9.3</td>
+        <td headers="visits tools">2,800</td>
+        <td headers="last-update tools">2024-01-19</td>
+      </tr>
+      
+      <tr>
+        <th id="education" headers="category" rowspan="2">Образование</th>
+        <td headers="name education">
+          <a href="https://www.belarus.by" target="_blank" rel="noopener">Официальный сайт РБ</a>
+        </td>
+        <td headers="description education">Государственная информация и нормативные акты</td>
+        <td headers="rating education">8.8</td>
+        <td headers="visits education">1,560</td>
+        <td headers="last-update education">2024-01-16</td>
+      </tr>
+      
+      <tr>
+        <td headers="name education">
+          <a href="https://www.consultant.by" target="_blank" rel="noopener">Консультант Плюс</a>
+        </td>
+        <td headers="description education">Правовая база данных и консультации</td>
+        <td headers="rating education">9.1</td>
+        <td headers="visits education">1,920</td>
+        <td headers="last-update education">2024-01-21</td>
+      </tr>
+    </tbody>
+    
+    <tfoot>
+      <tr>
+        <td headers="category" colspan="3">Общая статистика</td>
+        <td headers="rating">8.9</td>
+        <td headers="visits">22,506</td>
+        <td headers="last-update">2024-01-25</td>
+      </tr>
+    </tfoot>
+  </table>
+</section>
+<section class="about-section about-map">
+  <h2 class="about-section-title">Карта</h2>
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117509.25792728113!2d27.45192345!3d53.88475999999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46dbcfd35b1e6ad3%3A0xb61b853ddb570d9!2z0JzQuNC90YHQuiwg0JHQtdC70LDRgNGD0YHRjA!5e0!3m2!1sru!2s!4v1719912345678!5m2!1sru!2s"
+    width="400"
+    height="300"
+    style="border:0;"
+    allowfullscreen=""
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+    title="Карта города Минск на Google Maps">
+    </iframe>
+</section>
+{% endblock %}

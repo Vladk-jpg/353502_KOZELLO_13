@@ -1,0 +1,246 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/preloader.css' %}">
+<link rel="stylesheet" href="{% static 'css/animation.css' %}">
+{% endblock %}
+{% block content %}
+<header class="home-header">
+  <h1>Добро пожаловать в наше агентство недвижимости</h1>
+
+  {% if about_info.logo %}
+  <figure>
+    <img
+      src="{{ about_info.logo.url }}"
+      alt="Логотип компании"
+      width="150"
+      height="auto"
+    />
+  </figure>
+  {% endif %}
+</header>
+
+<section class="animation-section">
+  <div class="animation-container">
+    <div class="animation-forest animation-forest-left"></div>
+    <div class="animation-forest animation-forest-right"></div>
+    <div class="animation-cloud"></div>
+    <div class="animation-house"></div>
+    <div class="animation-window1"></div>
+    <div class="animation-window2"></div>
+    <div class="animation-window3"></div>
+    <div class="animation-door"></div>
+    <div class="animation-text">Найдите свой дом мечты с нами!</div>
+  </div>
+</section>
+
+<section class="banner-section">
+  <article>
+    <picture>
+      <source 
+        media="(max-width: 500px)"
+        srcset="/media/banner/banner-narrow-500.png 500w"
+        sizes="100vw">
+      
+      <source 
+        media="(max-width: 700px)"
+        srcset="/media/banner/banner-narrow-700.png 700w"
+        sizes="100vw">
+      
+      <source 
+        media="(max-width: 1000px)"
+        srcset="/media/banner/banner-1000.png 1000w"
+        sizes="100vw">
+      
+      <source 
+        media="(min-width: 1001px)"
+        srcset="/media/banner/banner-1400.png 1400w"
+        sizes="100vw">
+      
+      <img
+        src="/media/banner/banner.png"
+        srcset="/media/banner/banner-1000.png 1000w,
+                /media/banner/banner-1400.png 1400w"
+        sizes="(max-width: 500px) 100vw,
+               (max-width: 700px) 100vw,
+               (max-width: 1000px) 100vw,
+               100vw"
+        alt="Баннер Estate Agency - Найдите свою мечту с нами"
+        loading="lazy"
+      />
+    </picture>
+  </article>
+</section>
+
+<section class="audio-section">
+  <header>
+    <h2>Приветственное сообщение</h2>
+  </header>
+  <article>
+    <p>Послушайте приветственное сообщение от нашего директора:</p>
+    <figure>
+      <audio controls>
+        <source src="/media/audio/greetings.mp3" type="audio/mpeg" />
+        <source src="/media/audio/greetings.ogg" type="audio/ogg" />
+        Ваш браузер не поддерживает аудио элемент
+      </audio>
+      <figcaption>
+        Приветственное сообщение от директора агентства недвижимости
+      </figcaption>
+    </figure>
+  </article>
+</section>
+
+{% if latest_property %}
+<section class="latest-property-section">
+  <header>
+    <h2>Последний объект недвижимости</h2>
+  </header>
+
+  <article>
+    <header>
+      <h3>{{ latest_property.title }}</h3>
+    </header>
+
+    <dl>
+      <dt>Цена:</dt>
+      <dd>{{ latest_property.price }} BYN</dd>
+
+      <dt>Категория:</dt>
+      <dd>{{ latest_property.category.name }}</dd>
+
+      <dt>Статус:</dt>
+      <dd>{{ latest_property.get_status_display }}</dd>
+
+      <dt>Описание:</dt>
+      <dd>{{ latest_property.description|truncatewords:20 }}</dd>
+    </dl>
+
+    <nav>
+      <a href="{{ latest_property.get_absolute_url }}">Подробнее</a>
+      <a href="{% url 'index' %}">Посмотреть все объекты</a>
+    </nav>
+  </article>
+</section>
+{% else %}
+<section class="latest-property-section">
+  <p>В данный момент нет доступных объектов недвижимости.</p>
+  <nav>
+    <a href="{% url 'index' %}">Посмотреть каталог</a>
+  </nav>
+</section>
+{% endif %}
+{% if latest_article %}
+<section class="latest-article-section">
+  <header>
+    <h2>Последние новости</h2>
+  </header>
+
+  <article class="latest-article-content">
+    <header>
+      <h3>{{ latest_article.title }}</h3>
+      <time datetime="{{ latest_article.created_at|date:'c' }}">
+        {{ latest_article.created_at|date:"d.m.Y H:i" }}
+      </time>
+    </header>
+
+    {% if latest_article.image %}
+    <figure>
+      <img
+        src="{{ latest_article.image.url }}"
+        alt="{{ latest_article.title }}"
+        width="300"
+        height="auto"
+      />
+    </figure>
+    {% endif %}
+
+    <section>
+      <p>{{ latest_article.get_short_content }}</p>
+    </section>
+
+    <nav>
+      <a href="{% url 'content:article_detail' latest_article.id %}"
+        >Читать далее</a
+      >
+      <a href="{% url 'content:news' %}">Все новости</a>
+    </nav>
+  </article>
+</section>
+{% endif %}
+{% if partners %}
+<section class="partners-section">
+  <header>
+    <h2>Наши партнеры</h2>
+  </header>
+
+  <section class="partners-grid">
+    {% for partner in partners %}
+    <article class="partner-item">
+      <figure>
+        <a href="{{ partner.link }}" target="_blank" rel="noopener">
+          <img
+            src="{{ partner.image.url }}"
+            alt="{{ partner.name }}"
+            width="120"
+            height="auto"
+          />
+        </a>
+        <figcaption>{{ partner.name }}</figcaption>
+      </figure>
+    </article>
+    {% endfor %}
+  </section>
+</section>
+{% endif %}
+
+<aside class="calendar-aside">
+  <header>
+    <h2>Сегодня: {{ current_date }}</h2>
+  </header>
+
+  <section>
+    <pre>{{ month_calendar }}</pre>
+  </section>
+</aside>
+
+<!-- Прелоадер с тремя пульсирующими точками -->
+<section class="preloader-container">
+  <div class="preloader-dots">
+    <div class="preloader-dot"></div>
+    <div class="preloader-dot"></div>
+    <div class="preloader-dot"></div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const animationSection = document.querySelector('.animation-section');
+  
+  // Перезапуск анимации при клике
+  animationSection.addEventListener('click', function() {
+    // Удаляем классы анимации
+    const elements = this.querySelectorAll('[class*="animation-"]');
+    elements.forEach(el => {
+      el.style.animation = 'none';
+      el.offsetHeight; // Принудительный reflow
+      el.style.animation = null;
+    });
+    
+    // Перезапускаем анимацию через небольшую задержку
+    setTimeout(() => {
+      elements.forEach(el => {
+        el.style.animationPlayState = 'running';
+      });
+    }, 100);
+  });
+  
+  // Добавляем курсор pointer для интерактивности
+  animationSection.style.cursor = 'pointer';
+  animationSection.title = 'Кликните для перезапуска анимации';
+});
+</script>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Новости компании{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/news.css' %}">
+{% endblock %}
+{% block content %}
+<div class="news-container">
+  <header>
+    <h1 class="news-title">Новости компании</h1>
+  </header>
+
+  {% if articles %}
+  <div class="news-grid">
+    {% for article in articles %}
+    <article class="news-card">
+      {% if article.image %}
+      <figure class="news-image-container">
+        <img 
+          class="news-image"
+          src="{{ article.image.url }}" 
+          alt="{{ article.title }}"
+        />
+      </figure>
+      {% endif %}
+      
+      <header class="news-header">
+        <h2 class="news-card-title">{{ article.title }}</h2>
+        <time class="news-date" datetime="{{ article.created_at|date:'c' }}">
+          {{ article.created_at|date:"d.m.Y H:i" }}
+        </time>
+      </header>
+      
+      <section class="news-content">
+        <p class="news-excerpt">{{ article.content }}</p>
+      </section>
+      
+      <nav class="news-actions">
+        <a class="news-read-more" href="{% url 'content:article_detail' article.id %}">Читать далее</a>
+      </nav>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="news-empty">
+    <p>Новостей пока нет.</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

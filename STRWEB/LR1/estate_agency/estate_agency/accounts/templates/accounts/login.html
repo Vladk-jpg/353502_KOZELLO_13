@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+  <header class="login-header">
+    <h1>Вход</h1>
+  </header>
+
+  <section class="login-form">
+    <form method="post">
+      {% csrf_token %}
+      <fieldset>
+        <legend>Данные для входа</legend>
+        <div class="form-group">
+          <label for="username">Имя пользователя</label>
+          <input type="text" name="username" id="username" required />
+          <small>Поле обязательно для заполнения</small>
+          {% if form.username.errors %}
+          <div class="form-errors">
+            <small>{{ form.username.errors }}</small>
+          </div>
+          {% endif %}
+        </div>
+        <div class="form-group">
+          <label for="password">Пароль</label>
+          <input type="password" name="password" id="password" required />
+          <small>Поле обязательно для заполнения</small>
+          {% if form.password.errors %}
+          <div class="form-errors">
+            <small>{{ form.password.errors }}</small>
+          </div>
+          {% endif %}
+        </div>
+      </fieldset>
+      
+      <div>
+        <button type="submit" class="submit-button" accesskey="Enter">Войти</button>
+      </div>
+    </form>
+  </section>
+
+  <aside class="login-aside">
+    <p>
+      Нет аккаунта?
+      <a href="{% url 'register' %}">Зарегистрироваться</a>
+    </p>
+  </aside>
+</div>
+{% endblock %}

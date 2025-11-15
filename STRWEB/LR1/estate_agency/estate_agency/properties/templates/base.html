@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Агентство недвижимости Estate Agency - найдите свою мечту с нами" />
+    <meta name="keywords" content="недвижимость, агентство недвижимости, купить квартиру, продать квартиру, аренда недвижимости, коммерческая недвижимость, жилая недвижимость, Estate Agency, недвижимость Минск, недвижимость Беларусь" />
+    
+    <link rel="icon" type="image/png" href="/media/logos/Logo.png">
+    <link rel="shortcut icon" type="image/png" href="/media/logos/Logo.png">
+    
+    <title>{% block title %}Estate Agency{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nav.css' %}">
+    {% block extra_css %}{% endblock %}
+  </head>
+  <body itemscope itemtype="https://schema.org/WebSite">
+    <header class="main-header">
+      <nav role="navigation" aria-label="Основная навигация" itemscope itemtype="https://schema.org/SiteNavigationElement">
+        <div class="navbar">
+          <a class="brand" href="{% url 'content:home' %}" aria-label="Estate Agency - главная страница">
+            Estate Agency
+          </a>
+
+          <input class="nav-toggle" type="checkbox" id="nav-toggle" aria-label="Переключить навигационное меню">
+          <label class="nav-toggle-label" for="nav-toggle" aria-hidden="true"><span></span></label>
+
+          <div class="nav-menus" id="navbarNav">
+            <ul role="menubar">
+              <li role="none">
+                <a href="{% url 'content:about' %}" role="menuitem">
+                  О нас
+                </a>
+              </li>
+              <li role="none">
+                <a href="{% url 'content:news' %}" role="menuitem">
+                  Новости
+                </a>
+              </li>
+              <li role="none">
+                <a href="{% url 'content:faq' %}" role="menuitem">
+                  FAQ
+                </a>
+              </li>
+              <li role="none">
+                <a href="{% url 'content:vacancies' %}" role="menuitem">
+                  Вакансии
+                </a>
+              </li>
+              <li role="none">
+                <a href="{% url 'content:reviews' %}" role="menuitem">
+                  Отзывы
+                </a>
+              </li>
+              <li role="none">
+                <a href="{% url 'index' %}" role="menuitem">
+                  Объекты недвижимости
+                </a>
+              </li>
+              <li role="none">
+                <a href="{% url 'category_list' %}" role="menuitem">Категории</a>
+              </li>
+              <li role="none">
+                <a href="{% url 'promo_codes' %}" role="menuitem">Промокоды</a>
+              </li>
+              <li role="none">
+                <a href="{% url 'staff_list' %}" role="menuitem">Контакты</a>
+              </li>
+            </ul>
+            <ul role="menubar" aria-label="Пользовательское меню">
+              {% if user.is_authenticated %}
+              <li role="none">
+                <a href="{% url 'profile' %}" role="menuitem">Мой профиль</a>
+              </li>
+              {% if user.userprofile.role == 'agent' %}
+              <li role="none">
+                <a href="{% url 'agent_property_list' %}" role="menuitem">
+                  Управление объектами
+                </a>
+              </li>
+              <li role="none">
+                <a href="{% url 'agent_sales' %}" role="menuitem">
+                  Мои продажи
+                </a>
+              </li>
+              {% endif %}
+              {% if user.userprofile.role == 'admin' %}
+              <li role="none">
+                <a href="{% url 'agent_property_list' %}" role="menuitem">
+                  Управление объектами
+                </a>
+              </li>
+              <li role="none">
+                <a href="{% url 'sales_monitoring' %}" role="menuitem">
+                  Мониторинг продаж
+                </a>
+              </li>
+              {% endif %}
+              {% if user.userprofile.role == 'client' %}
+              <li role="none">
+                <a href="{% url 'client_purchases' %}" role="menuitem">
+                  Мои покупки
+                </a>
+              </li>
+              <li role="none">
+                <a href="{% url 'client_reservations' %}" role="menuitem">
+                  Мои резервации
+                </a>
+              </li>
+              {% endif %}
+              {% if user.userprofile.role == 'admin' %}
+              <li role="none">
+                <a href="{% url 'content:statistics' %}" role="menuitem">
+                  Статистика
+                </a>
+              </li>
+              {% endif %}
+              <li role="none">
+                <a href="{% url 'logout' %}" role="menuitem">Выйти</a>
+              </li>
+              {% else %}
+              <li role="none">
+                <a href="{% url 'login' %}" role="menuitem">Войти</a>
+              </li>
+              <li role="none">
+                <a href="{% url 'register' %}" role="menuitem">Регистрация</a>
+              </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main role="main" class="container-narrow">{% block content %} {% endblock %}</main>
+
+    <footer itemscope itemtype="https://schema.org/Organization">
+      <section>
+        <div>
+          <div>
+            <h2 itemprop="name">Estate Agency</h2>
+            <p itemprop="description">Найдите свою мечту с нами</p>
+            <address itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+              <span itemprop="addressCountry">BY</span>
+              <span itemprop="addressLocality">Минск</span>
+              <br>
+              IP адрес: {{ client_ip }}
+            </address>
+          </div>
+          <div>
+            <p>
+              &copy; {% now "Y" %} Estate Agency. Все права защищены.
+            </p>
+            <nav>
+              <a href="{% url 'content:privacy_policy' %}">Политика конфиденциальности</a>
+            </nav>
+            {% load tz %}
+            <section>
+              <h3>Информация о времени</h3>
+              <time datetime="{% now 'c' %}">
+                Текущее время: {% now "d.m.Y H:i" %}
+              </time>
+              <p>
+                Часовой пояс: {{ tz }}
+              </p>
+            </section>
+          </div>
+        </div>
+      </section>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+  </body>
+</html>

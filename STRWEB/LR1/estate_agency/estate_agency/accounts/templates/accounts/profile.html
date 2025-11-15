@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+  <header class="profile-header">
+    <h1>Профиль пользователя</h1>
+  </header>
+
+  <main>
+    <section class="profile-section">
+      <header>
+        <h2>Основная информация</h2>
+      </header>
+      
+      <div class="profile-info">
+        <dl>
+          <dt>Имя пользователя:</dt>
+          <dd>{{ user.username }}</dd>
+
+          <dt>Email:</dt>
+          <dd>{{ user.email }}</dd>
+
+          <dt>Роль:</dt>
+          <dd>{{ user.userprofile.get_role_display }}</dd>
+
+          <dt>Телефон:</dt>
+          <dd>{{ user.userprofile.phone_number }}</dd>
+
+          <dt>Дата рождения:</dt>
+          <dd>{{ user.userprofile.birth_date|date:"d.m.Y" }}</dd>
+
+          <dt>Возраст:</dt>
+          <dd>{{ user.userprofile.age }} лет</dd>
+        </dl>
+      </div>
+    </section>
+
+    {% if user.userprofile.role == 'client' %}
+    <section class="profile-section">
+      <header>
+        <h2>Ваш <b>агент</b></h2>
+      </header>
+      
+      {% if agent %}
+      <div class="agent-info">
+        <article>
+          <header>
+            <h3>{{ agent.user.get_full_name|default:agent.user.username }}</h3>
+          </header>
+          
+          <dl>
+            <dt>Email:</dt>
+            <dd>{{ agent.user.email }}</dd>
+
+            <dt>Телефон:</dt>
+            <dd>{{ agent.phone_number }}</dd>
+
+            <dt>Возраст:</dt>
+            <dd>{{ agent.age }} лет</dd>
+          </dl>
+        </article>
+      </div>
+      {% else %}
+      <p class="no-agent">У вас пока нет назначенного агента</p>
+      {% endif %}
+    </section>
+    {% endif %}
+
+    {% if user.userprofile.role == 'agent' %}
+    <section class="profile-section">
+      <header>
+        <h2>Ваши <b>клиенты</b></h2>
+      </header>
+      
+      {% if user.userprofile.clients.exists %}
+      <div class="clients-info">
+        {% for client in user.userprofile.clients.all %}
+        <div class="client-item">
+          <header>
+            <h4>{{ client.user.username }}</h4>
+          </header>
+          
+          <dl>
+            <dt>Email:</dt>
+            <dd>{{ client.user.email }}</dd>
+
+            <dt>Телефон:</dt>
+            <dd>{{ client.phone_number }}</dd>
+
+            <dt>Возраст:</dt>
+            <dd>{{ client.age }} лет</dd>
+          </dl>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <p class="no-agent">У вас пока нет клиентов</p>
+      {% endif %}
+    </section>
+    {% endif %}
+  </main>
+</div>
+
+{% if dog_image %}
+<aside>
+  <header>
+    <h2>Случайная собака</h2>
+  </header>
+  <figure>
+    <img src="{{ dog_image }}" alt="Случайная собака"  width="300" height="auto"/>
+    <figcaption>Случайное изображение собаки</figcaption>
+  </figure>
+</aside>
+{% endif %}
+{% endblock %}

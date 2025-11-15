@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Отзывы{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/reviews.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="reviews-page">
+  <header class="reviews-header">
+    <h1>Отзывы</h1>
+    {% if user.is_authenticated and user.userprofile.role == 'client' %}
+    <nav>
+      <a href="{% url 'content:add_review' %}">Добавить отзыв</a>
+    </nav>
+    {% elif not user.is_authenticated %}
+    <nav>
+      <a href="{% url 'login' %}?next={% url 'content:add_review' %}">Добавить отзыв</a>
+    </nav>
+    {% endif %}
+  </header>
+
+  <section class="reviews-list">
+    {% if reviews %}
+      {% for review in reviews %}
+      <article class="review-item">
+        <header class="review-header">
+          <h2 class="review-author">{{ review.user_name }}</h2>
+          <div class="review-rating">
+            <span>Оценка: {{ review.rating }}/10</span>
+          </div>
+        </header>
+        
+        <section class="review-content">
+          <div class="review-text">
+            {{ review.text|linebreaks }}
+          </div>
+        </section>
+        
+        <footer class="review-footer">
+          <time class="review-date" datetime="{{ review.created_at|date:'c' }}">
+            Добавлено: {{ review.created_at|date:"d.m.Y H:i" }}
+          </time>
+        </footer>
+      </article>
+      {% endfor %}
+    {% else %}
+    <section class="reviews-empty">
+      <p>Пока нет отзывов. Будьте первым, кто оставит отзыв!</p>
+    </section>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}
