@@ -3,6 +3,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/properties.css' %}">
+<link rel="stylesheet" href="{% static 'css/property-card.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -54,59 +55,23 @@
             </fieldset>
             
             <div class="filter-actions">
-                <button type="submit">Применить фильтры</button>
+                <button id="filter-submit-button" type="submit">Применить фильтры</button>
                 <a href="{% url 'index' %}">Очистить фильтры</a>
             </div>
         </form>
+        
+        <div class="pagination-controls">
+            <div class="filter-group">
+                <label for="pagination-limit">Элементов на странице:</label>
+                <input type="number" id="pagination-limit" name="pagination-limit" min="1" max="20" value="3">
+            </div>
+        </div>
     </aside>
 
     <section class="catalog-properties">
-        <div class="properties-grid">
-            {% for property in properties %}
-            <article class="property-card">
-                <header>
-                    <h2>
-                        <a href="{% url 'property_detail' property.id %}">
-                            {{ property.title }}
-                        </a>
-                    </h2>
-                    <h3>{{ property.category.name }}</h3>
-                </header>
-                
-                <section>
-                    <p>{{ property.description|truncatewords:30 }}</p>
-                </section>
-                
-                <section>
-                    <dl>
-                        <dt>Цена:</dt>
-                        <dd class="price-highlight">{{ property.price }} BYN</dd>
-                        
-                        <dt>Добавлено:</dt>
-                        <dd>
-                            <time datetime="{{ property.created_at|date:'c' }}">
-                                {{ property.created_at|date:"d.m.Y H:i" }}
-                            </time>
-                        </dd>
-                        
-                        <dt>Статус:</dt>
-                        <dd>
-                            <span class="status-badge status-{{ property.status|lower }}">
-                                {{ property.get_status_display }}
-                            </span>
-                        </dd>
-                    </dl>
-                </section>
-                <nav>
-                    <a href="{% url 'property_detail' property.id %}">Посмотреть детали</a>
-                </nav>
-            </article>
-            {% empty %}
-            <div class="catalog-empty">
-                <p>Нет объектов недвижимости, соответствующих вашим критериям.</p>
-            </div>
-            {% endfor %}
-        </div>
+        <div class="properties-grid"></div>
     </section>
 </div>
+
+<script src="{% static 'js/properties.js' %}"></script>
 {% endblock %} 

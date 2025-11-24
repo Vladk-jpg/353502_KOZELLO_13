@@ -4,6 +4,8 @@
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 <link rel="stylesheet" href="{% static 'css/preloader.css' %}">
 <link rel="stylesheet" href="{% static 'css/animation.css' %}">
+<link rel="stylesheet" href="{% static 'css/lr_3/slider.css' %}">
+<link rel="stylesheet" href="{% static 'css/lr_3/scroll-img.css' %}">
 {% endblock %}
 {% block content %}
 <header class="home-header">
@@ -35,42 +37,64 @@
   </div>
 </section>
 
-<section class="banner-section">
-  <article>
-    <picture>
-      <source 
-        media="(max-width: 500px)"
-        srcset="/media/banner/banner-narrow-500.png 500w"
-        sizes="100vw">
-      
-      <source 
-        media="(max-width: 700px)"
-        srcset="/media/banner/banner-narrow-700.png 700w"
-        sizes="100vw">
-      
-      <source 
-        media="(max-width: 1000px)"
-        srcset="/media/banner/banner-1000.png 1000w"
-        sizes="100vw">
-      
-      <source 
-        media="(min-width: 1001px)"
-        srcset="/media/banner/banner-1400.png 1400w"
-        sizes="100vw">
-      
-      <img
-        src="/media/banner/banner.png"
-        srcset="/media/banner/banner-1000.png 1000w,
-                /media/banner/banner-1400.png 1400w"
-        sizes="(max-width: 500px) 100vw,
-               (max-width: 700px) 100vw,
-               (max-width: 1000px) 100vw,
-               100vw"
-        alt="Баннер Estate Agency - Найдите свою мечту с нами"
-        loading="lazy"
-      />
-    </picture>
-  </article>
+<section id="slider" class="slider-container">
+  <div class="slider-image-wrapper">
+    <aside class="slider-number"></aside>
+    <img class="slider-img" />
+    <button class="slider-left-button">&lt;</button>
+    <button class="slider-right-button">&gt;</button>
+    <aside class="slider-title"></aside>
+    <nav class="slider-pagination"></nav>
+  </div>
+</section>
+
+<section class="slider-settings">
+  <header>
+    <h2>Настройки слайдера</h2>
+  </header>
+  <div class="slider-settings-content">
+    <div class="slider-setting-item">
+      <label>
+        <input type="checkbox" id="slider-loop" checked>
+        <span>Круговое переключение</span>
+      </label>
+    </div>
+    <div class="slider-setting-item">
+      <label>
+        <input type="checkbox" id="slider-navs" checked>
+        <span>Показывать навигацию</span>
+      </label>
+    </div>
+    <div class="slider-setting-item">
+      <label>
+        <input type="checkbox" id="slider-pags" checked>
+        <span>Показывать пагинацию</span>
+      </label>
+    </div>
+    <div class="slider-setting-item">
+      <label>
+        <input type="checkbox" id="slider-auto" checked>
+        <span>Автоматическое переключение</span>
+      </label>
+    </div>
+    <div class="slider-setting-item">
+      <label>
+        <input type="checkbox" id="slider-stopMouseHover" checked>
+        <span>Останавливать при наведении</span>
+      </label>
+    </div>
+    <div class="slider-setting-item">
+      <label>
+        <span>Задержка (мс):</span>
+        <input type="number" id="slider-delay" min="500" step="500" value="2000">
+      </label>
+    </div>
+  </div>
+</section>
+
+<section>
+  <button class="input-element-flag">🚩</button>
+  <div class="input-element-container"></div>
 </section>
 
 <section class="audio-section">
@@ -205,7 +229,6 @@
   </section>
 </aside>
 
-<!-- Прелоадер с тремя пульсирующими точками -->
 <section class="preloader-container">
   <div class="preloader-dots">
     <div class="preloader-dot"></div>
@@ -213,34 +236,19 @@
     <div class="preloader-dot"></div>
   </div>
 </section>
+
+<div class="scroll-houses-container">
+  <img src="/media/photoes/building1.png" class="scroll-house scroll-house-left">
+  <img src="/media/photoes/building2.png" class="scroll-house scroll-house-left">
+  <img src="/media/photoes/building3.png" class="scroll-house scroll-house-left">
+  <img src="/media/photoes/building4.png" class="scroll-house scroll-house-right">
+  <img src="/media/photoes/building5.png" class="scroll-house scroll-house-right">
+  <img src="/media/photoes/building6.png" class="scroll-house scroll-house-right">
+</div>
 {% endblock %}
 
 {% block extra_js %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const animationSection = document.querySelector('.animation-section');
-  
-  // Перезапуск анимации при клике
-  animationSection.addEventListener('click', function() {
-    // Удаляем классы анимации
-    const elements = this.querySelectorAll('[class*="animation-"]');
-    elements.forEach(el => {
-      el.style.animation = 'none';
-      el.offsetHeight; // Принудительный reflow
-      el.style.animation = null;
-    });
-    
-    // Перезапускаем анимацию через небольшую задержку
-    setTimeout(() => {
-      elements.forEach(el => {
-        el.style.animationPlayState = 'running';
-      });
-    }, 100);
-  });
-  
-  // Добавляем курсор pointer для интерактивности
-  animationSection.style.cursor = 'pointer';
-  animationSection.title = 'Кликните для перезапуска анимации';
-});
-</script>
+<script src="{% static 'js/slider.js' %}"></script>
+<script src="{% static 'js/input.js' %}"></script>
+<script src="{% static 'js/scrollAnimation.js' %}"></script>
 {% endblock %}

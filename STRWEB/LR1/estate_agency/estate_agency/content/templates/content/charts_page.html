@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Графики{% endblock %}
+
+{% block content %}
+<div class="charts-content">
+    <header class="charts-header">
+        <h1>Графики функции ln(1+x)</h1>  
+    </header>
+    
+    <section class="charts-section">
+        <div style="position: relative; height: 500px; width: 100%; margin: 20px 0;">
+            <canvas id="functionChart"></canvas>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+<script src="{% static 'js/charts.js' %}"></script>
+{% endblock %}

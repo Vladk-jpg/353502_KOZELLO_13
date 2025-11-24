@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Работа с датами{% endblock %}
+
+{% block content %}
+<div class="date-manipulation-content">
+    <header class="date-manipulation-header">
+        <h1>Работа с датами</h1>
+    </header>
+    
+    <section class="date-manipulation-section">
+        <div class="date-input-section">
+            <label for="add-new-date-input">Введите дату (формат: ДД/ММ/ГГГГ):</label>
+            <input type="text" id="add-new-date-input" placeholder="01/01/2000" />
+            <button type="button" id="add-new-date-button">Добавить дату</button>
+        </div>
+        
+        <div class="date-actions-section">
+            <button type="button" id="show-all-dates-button">Показать все даты</button>
+            <button type="button" id="show-spring-dates-button">Показать весенние даты</button>
+            <a id="download-spring-dates-link" download="spring_dates.json" style="display: none;"></a>
+        </div>
+        
+        <div id="represent-div-for-dates" class="dates-display-section"></div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/dateManipulationPrototype.js' %}"></script>
+{% endblock %}
+

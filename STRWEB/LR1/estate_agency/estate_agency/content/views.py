@@ -34,7 +34,8 @@ def get_client_ip():
 def base_context(request):
     return {
         'client_ip': get_client_ip(),
-        'tz': timezone.get_current_timezone()
+        'tz': timezone.get_current_timezone(),
+        'API_KEY': settings.API_KEY
     }
 
 def home(request):
@@ -142,6 +143,12 @@ def faq_view(request):
 
 def privacy_policy_view(request):
     return render(request, 'content/privacy_policy.html')
+
+def date_manipulation_view(request):
+    return render(request, 'content/date_manipulation.html')
+
+def charts_view(request):
+    return render(request, 'content/charts_page.html')
 
 def vacancies_view(request):
     vacancies = Vacancy.objects.all()

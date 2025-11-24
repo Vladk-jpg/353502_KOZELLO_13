@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from accounts.decorators import role_required
 from .models import Property, Category
 from .forms import PropertyForm, ReservationForm
@@ -43,9 +44,33 @@ def index(request):
         except ValidationError:
             messages.error(request, 'Дата "до" должна быть в формате ДД/ММ/ГГГГ')
     
+    properties_data = [
+        {
+            'id': p.id,
+            'title': p.title,
+            'price': p.price,
+            'description': p.description or '',
+            'category': p.category.name,
+            'status': p.status,
+            'status_display': p.get_status_display(),
+            'created_at': p.created_at.strftime('%d/%m/%Y %H:%M') if p.created_at else None,
+        }
+        for p in properties.select_related('category')
+    ]
+    
+    categories_data = [
+        {
+            'id': c.id,
+            'name': c.name,
+        }
+        for c in categories
+    ]
+    
     context = {
         'properties': properties,
+        'properties_data': properties_data,
         'categories': categories,
+        'categories_data': categories_data,
         'current_filters': {
             'min_price': min_price,
             'max_price': max_price,
@@ -310,3 +335,62 @@ def promo_codes(request):
         'expired_promos': expired_promos,
     }
     return render(request, 'properties/promo_codes.html', context)
+
+def api_properties(request):
+    properties = Property.objects.filter(status='available')
+    
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+    category_id = request.GET.get('category')
+    date_from = request.GET.get('date_from')
+    date_to = request.GET.get('date_to')
+    
+    if min_price:
+        try:
+            properties = properties.filter(price__gte=float(min_price))
+        except (ValueError, TypeError):
+            pass
+    
+    if max_price:
+        try:
+            properties = properties.filter(price__lte=float(max_price))
+        except (ValueError, TypeError):
+            pass
+    
+    if category_id:
+        try:
+            properties = properties.filter(category_id=int(category_id))
+        except (ValueError, TypeError):
+            pass
+    
+    if date_from:
+        try:
+            date_validator(date_from)
+            parsed_date_from = datetime.strptime(date_from, '%d/%m/%Y')
+            properties = properties.filter(created_at__gte=parsed_date_from)
+        except (ValidationError, ValueError):
+            pass
+    
+    if date_to:
+        try:
+            date_validator(date_to)
+            parsed_date_to = datetime.strptime(date_to, '%d/%m/%Y')
+            properties = properties.filter(created_at__lte=parsed_date_to)
+        except (ValidationError, ValueError):
+            pass
+    
+    properties_data = [
+        {
+            'id': p.id,
+            'title': p.title,
+            'price': p.price,
+            'description': p.description or '',
+            'category': p.category.name,
+            'status': p.status,
+            'status_display': p.get_status_display(),
+            'created_at': p.created_at.strftime('%d/%m/%Y %H:%M') if p.created_at else None,
+        }
+        for p in properties.select_related('category')
+    ]
+    
+    return JsonResponse({'properties': properties_data}, safe=False)

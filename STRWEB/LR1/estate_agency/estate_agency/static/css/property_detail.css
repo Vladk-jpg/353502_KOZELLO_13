@@ -2,17 +2,17 @@
   max-width: 1000px;
   margin: 0 auto;
   padding: 2rem 1rem;
-  background: #f8fafc;
+  background: transparent;
   min-height: 100vh;
 }
 
 .breadcrumb {
   margin-bottom: 2rem;
-  background: white;
-  border-radius: 8px;
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
   padding: 1rem 1.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e2e8f0;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
 }
 
 .breadcrumb ol {
@@ -32,29 +32,30 @@
 .breadcrumb li:not(:last-child)::after {
   content: "›";
   margin-left: 0.5rem;
-  color: #64748b;
+  color: var(--color-muted);
   font-weight: 600;
 }
 
 .breadcrumb a {
-  color: #3b82f6;
+  color: var(--color-primary-500);
   text-decoration: none;
   font-weight: 500;
   padding: 0.25rem 0.5rem;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
 }
 
 .breadcrumb a:hover {
-  color: #1d4ed8;
-  background: #f1f5f9;
+  color: var(--color-primary-600);
+  background: var(--color-surface);
+  text-decoration: none;
 }
 
 .property-article {
-  background: white;
-  border-radius: 12px;
+  background: var(--color-bg);
+  border-radius: var(--radius-lg);
   padding: 2.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e2e8f0;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-border);
 }
 
 .property-article header {
@@ -63,8 +64,8 @@
 }
 
 .property-article h1 {
-  color: #1e293b;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--color-text);
+  font-family: var(--font-alt);
   margin: 0 0 1rem 0;
   font-size: 2.25rem;
   font-weight: 600;
@@ -81,30 +82,30 @@
 }
 
 .property-price h2 {
-  color: #059669;
+  color: var(--color-success);
   font-size: 2rem;
   font-weight: 700;
   margin: 0;
 }
 
 .property-status {
-  background: #dbeafe;
-  color: #1e40af;
+  background: var(--color-primary-50);
+  color: var(--color-primary-700);
   padding: 0.5rem 1rem;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: 0.875rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  border: 1px solid #bfdbfe;
+  border: 1px solid var(--color-primary-200);
 }
 
 .property-section {
   margin-bottom: 2rem;
-  background: #f8fafc;
-  border-radius: 8px;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
   padding: 1.5rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--color-border);
 }
 
 .property-section:last-child {
@@ -112,8 +113,8 @@
 }
 
 .property-section h2 {
-  color: #1e293b;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--color-text);
+  font-family: var(--font-alt);
   margin-top: 0;
   margin-bottom: 1rem;
   font-size: 1.25rem;
@@ -121,14 +122,14 @@
 }
 
 .property-section p {
-  color: #475569;
+  color: var(--color-text);
   line-height: 1.6;
   margin: 0;
   font-size: 1rem;
 }
 
 .property-section small {
-  color: #64748b;
+  color: var(--color-muted);
   font-size: 0.875rem;
   font-style: italic;
 }
@@ -138,15 +139,15 @@
   grid-template-columns: 1fr 2fr;
   gap: 0.75rem 1.5rem;
   margin: 0;
-  background: white;
-  border-radius: 8px;
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
   padding: 1.5rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--color-border);
 }
 
 .property-details dt {
   font-weight: 600;
-  color: #1e293b;
+  color: var(--color-text);
   padding: 0.5rem 0;
   font-size: 0.95rem;
 }
@@ -154,9 +155,9 @@
 .property-details dd {
   margin: 0;
   padding: 0.5rem 0;
-  color: #475569;
+  color: var(--color-text);
   font-size: 0.95rem;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .property-details dd:last-child {
@@ -178,9 +179,9 @@
 .property-actions a {
   display: inline-block;
   padding: 0.75rem 1.5rem;
-  background: #3b82f6;
+  background: var(--color-primary-500);
   color: white;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   text-decoration: none;
   font-weight: 600;
   font-size: 1rem;
@@ -188,7 +189,7 @@
 }
 
 .property-actions a:hover {
-  background: #1d4ed8;
+  background: var(--color-primary-600);
   color: white;
   text-decoration: none;
 }

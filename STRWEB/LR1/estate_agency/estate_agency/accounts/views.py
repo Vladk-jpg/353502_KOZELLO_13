@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib import messages
 from .forms import UserRegistrationForm, StaffForm
 from django.http import HttpResponse
@@ -8,6 +9,12 @@ from .decorators import role_required
 from .models import UserProfile, Staff
 import random
 import requests
+import json
+from datetime import datetime
+from django.http import JsonResponse
+from django.core import serializers
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
 
 def register(request):
     if request.method == 'POST':
@@ -99,3 +106,78 @@ def add_staff(request):
     else:
         form = StaffForm()
     return render(request, 'accounts/add_staff.html', {'form': form})
+
+def staff_list_api(request):
+    staff_members = Staff.objects.filter(is_active=True).select_related('user_profile__user')
+    data = []
+    for staff in staff_members:
+        data.append({
+            'id': staff.id,
+            'name': staff.user_profile.user.get_full_name() or staff.user_profile.user.username,
+            'position': staff.position,
+            'experience': staff.experience,
+            'email': staff.user_profile.user.email,
+            'phone': staff.user_profile.phone_number,
+            'photo_url': staff.photo.url if staff.photo else None
+        })
+    return JsonResponse({'staff': data}, safe=False)
+
+@csrf_exempt
+@require_http_methods(["POST"])
+@login_required
+@role_required(['admin'])
+def add_staff_api(request):
+    try:
+        if request.content_type == 'application/json':
+            data = json.loads(request.body)
+        else:
+            data = request.POST.dict()
+        
+        birth_date = datetime.strptime(data['birth_date'], '%d/%m/%Y').date()
+        
+        user = User.objects.create_user(
+            username=data['username'],
+            email=data['email'],
+            password=data['password'],
+            first_name=data.get('first_name', ''),
+            last_name=data.get('last_name', '')
+        )
+        
+        user_profile = UserProfile.objects.create(
+            user=user,
+            role='agent',
+            phone_number=data['phone_number'],
+            birth_date=birth_date,
+            timezone=data.get('timezone', 'Europe/Moscow')
+        )
+        
+        staff = Staff.objects.create(
+            user_profile=user_profile,
+            position=data['position'],
+            experience=int(data['experience']),
+            is_active=True
+        )
+        
+        if 'photo' in request.FILES:
+            staff.photo = request.FILES['photo']
+            staff.save()
+        
+        return JsonResponse({
+            'success': True,
+            'message': 'Success!',
+            'staff': {
+                'id': staff.id,
+                'name': user.get_full_name() or user.username,
+                'position': staff.position,
+                'experience': staff.experience,
+                'email': user.email,
+                'phone': user_profile.phone_number,
+                'photo_url': staff.photo.url if staff.photo else None
+            }
+        }, status=201)
+        
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        }, status=500)

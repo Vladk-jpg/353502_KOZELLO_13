@@ -11,6 +11,7 @@ urlpatterns = [
     path('client/reservations/', views.client_reservations, name='client_reservations'),
     path('promo-codes/', views.promo_codes, name='promo_codes'),
     
+    path('api/properties/', views.api_properties, name='api_properties'),
 
     path('agent/properties/', views.agent_property_list, name='agent_property_list'),
     path('agent/properties/create/', views.agent_property_create, name='agent_property_create'),

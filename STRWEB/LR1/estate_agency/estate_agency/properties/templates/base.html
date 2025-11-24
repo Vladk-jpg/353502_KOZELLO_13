@@ -13,6 +13,7 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/nav.css' %}">
+    <link rel="stylesheet" href="{% static 'css/lr_3/theme-toggle.css' %}">
     {% block extra_css %}{% endblock %}
   </head>
   <body itemscope itemtype="https://schema.org/WebSite">
@@ -22,6 +23,14 @@
           <a class="brand" href="{% url 'content:home' %}" aria-label="Estate Agency - главная страница">
             Estate Agency
           </a>
+
+          <div class="theme-toggle-wrapper">
+            <input type="checkbox" id="theme-toggle" class="theme-toggle" aria-label="Переключить тему">
+            <label for="theme-toggle" class="theme-toggle-label" aria-label="Переключить тему">
+              <span class="theme-icon theme-icon-light">☀️</span>
+              <span class="theme-icon theme-icon-dark">🌙</span>
+            </label>
+          </div>
 
           <input class="nav-toggle" type="checkbox" id="nav-toggle" aria-label="Переключить навигационное меню">
           <label class="nav-toggle-label" for="nav-toggle" aria-hidden="true"><span></span></label>
@@ -51,6 +60,16 @@
               <li role="none">
                 <a href="{% url 'content:reviews' %}" role="menuitem">
                   Отзывы
+                </a>
+              </li>
+              <li role="none">
+                <a href="{% url 'content:date_manipulation' %}" role="menuitem">
+                  Работа с датами
+                </a>
+              </li>
+              <li role="none">
+                <a href="{% url 'content:charts' %}" role="menuitem">
+                  Графики функции
                 </a>
               </li>
               <li role="none">
@@ -142,11 +161,9 @@
             <h2 itemprop="name">Estate Agency</h2>
             <p itemprop="description">Найдите свою мечту с нами</p>
             <address itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
-              <span itemprop="addressCountry">BY</span>
-              <span itemprop="addressLocality">Минск</span>
-              <br>
               IP адрес: {{ client_ip }}
             </address>
+            <aside id="bitcoin-price" data-api-key="{{ API_KEY }}"></aside>
           </div>
           <div>
             <p>
@@ -170,6 +187,10 @@
       </section>
     </footer>
 
+    {% load static %}
+    <script src="{% static 'js/theme.js' %}"></script>
+    <script src="{% static 'js/age.js' %}"></script>
+    <script src="{% static 'js/bitcoinPrice.js' %}"></script>
     {% block extra_js %}{% endblock %}
   </body>
 </html>

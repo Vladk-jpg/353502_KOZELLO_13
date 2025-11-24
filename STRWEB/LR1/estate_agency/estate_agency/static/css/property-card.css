@@ -1,0 +1,171 @@
+.property-card-wrapper {
+  position: relative;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+}
+
+.property-card {
+  --rotateX: 0deg;
+  --rotateY: 0deg;
+  position: relative;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  pointer-events: auto;
+  transform-style: preserve-3d;
+  transform: perspective(1000px) rotateY(var(--rotateX)) rotateX(var(--rotateY));
+  transition: transform 0.1s ease-out, box-shadow 0.3s ease;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.property-card * {
+  pointer-events: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.property-card-wrapper:hover .property-card {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.property-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(59, 121, 255, 0.1) 0%,
+    rgba(59, 121, 255, 0.05) 50%,
+    rgba(59, 121, 255, 0.1) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 0;
+}
+
+.property-card-wrapper:hover .property-card::before {
+  opacity: 1;
+}
+
+@keyframes reset-card {
+  to {
+    transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+  }
+}
+
+.property-card header {
+  padding: var(--catalog-spacing);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.property-card h2 {
+  margin: 0 0 0.5rem 0;
+  font-family: var(--font-alt);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.property-card h2 a {
+  color: var(--color-primary-700);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+}
+
+.property-card h2 a:hover {
+  color: var(--color-primary-500);
+  text-decoration: none;
+}
+
+.property-card nav a {
+  position: relative;
+  z-index: 2;
+}
+
+.property-card h3 {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-primary-600);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.property-card section {
+  padding: var(--catalog-spacing);
+  flex: 1;
+}
+
+.property-card p {
+  color: var(--color-muted);
+  line-height: 1.6;
+  margin: 0 0 var(--catalog-spacing-sm) 0;
+  font-size: 0.875rem;
+}
+
+.property-card dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem 1rem;
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.property-card dt {
+  font-weight: 600;
+  color: var(--color-text);
+  grid-column: 1;
+}
+
+.property-card dd {
+  margin: 0;
+  color: var(--color-muted);
+  grid-column: 2;
+}
+
+.property-card time {
+  color: var(--color-primary-600);
+  font-weight: 500;
+}
+
+.property-card nav {
+  padding: var(--catalog-spacing);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.property-card nav a {
+  display: inline-block;
+  background: var(--color-primary-500);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  font-weight: 600;
+  text-align: center;
+  min-width: 200px;
+  margin: auto;
+}
+
+.property-card nav a:hover {
+  background: var(--color-primary-600);
+  text-decoration: none;
+}
+
