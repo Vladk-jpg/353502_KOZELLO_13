@@ -102,7 +102,7 @@ class Slider {
       autoCheckbox.checked = this.auto;
       autoCheckbox.addEventListener('change', (e) => {
         this.setAuto(e.target.checked);
-        this.updateAutoDependentSettings();
+        this.updateAutoSettings();
       });
     }
 
@@ -126,10 +126,10 @@ class Slider {
       });
     }
 
-    this.updateAutoDependentSettings();
+    this.updateAutoSettings();
   }
 
-  updateAutoDependentSettings() {
+  updateAutoSettings() {
     const stopMouseHoverCheckbox = document.getElementById('slider-stopMouseHover');
     const delayInput = document.getElementById('slider-delay');
 
