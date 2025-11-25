@@ -20,6 +20,7 @@ class Slider {
   auto = true;
   stopMouseHover = true;
   delay = 2000;
+  isAdmin = false;
 
   constructor() {
     document.addEventListener('DOMContentLoaded', () => {
@@ -28,6 +29,10 @@ class Slider {
   }
 
   init() {
+    const sliderContainer = document.getElementById('slider');
+    if (sliderContainer) {
+      this.isAdmin = sliderContainer.getAttribute('data-is-admin') === 'true';
+    }
     const prevButton = document.querySelector('.slider-left-button');
     const nextButton = document.querySelector('.slider-right-button');
     const sliderImg = document.querySelector('.slider-img');
@@ -115,15 +120,24 @@ class Slider {
 
     if (delayInput) {
       delayInput.value = this.delay;
-      delayInput.addEventListener('blur', (e) => {
-        const value = parseInt(e.target.value);
-        if (!isNaN(value) && value >= 100) {
-          this.setDelay(value);
-        } else {
-          e.target.value = this.delay;
-          alert('Задержка должна быть не менее 100 мс');
+      
+      if (!this.isAdmin) {
+        const delaySettingItem = delayInput.closest('.slider-setting-item');
+        if (delaySettingItem) {
+          delaySettingItem.style.display = 'none';
         }
-      });
+        delayInput.disabled = true;
+      } else {
+        delayInput.addEventListener('blur', (e) => {
+          const value = parseInt(e.target.value);
+          if (!isNaN(value) && value >= 100) {
+            this.setDelay(value);
+          } else {
+            e.target.value = this.delay;
+            alert('Задержка должна быть не менее 100 мс');
+          }
+        });
+      }
     }
 
     this.updateAutoSettings();
@@ -137,7 +151,7 @@ class Slider {
       stopMouseHoverCheckbox.disabled = !this.auto;
     }
 
-    if (delayInput) {
+    if (delayInput && this.isAdmin) {
       delayInput.disabled = !this.auto;
     }
   }

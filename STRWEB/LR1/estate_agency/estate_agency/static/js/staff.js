@@ -213,7 +213,7 @@ class StaffManagement {
 
     const bonusButton = document.getElementById('staff-bonus-button');
     if (bonusButton) {
-      bonusButton.addEventListener('click', () => {
+      bonusButton.addEventListener('click', (e) => {
         this.handleBonus();
       });
     }
@@ -564,7 +564,7 @@ class StaffManagement {
         img.src = staff.photo_url;
         img.alt = staff.name;
       } else {
-        img.src = 'media/staff_photosnoimage.jpg';
+        img.src = 'media/staff_photos/noimage.jpg';
         img.alt = 'Фото сотрудника отсутствует';
       }
       photoDiv.appendChild(img);

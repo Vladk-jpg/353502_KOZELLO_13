@@ -50,13 +50,21 @@ def home(request):
     cal = calendar.TextCalendar()
     month_calendar = cal.formatmonth(today.year, today.month)
     
+    is_admin = False
+    if request.user.is_authenticated:
+        try:
+            is_admin = request.user.userprofile.role == 'admin'
+        except:
+            pass
+    
     context = {
         'latest_property': latest_property,
         'latest_article': latest_article,
         'about_info': about_info,
         'partners': partners,
         'current_date': current_date, 
-        'month_calendar': month_calendar, 
+        'month_calendar': month_calendar,
+        'is_admin': is_admin,
     }
     return render(request, 'content/home.html', context)
 
