@@ -81,12 +81,8 @@ class UrlInputManager {
     if (input) {
       input[field] = value;
       this.saveToStorage();
-      if (field === 'value' || field === 'required' || field === 'pattern') {
-        this.validateInputElement(id);
-      }
-      if (field === 'name' || field === 'placeholder' || field === 'pattern' || field === 'readonly' || field === 'required') {
-        this.updateInputAttributes(id);
-      }
+      this.validateInputElement(id);
+      this.updateInputAttributes(id);
     }
   }
 

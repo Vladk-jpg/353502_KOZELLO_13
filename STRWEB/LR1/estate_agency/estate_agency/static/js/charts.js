@@ -97,7 +97,7 @@ function createChart() {
       plugins: {
         title: {
           display: true,
-          text: 'Сравнение разложения в ряд Маклорена и точной функции ln(1+x)',
+          text: 'Сравнение разложения в ряд Маклорена и точной ln(1+x)',
           font: {
             size: 16,
             weight: 'bold'
